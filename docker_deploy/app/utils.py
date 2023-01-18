@@ -70,14 +70,34 @@ def load_test_data():
 
 def training_model(x_data, y_data):
 
-	numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
-	column_transformer = ColumnTransformer(transformers=[
-		('numerical', numeric_transformer, list(x_data.columns)),
+    numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
+    column_transformer = ColumnTransformer(transformers=[
+        ('numerical', numeric_transformer, list(x_data.columns)),
         ])
-	clf = Pipeline(steps=[('preprocessor', column_transformer),
-                      ('classifier', RandomForestClassifier(n_estimators=300,
+    clf = Pipeline(steps=[('preprocessor', column_transformer),
+                        ('classifier', RandomForestClassifier(n_estimators=300,
                                                             random_state=123))])
-	model = clf.fit(x_data, y_data)
-	acc = 100 * model.score(x_data, y_data)
-	
-	return acc
+    model = clf.fit(x_data, y_data)
+    x_test, y_test = load_test_data()
+    acc = 100 * model.score(x_data, y_data)
+    test_acc = 100 * model.score(x_test, y_test)
+
+    return f"Training Accuracy: {acc}; Test Accuracy {test_acc}"
+
+def retrain_selected_features(x_data, y_data, features_to_include):
+
+    if features_to_include is not None or len(features_to_include) > 0:
+        x_data = x_data[features_to_include]
+    numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
+    column_transformer = ColumnTransformer(transformers=[
+        ('numerical', numeric_transformer, list(x_data.columns)),
+        ])
+    clf = Pipeline(steps=[('preprocessor', column_transformer),
+                        ('classifier', RandomForestClassifier(n_estimators=300,
+                                                            random_state=123))])
+    model = clf.fit(x_data, y_data)
+    x_test, y_test = load_test_data()
+    acc = 100 * model.score(x_data, y_data)
+    test_acc = 100 * model.score(x_test, y_test)
+
+    return 1, f"Training Accuracy: {acc}; Test Accuracy {test_acc}"
