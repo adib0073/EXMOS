@@ -1,16 +1,6 @@
 from fastapi import FastAPI
 from utils import *
 
-import sklearn
-from sklearn.model_selection import train_test_split
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, roc_auc_score
-
-import pandas as pd
 
 app = FastAPI()
 
@@ -21,31 +11,77 @@ def get_root():
 
 
 
-def training_model():
-	data = pd.read_csv("data/training_data.csv")
-	x_data = data.drop(["Outcome"],axis='columns')
-	y_data = data.filter(["Outcome"],axis='columns')
-	
-	numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
-	column_transformer = ColumnTransformer(transformers=[
-		('numerical', numeric_transformer, list(x_data.columns)),
-        ])
-	clf = Pipeline(steps=[('preprocessor', column_transformer),
-                      ('classifier', RandomForestClassifier(n_estimators=300,
-                                                            random_state=123))])
-	model = clf.fit(x_data, y_data)
-	acc = 100 * model.score(x_data, y_data)
-	
-	return acc
-
 @app.get("/train")
 async def train_model():
+	x_data, y_data = load_training_data()
+	message = training_model(x_data, y_data)
 
-		message = training_model()
+	response = { 
+		"StatusCode": 1,
+		"StatusMessage": message,
+		}
 
-		response = { 
-			"StatusCode": 1,
-			"StatusMessage": message,
-			}
+	return response
 
-		return response
+@app.get("/checkmissingvalues")
+async def check_missing_values():
+	status_code = 0
+	status_message = "Pending execution"
+	data, labels = load_training_data()
+	checker = detect_missing_values(data)
+
+	if checker:
+		status_code = 1
+		status_message = "Missing values detected"	
+	else:
+		status_code = 0
+		status_message = "Missing Values not found"	
+	
+	response = { 
+		"StatusCode": status_code,
+		"StatusMessage": status_message,
+		}
+
+	return response
+
+@app.get("/checkduplicates")
+async def check_duplicates():
+	status_code = 0
+	status_message = "Pending execution"
+	data, labels = load_training_data()
+	checker = detect_duplicates(data)
+
+	if checker:
+		status_code = 1
+		status_message = "Data duplicates found"	
+	else:
+		status_code = 0
+		status_message = "Data duplicates not found"	
+	
+	response = { 
+		"StatusCode": status_code,
+		"StatusMessage": status_message,
+		}
+
+	return response	
+
+@app.get("/checkoutliers")
+async def check_outliers():
+	status_code = 0
+	status_message = "Pending execution"
+	data, labels = load_training_data()
+	checker = detect_outliers(data, list(data.columns))
+
+	if checker:
+		status_code = 1
+		status_message = "Outliers found"	
+	else:
+		status_code = 0
+		status_message = "Outliers not found"	
+	
+	response = { 
+		"StatusCode": status_code,
+		"StatusMessage": status_message,
+		}
+
+	return response
