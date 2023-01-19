@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+from constants import *
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -101,3 +102,14 @@ def retrain_selected_features(x_data, y_data, features_to_include):
     test_acc = 100 * model.score(x_test, y_test)
 
     return 1, f"Training Accuracy: {acc}; Test Accuracy {test_acc}"
+
+
+def get_default_feature_values():
+    data, _ = load_training_data()
+    feature_bounds = []
+    for feature in ALL_FEATURES:
+        min_val = np.min(data[feature])
+        max_val = np.max(data[feature])
+        feature_bounds.append([feature, (min_val, max_val)])
+
+    return feature_bounds

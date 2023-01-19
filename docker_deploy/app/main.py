@@ -91,7 +91,6 @@ async def check_outliers():
 async def retrain_filtered_features(features: FeaturesToInclude):
 
 	data, labels = load_training_data()
-	print(features.features_to_include)
 	status_code, status_message = retrain_selected_features(data, labels, features.features_to_include)
 
 	response = {
@@ -102,14 +101,15 @@ async def retrain_filtered_features(features: FeaturesToInclude):
 
 
 @app.post("/filterfeatureranges", response_model=OutputDataModel)
-async def filter_feature_ranges(features: FeaturesToInclude):
+async def filter_feature_ranges(features: FeatureRanges):
 
 	data, labels = load_training_data()
-	print(features.features_to_include)
-	status_code, status_message = retrain_selected_features(data, labels, features.features_to_include)
+	features.features_ranges = get_default_feature_values()
+
+	#status_code, status_message = retrain_selected_features(data, labels, features.features_ranges)
 
 	response = {
-		"StatusCode": status_code,
-		"StatusMessage": status_message
+		"StatusCode": True,
+		"StatusMessage": str(features.features_ranges)
 	}
 	return response
