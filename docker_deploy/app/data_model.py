@@ -11,4 +11,5 @@ class FeaturesToInclude(BaseModel):
 
 
 class FeatureRanges(BaseModel):
-    features_ranges: list[str] = []
+    features_to_include: list[str] = ALL_FEATURES
+    features_ranges: list[tuple] = DEFAULT_VALUES

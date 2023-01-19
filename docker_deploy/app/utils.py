@@ -55,11 +55,15 @@ def normalize_data():
     pass
 
 
-def load_training_data():
+def load_training_data(filters = None):
     data = pd.read_csv("data/training_data.csv")
+    if filters is not None:
+        for i in range(len(DEFAULT_VALUES)):
+            data = data[(data[ALL_FEATURES[i]] >= filters[i][0]) & (data[ALL_FEATURES[i]] <= filters[i][1])]
+
+
     x_data = data.drop(["Outcome"],axis='columns')
     y_data = data.filter(["Outcome"],axis='columns')
-
     return x_data, y_data
 
 def load_test_data():
@@ -111,5 +115,5 @@ def get_default_feature_values():
         min_val = np.min(data[feature])
         max_val = np.max(data[feature])
         feature_bounds.append([feature, (min_val, max_val)])
-
+    # Output: "[['Pregnancies', (0, 15)], ['Glucose', (0, 199)], ['BloodPressure', (0, 122)], ['SkinThickness', (0, 99)], ['Insulin', (0, 846)], ['BMI', (0.0, 67.1)], ['DiabetesPedigreeFunction', (0.078, 2.329)], ['Age', (21, 81)]]"
     return feature_bounds

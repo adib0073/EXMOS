@@ -2,6 +2,7 @@ from typing import List, Union
 from fastapi import FastAPI, Query
 from utils import *
 from data_model import *
+from constants import *
 
 app = FastAPI()
 
@@ -103,13 +104,12 @@ async def retrain_filtered_features(features: FeaturesToInclude):
 @app.post("/filterfeatureranges", response_model=OutputDataModel)
 async def filter_feature_ranges(features: FeatureRanges):
 
-	data, labels = load_training_data()
-	features.features_ranges = get_default_feature_values()
-
-	#status_code, status_message = retrain_selected_features(data, labels, features.features_ranges)
+	data, labels = load_training_data(features.features_ranges)
+	
+	status_code, status_message = retrain_selected_features(data, labels, features.features_to_include)
 
 	response = {
-		"StatusCode": True,
-		"StatusMessage": str(features.features_ranges)
+		"StatusCode": status_code,
+		"StatusMessage": status_message
 	}
 	return response
