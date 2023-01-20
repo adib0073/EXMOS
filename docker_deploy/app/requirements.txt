@@ -6,4 +6,4 @@ pydantic
 scikit-learn
 scipy
 seaborn
-"uvicorn[standard]"
+uvicorn[standard]
