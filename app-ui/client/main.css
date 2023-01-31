@@ -1,5 +1,5 @@
 html, body {
-  font-family: 'Noto Sans';
+  font-family: "Montserrat",sans-serif;
   background-color: #E5E5E5;
   padding: 0;
   margin: 0;
@@ -8,7 +8,7 @@ html, body {
 }
 /* app-container */
 .app-container {
-  font-family: 'Noto Sans';
+  font-family: "Montserrat",sans-serif;
   background-color: #E5E5E5;
   height: 100%;
   width: 100%;
@@ -19,6 +19,70 @@ html, body {
   height: 100%;
   width: 100%;
   position: relative;
+}
+
+/* landing page container */
+.lp-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  /*background: rgba(255, 255, 255, 0.2);*/
+}
+
+/* landing page inner container */
+.lp-container-inner {
+  position : relative;
+  padding : 32px;
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+/* landing page image changes */
+.lp-container-image {
+  max-width: 754px;
+  padding-bottom:40px;
+  width: 80%;
+  margin: 0 auto;
+  display: block;
+  max-width: 769px;
+}
+
+/* landing page header font */
+.lp-container-headerfont-1 {
+  color: #fff;
+  text-align: center;
+  max-width: 1200px;
+  background-size: cover !important;
+  margin: 0 auto;
+  background-position: center;
+  margin-top: 0px;
+  padding-top: 50px;
+  font-size: 27px;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+}
+.lp-container-headerfont-2 {
+  color: #fff;
+  text-align: center;
+  max-width: 1000px;
+  background-size: cover !important;
+  margin: 0 auto;
+  background-position: center;
+  margin-top: 0px;
+  padding-top: 3px;
+  font-size: 25px;
+  font-weight: 400 !important;
+  padding-bottom: 67px;
+  line-height: 38px;
 }
 
 /* main-container after nav bar */
