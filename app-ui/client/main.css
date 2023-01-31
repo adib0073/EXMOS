@@ -1,18 +1,24 @@
 html, body {
-  font-family: 'Roboto';
+  font-family: 'Noto Sans';
   background-color: #E5E5E5;
   padding: 0;
   margin: 0;
+  height: 100%;
   width: 100%;
-  height: 100vh;
 }
 /* app-container */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto';
+  font-family: 'Noto Sans';
   background-color: #E5E5E5;
-  height: 120vh;
+  height: 100%;
+  width: 100%;
+}
+
+/* video-container */
+.video-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 /* main-container after nav bar */
