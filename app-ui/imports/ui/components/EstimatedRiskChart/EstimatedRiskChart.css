@@ -1,0 +1,13 @@
+
+/* progress-bar-div */
+.ant-progress-text {
+    font-family: 'Roboto';
+    font-weight: 600;
+  }
+  .progress-text-red .ant-progress-circle  .ant-progress-text {
+    color: #D64242;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }

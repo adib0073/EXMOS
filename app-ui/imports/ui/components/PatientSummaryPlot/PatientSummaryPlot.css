@@ -1,0 +1,112 @@
+/* chart-box-1 */
+.chart-box-1 {
+  border: 0px;
+  border-right: 1px;
+  border-style: dashed;
+  border-color: #C4C4C4;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+/* chart-box-2 */
+.chart-box-2 {
+  margin: 0px 0px 0px 10px;
+  border: 2px;
+  border-style: solid;
+  border-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+/* summary-chart-box */
+.summary-chart-box {
+  padding: 5px 10px 5px 10px;
+  border: 1px;
+  border-style: solid;
+  border-color: transparent;
+  flex: 1;
+}
+
+.SummaryCard {
+  padding: 5px 5px 5px 10px;
+  background: #449231;
+  height: 12vh;
+  width: 20vw;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContDistPlot {
+  margin-left: 10px;
+  height: 10vh;
+  width: 10vw;
+  background: #FFFFFF;
+  padding: 2px 5px 2px 5px;
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.ContDistPlot:hover {
+  cursor: grab;
+  transition: 0.2s;
+}
+
+.ContDistPlot:active {
+  cursor: grabbing;
+  transition: 0.2s;
+}
+
+.DiscreteDistPlot {
+  margin-left: 10px;
+  height: 10vh;
+  width: 10vw;
+  background: #FFFFFF;
+  padding: 2px 20px 12px 15px;
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.DiscreteDistPlot:hover {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.DiscreteDistPlot:active {
+  cursor: wait;
+  transition: 0.2s;
+}
+
+.SummaryValue {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.5vw;
+  color: #FFFFFF;
+}
+
+.ValueLabel {
+  font-size: 1.0vw;
+  color: #000000;
+}
+
+.SummaryChartLabels {
+  padding: 20px 10px 10px 10px;
+  font-size: 1.0vw;
+  color: #000000;
+}
