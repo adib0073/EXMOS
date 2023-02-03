@@ -7,9 +7,6 @@ import { LandingPage } from './LandingPage';
 export const App = () => {
     const [user, setUser] = useState({ id: "", cohort: "" });
 
-
-    useEffect(() => { window.scrollTo(0, 0); }, []);
-
     return (
         <>
             <BrowserRouter>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BASE_API } from './Constants';
+import axios from 'axios';
 
 
 
@@ -8,6 +9,22 @@ export const LandingPage = ({ user, setUser }) => {
     const navigate = useNavigate();
     const selectedDashType = () => {
         console.log(user);
+
+        axios.post(BASE_API + '/validateusers', {
+            UserId: "master",
+            Cohort: "DCE"
+        }, {
+            headers: {
+                "Accept": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                //"Access-Control-Request-Method": "GET, POST, DELETE, PUT, OPTIONS",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}
+        }).then(function (response) {
+                    console.log(response);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
         navigate('/dashboard');
     }
 
@@ -54,7 +71,7 @@ export const LandingPage = ({ user, setUser }) => {
                             type="submit"
                             onClick={selectedDashType}
                         >
-                            {user.id  === "" || user.cohort === "" ? "Not ready yet?" : "Let's Start"}
+                            {user.id === "" || user.cohort === "" ? "Not ready yet?" : "Let's Start"}
                         </button>
                     </form>
                 </div>
