@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import NavBar from './components/NavBar/NavBar.jsx';
 import { EstimatedRiskChart } from './components/EstimatedRiskChart/EstimatedRiskChart.jsx';
 import { DoughnutChart } from './components/EstimatedRiskChart/DoughnutChart.jsx';

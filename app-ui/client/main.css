@@ -4,8 +4,10 @@ body {
   background-color: #E5E5E5;
   padding: 0;
   margin: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  
+  overflow-y: auto;
   /*overflow: hidden;*/
 }
 
@@ -13,7 +15,9 @@ body {
 .app-container {
   font-family: "Montserrat", sans-serif;
   background-color: #E5E5E5;
-  height: 100%;
+  /* Check the overflow here */
+  /* height: 100vh; */
+  overflow-y: auto;
   width: 100%;
 }
 
@@ -24,7 +28,7 @@ body {
 
 /* landing page container */
 .lp-container {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   position: absolute;
   display: flex;

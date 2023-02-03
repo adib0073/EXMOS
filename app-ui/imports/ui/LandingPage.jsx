@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_API } from './Constants';
 
 
 
@@ -17,6 +18,7 @@ export const LandingPage = ({ user, setUser }) => {
             [name]: value
         }));
     };
+    console.log(BASE_API);
 
     return (<div className="app-container">
         <div className="lp-container">
