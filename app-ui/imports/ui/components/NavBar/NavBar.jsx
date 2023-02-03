@@ -11,7 +11,7 @@ class NavBar extends Component {
         return (
             <nav className='NavBarItems'>
                 <h1 className='navbar-logo'>
-                    <b>eXMOS Dashboard</b>              
+                    <b>EXMOS Dashboard</b>              
                 </h1>
                 <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview"  className="augment-logo"></img> 
                 <div className='menu-icon' onClick={this.handleClick}>

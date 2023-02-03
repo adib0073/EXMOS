@@ -3,11 +3,21 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export const LandingPage = () => {
+export const LandingPage = ({ user, setUser }) => {
     const navigate = useNavigate();
     const selectedDashType = () => {
+        console.log(user);
         navigate('/dashboard');
     }
+
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setUser(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
     return (<div className="app-container">
         <div className="lp-container">
             <div className="lp-container-inner">
@@ -20,16 +30,31 @@ export const LandingPage = () => {
                     An Interactive Explainable Machine Learning Platform for Healthcare Experts for Personalized Predictions
                 </h1>
                 <div className="lp-container-entry">
-                    <input className="lp-container-entry-input" placeholder="Please enter your user id" />
-                    <br />
-                    <select className="lp-container-entry-input"  >
-                        <option value="" disabled selected>Select your assigned cohort</option>
-                        <option value="DCE">Cohort-1</option>
-                        <option value="MCE">Cohort-2</option>
-                        <option value="HYB">Cohort-3</option>
-                    </select>
-                    <br />
-                    <button className="lp-container-entry-button" onClick={selectedDashType}>Let's Start</button>
+                    <form onClick={(e) => e.preventDefault()}>
+                        <input
+                            className="lp-container-entry-input"
+                            placeholder="Please enter your user id"
+                            value={user.id}
+                            name="id"
+                            onChange={handleChange}
+                            required />
+                        <br />
+                        <select className="lp-container-entry-input" defaultValue={'DEFAULT'} name="cohort" onChange={handleChange} required>
+                            <option value="DEFAULT" disabled>Select your assigned cohort</option>
+                            <option value="DCE">Cohort-1</option>
+                            <option value="MCE">Cohort-2</option>
+                            <option value="HYB">Cohort-3</option>
+                        </select>
+                        <br />
+                        <button
+                            className="lp-container-entry-button"
+                            disabled={user.id === "" || user.cohort === ""}
+                            type="submit"
+                            onClick={selectedDashType}
+                        >
+                            {user.id  === "" || user.cohort === "" ? "Not ready yet?" : "Let's Start"}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
