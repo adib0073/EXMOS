@@ -6,6 +6,10 @@ class OutputDataModel(BaseModel):
     StatusCode: bool
     StatusMessage: str
 
+class ValidateUserModel(BaseModel):
+    UserId: str
+    Cohort: str
+
 class FeaturesToInclude(BaseModel):
     features_to_include: list[str] = ALL_FEATURES
 

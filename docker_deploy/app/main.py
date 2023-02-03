@@ -113,3 +113,14 @@ async def filter_feature_ranges(features: FeatureRanges):
 		"StatusMessage": status_message
 	}
 	return response
+
+@app.post("/validateusers", response_model=OutputDataModel)
+async def validate_user(features: FeatureRanges):
+
+	# Call method to validate user
+
+	response = {
+		"StatusCode": True,
+		"StatusMessage": "Sucessful. User Validated."
+	}
+	return response
