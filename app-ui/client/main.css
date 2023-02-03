@@ -1,14 +1,17 @@
-html, body {
-  font-family: "Montserrat",sans-serif;
+html,
+body {
+  font-family: "Montserrat", sans-serif;
   background-color: #E5E5E5;
   padding: 0;
   margin: 0;
   height: 100%;
   width: 100%;
+  /*overflow: hidden;*/
 }
+
 /* app-container */
 .app-container {
-  font-family: "Montserrat",sans-serif;
+  font-family: "Montserrat", sans-serif;
   background-color: #E5E5E5;
   height: 100%;
   width: 100%;
@@ -16,8 +19,6 @@ html, body {
 
 /* video-container */
 .video-container {
-  height: 100%;
-  width: 100%;
   position: relative;
 }
 
@@ -38,18 +39,19 @@ html, body {
 
 /* landing page inner container */
 .lp-container-inner {
-  position : relative;
-  padding : 32px;
+  position: relative;
+  padding: 32px;
   width: 80%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
   display: flex;
   flex-direction: column;
 }
+
 /* landing page image changes */
 .lp-container-image {
   max-width: 754px;
-  padding-bottom:40px;
+  padding-bottom: 40px;
   width: 80%;
   margin: 0 auto;
   display: block;
@@ -65,11 +67,12 @@ html, body {
   margin: 0 auto;
   background-position: center;
   margin-top: 0px;
-  padding-top: 50px;
+  padding-top: 10px;
   font-size: 27px;
   font-weight: 600 !important;
   text-transform: uppercase;
 }
+
 .lp-container-headerfont-2 {
   color: #fff;
   text-align: center;
@@ -81,10 +84,59 @@ html, body {
   padding-top: 3px;
   font-size: 25px;
   font-weight: 400 !important;
-  padding-bottom: 67px;
+  padding-bottom: 50px;
   line-height: 38px;
 }
 
+.lp-container-entry {
+  color: #fff;
+  text-align: center;
+  max-width: 1000px;
+  background-size: cover !important;
+  margin: 0 auto;
+  background-position: center;
+  margin-top: 0px;
+  padding-top: 2px;
+  font-size: 25px;
+  font-weight: 400 !important;
+  padding-bottom: 50px;
+  line-height: 38px;
+}
+
+.lp-container-entry-input {
+  color: #000;
+  font-size: 20px;
+  border: None;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 180ms box-shadow ease-in-out;
+  width: 100%;
+  height: 20%;
+}
+
+.lp-container-entry-input:focus {
+  color: #244CB1;
+  box-shadow: 0px 1px 3px rgb(192, 185, 185);
+}
+
+.lp-container-entry-button {
+  color: #fff;
+  border: None;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #244CB1;
+}
+
+.lp-container-entry-button:hover {
+  background-color: #1363DF;
+}
+
+/*------------------------------*/
 /* main-container after nav bar */
 .container {
   margin: 20px 90px 20px 90px;
@@ -97,6 +149,7 @@ html, body {
   background-color: #E5E5E5;
   padding-bottom: 20px;
 }
+
 /* --- */
 /* box-1 */
 .container-box-1 {
@@ -104,12 +157,13 @@ html, body {
   margin: 0px 0px 10px 0px;
   background: rgba(255, 255, 255);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;  
+  border-radius: 20px;
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
 }
+
 /* text-box */
 .text-box {
   display: flex;
@@ -120,6 +174,7 @@ html, body {
   justify-content: center;
   padding-left: 20px;
 }
+
 /* inner-text-box-1 */
 .inner-text-box-1-key {
   border: 1px;
@@ -131,6 +186,7 @@ html, body {
   font-size: 0.9rem;
   justify-content: center;
 }
+
 .inner-text-box-1-val {
   border: 1px;
   border-style: solid;
@@ -141,6 +197,7 @@ html, body {
   font-size: 0.9rem;
   justify-content: center;
 }
+
 /* key-value-text-box */
 .key-value-text-box {
   border: 1px;
@@ -148,6 +205,7 @@ html, body {
   border-color: transparent;
   flex: 1;
 }
+
 /* --- */
 /* progress-box */
 .progress-box {
@@ -176,9 +234,10 @@ html, body {
   border-style: solid;
   border-color: transparent;
   flex: 1.5;
-  display: flex;  
+  display: flex;
   flex-direction: column;
 }
+
 /* inner-box-2-1-1 */
 .container-box-2-1-1 {
   padding: 10px;
@@ -189,6 +248,7 @@ html, body {
   flex-direction: column;
   flex: 3;
 }
+
 /* chart-title-box */
 .chart-title-box {
   border: 1px;
@@ -200,23 +260,26 @@ html, body {
   padding-left: 2px;
   margin-left: 5px;
 }
-.chart-title{
+
+.chart-title {
   font-size: 1.1vw;
   font-weight: bold;
 }
-.chart-icons{
+
+.chart-icons {
   margin-left: auto;
   padding: 2px;
   cursor: help;
   display: flex;
 }
-.chart-reload{
+
+.chart-reload {
   margin-right: 30px;
   cursor: pointer;
   flex: 1;
 }
 
-.chart-info-logo{
+.chart-info-logo {
   padding: 2px;
   cursor: help;
   flex: 1;
@@ -233,6 +296,7 @@ html, body {
   justify-content: center;
   align-items: stretch;
 }
+
 /* --- */
 /* inner-box-2-1-2 */
 .container-box-2-1-2 {
@@ -248,15 +312,16 @@ html, body {
 
 /* --- */
 /* inner-box-2-2 */
-.container-box-2-2 {  
+.container-box-2-2 {
   margin-left: 20px;
   border: 2px;
   border-style: solid;
   border-color: transparent;
-  flex: 1;  
-  display: flex;  
+  flex: 1;
+  display: flex;
   flex-direction: column;
 }
+
 /* inner-box-2-2-1 */
 .container-box-2-2-1 {
   padding: 10px;
@@ -267,6 +332,7 @@ html, body {
   flex-direction: column;
   flex: 1;
 }
+
 /* inner-box-2-2-2 */
 .container-box-2-2-2 {
   padding: 10px;
@@ -284,5 +350,3 @@ html, body {
 
 
 /* --- NavBar CSS --- */
-
-
