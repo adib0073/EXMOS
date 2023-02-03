@@ -11,14 +11,15 @@ export const LandingPage = ({ user, setUser }) => {
         console.log(user);
 
         axios.post(BASE_API + '/validateusers', {
-            UserId: "master",
-            Cohort: "DCE"
+            UserId: user.id,
+            Cohort: user.cohort
         }, {
             headers: {
                 "Accept": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                //"Access-Control-Request-Method": "GET, POST, DELETE, PUT, OPTIONS",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"}
+                "Content-Type" : "application/json",
+                /*"Access-Control-Allow-Origin": "*",*/
+                "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+                "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"}
         }).then(function (response) {
                     console.log(response);
                 }).catch(function (error) {
