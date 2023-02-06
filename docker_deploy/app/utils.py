@@ -132,8 +132,12 @@ def login_service(user_name, cohort):
     # TO-DO: find and update last login time
     if  user_details is None:
         print("Record Not Found")
-        # TO-DO write code to create one
-        return (False, f"Record not found.", user_details)
+        new_user = USER_DETAIL_JSON
+        new_user["UserName"] = user_name
+        new_user["Cohort"] = cohort
+        collection_name.insert_one(new_user)
+        user_details = collection_name.find_one({"UserName" : user_name})
+        return (True, f"New record created for user: {user_name}", user_details)
     else:
         print("Record found")
         return (True, f"Record found for user: {user_name}", user_details)
