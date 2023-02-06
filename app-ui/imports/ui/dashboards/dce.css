@@ -72,3 +72,52 @@
     border-radius: 20px;
     padding: 10px;
 }
+/* Common Visual Component Usage */
+/* chart-title-box */
+.chart-title-box {
+    border: 1px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding-left: 2px;
+    margin-left: 5px;
+  }
+  
+  .chart-title {
+    font-size: 1.1vw;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .chart-icons {
+    margin-left: auto;
+    padding: 2px;
+    cursor: help;
+    display: flex;
+  }
+  
+  .chart-reload {
+    margin-right: 30px;
+    cursor: pointer;
+    flex: 1;
+  }
+  
+  .chart-info-logo {
+    padding: 2px;
+    cursor: help;
+    flex: 1;
+  }
+  
+  
+  /* chart-container */
+  .chart-container {
+    border: 1px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    flex: 12;
+    justify-content: center;
+    align-items: stretch;
+  }
