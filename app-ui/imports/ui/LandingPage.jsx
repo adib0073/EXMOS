@@ -24,7 +24,7 @@ export const LandingPage = ({ user, setUser }) => {
         }).then(function (response) {
             console.log(response.data);
             if (response.data["StatusCode"]) {
-                navigate('/dashboard');
+                navigate('/dashboard/'+user.cohort);
             }
             else{
                 console.log("Error reported. Login failed.")
