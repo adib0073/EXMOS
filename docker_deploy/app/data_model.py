@@ -6,6 +6,11 @@ class OutputDataModel(BaseModel):
     StatusCode: bool
     StatusMessage: str
 
+class OutputwithPayloadDataModel(BaseModel):
+    StatusCode: bool
+    StatusMessage: str    
+    OutputJson: dict = None
+
 class ValidateUserModel(BaseModel):
     UserId: str
     Cohort: str

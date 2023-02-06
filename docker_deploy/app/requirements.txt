@@ -6,4 +6,5 @@ pydantic
 scikit-learn
 scipy
 seaborn
+pymongo[srv]
 uvicorn[standard]

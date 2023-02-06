@@ -4,6 +4,11 @@ from utils import *
 from data_model import *
 from constants import *
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.encoders import jsonable_encoder
+# fix ObjectId & FastApi conflict
+import pydantic
+from bson.objectid import ObjectId
+pydantic.json.ENCODERS_BY_TYPE[ObjectId]=str
 
 app = FastAPI()
 origins = ["*"]
@@ -125,13 +130,15 @@ async def filter_feature_ranges(features: FeatureRanges):
 	}
 	return response
 
-@app.post("/validateusers", response_model=OutputDataModel)
+@app.post("/validateusers", response_model=OutputwithPayloadDataModel)
 async def validate_user(user: ValidateUserModel):
 
 	# Call method to validate user
+	code, message, output_json = login_service(user.UserId, user.Cohort)
 
 	response = {
-		"StatusCode": True,
-		"StatusMessage": f"Sucessful. User:{user.UserId}  Validated."
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
 	}
 	return response

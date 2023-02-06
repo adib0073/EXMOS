@@ -9,6 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 from constants import *
+from dbconnectors import get_database
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -117,3 +118,25 @@ def get_default_feature_values():
         feature_bounds.append([feature, (min_val, max_val)])
     # Output: "[['Pregnancies', (0, 15)], ['Glucose', (0, 199)], ['BloodPressure', (0, 122)], ['SkinThickness', (0, 99)], ['Insulin', (0, 846)], ['BMI', (0.0, 67.1)], ['DiabetesPedigreeFunction', (0.078, 2.329)], ['Age', (21, 81)]]"
     return feature_bounds
+
+
+def login_service(user_name, cohort):
+    """
+    Method to relieve user details if exists
+    or create a new user if doesn't exist
+    """
+    db = get_database()
+    collection_name = db[USER_COLLECTION]
+    user_details = collection_name.find_one({"UserName" : user_name})
+    
+    # TO-DO: find and update last login time
+    if  user_details is None:
+        print("Record Not Found")
+        # TO-DO write code to create one
+        return (False, f"Record not found.", user_details)
+    else:
+        print("Record found")
+        return (True, f"Record found for user: {user_name}", user_details)
+
+
+
