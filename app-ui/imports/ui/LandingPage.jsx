@@ -16,17 +16,25 @@ export const LandingPage = ({ user, setUser }) => {
         }, {
             headers: {
                 "Accept": "application/json",
-                "Content-Type" : "application/json",
+                "Content-Type": "application/json",
                 /*"Access-Control-Allow-Origin": "*",*/
                 "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
-                "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"}
+                "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+            }
         }).then(function (response) {
-                    console.log(response);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+            console.log(response.data);
+            if (response.data["StatusCode"]) {
+                navigate('/dashboard');
+            }
+            else{
+                console.log("Error reported. Login failed.")
+                // TO-DO: Navigate to Error Screen.
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
 
-        navigate('/dashboard');
+
     }
 
     const handleChange = e => {
