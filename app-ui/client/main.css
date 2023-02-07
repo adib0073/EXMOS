@@ -7,7 +7,7 @@ body {
   height: 100vh;
   width: 100%;
   
-  overflow-y: auto;
+  /*overflow-y: auto;*/
   /*overflow: hidden;*/
 }
 
@@ -16,14 +16,17 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: #E5E5E5;
   /* Check the overflow here */
-  /* height: 100vh; */
-  overflow-y: auto;
+  height: 100vh;
+  /*overflow-y: auto;*/
   width: 100%;
 }
 
 /* video-container */
 .video-container {
   position: relative;
+}
+video {
+  object-fit: fill;
 }
 
 /* landing page container */

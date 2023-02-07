@@ -87,7 +87,7 @@ export const LandingPage = ({ user, setUser }) => {
             </div>
         </div>
         <div className='video-container'>
-            <video autoPlay loop muted >
+            <video autoPlay loop muted width="100%" height="100%">
                 <source src="https://github.com/adib0073/HCI_design/blob/main/EXMOS2023/website_bg.mp4?raw=true" type="video/mp4" />
             </video>
         </div>
