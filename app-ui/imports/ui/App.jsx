@@ -13,7 +13,7 @@ export const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
-                    <Route path="/dashboard/dce" element={<DCE />} />
+                    <Route path="/dashboard/dce" element={<DCE userid={user.id}/>} />
                     <Route path="/dashboard/mce" element={<Dashboard />} />
                     <Route path="/dashboard/hyd" element={<Dashboard />} />
                 </Routes>

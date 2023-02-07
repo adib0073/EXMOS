@@ -5,11 +5,29 @@ import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
+import { BASE_API } from '../Constants.jsx';
+import axios from 'axios';
 
-export const DCE = () => {
+const GetChartValue = (userid) => {
+
+    axios.get(BASE_API + '/getpredchartvalues/?user=' + userid)
+    .then(function (response) {
+        console.log(response.data["OutputJson"]);
+        return response.data["OutputJson"]
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+}
+
+
+export const DCE = ({userid}) => {
     const accuracyChartRef = useRef();
-    
-    
+    // TO-DO: Handle null  cases
+    var chartVal = GetChartValue(userid);
+    console.log(chartVal)
+
     return (
         <>
             <NavBar />
@@ -27,7 +45,7 @@ export const DCE = () => {
                             </div>
                             <div className="chart-container" id="AccuracyChart">
                                 <div className='chart-container-viz'>
-                                    <DoughnutChart accuracy={30} chartRef={accuracyChartRef} />
+                                    <DoughnutChart accuracy={89} chartRef={accuracyChartRef} />
                                 </div>
                                 <div className='chart-container-info'>
                                     <HollowBullet /> Training Samples : <b>{700}</b>
@@ -36,7 +54,7 @@ export const DCE = () => {
                                     <HollowBullet /> Features Considered : <b>{8}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> <b>{"+3"}%</b> from previous score
+                                    <HollowBullet /> <b>{3}%</b> from previous score
 
                                 </div>
                             </div>
