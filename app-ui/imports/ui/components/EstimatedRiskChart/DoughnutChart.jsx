@@ -12,20 +12,19 @@ const options = {
         legend: { display: false },
         tooltip: { enabled: false },
     },
-    chartColor: '#D64242',
-    chartStatus: 'High',
+    accuracy: 0
 }
 const data = {
     datasets: [
         {
-            label: 'Predicted Risk',
+            label: 'Overall Prediction Accuracy',
             data: [0, 100],
             backgroundColor: [
-                options.chartColor,
+                '#1363DF',
                 '#E5E5E5'
             ],
             borderColor: [
-                options.chartColor,
+                '#1363DF',
                 '#E5E5E5'
             ],
             borderWidth: 1,
@@ -44,60 +43,46 @@ const centerText = {
         chart.update('none');
         const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
         ctx.save();
-        const fontHeight = 0.15 * height;
-        ctx.font = `bolder ${fontHeight / 2}px Roboto`;
+        const fontHeight = 0.2 * height;
+        ctx.font = `bolder ${fontHeight / 2}px Noto Sans`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText('Overall Risk', width / 2, 0.65 * height);
+        // For Overall text
+        ctx.fillText('Overall', width / 2, 0.65 * height);
 
-        ctx.font = `bolder ${fontHeight}px Roboto`;
-        ctx.fillStyle = options.chartColor;
+        ctx.font = `bolder ${fontHeight * 1.2}px Noto Sans`;
+        ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(options.chartStatus, width / 2, height / 2);
+        // For Accuracy Value
+        ctx.fillText(options.accuracy, 0.48 * width, height / 2);
+        
+        // For % symbol
+        var pOffset = (options.accuracy === 100 ? 0.08 : (options.accuracy >= 10 ? 0.04 : 0))
+        ctx.font = `bolder ${fontHeight * 0.6}px Noto Sans`;
+        ctx.fillText("%", (0.58 + pOffset) * width, height / 2);
         ctx.restore();
         chart.update();
     }
 }
-export const DoughnutChart = ({ estimatedRisk, chartRef }) => {
-    estimatedRisk = Math.min(estimatedRisk, 100); // Setting Boundary Conditions for risk
-    estimatedRisk = Math.max(0, estimatedRisk); // Setting Boundary Conditions for risk
+export const DoughnutChart = ({ accuracy, chartRef }) => {
+    accuracy = Math.min(accuracy, 100); // Setting Boundary Conditions for accuracy
+    accuracy = Math.max(0, accuracy); // Setting Boundary Conditions for accuracy
 
-    let statusColor = '#D64242';
-    let status = 'High';
-    let tooltipMessage = "Overall Risk is " + status + " at " + estimatedRisk + "%.";
-    if (estimatedRisk > 75) {
-        statusColor = '#D64242';
-        status = 'High';
-        tooltipMessage = tooltipMessage + "\n\nReduce risk by " + (estimatedRisk - 75) + "% to reach Moderate level.";
-    }
-    else if (estimatedRisk > 50) {
-        statusColor = '#EA965A';
-        status = 'Moderate';
-        //setStatusColor('#D64242');
-        tooltipMessage = tooltipMessage + "\nReduce risk by " + (estimatedRisk - 50) + "% to reach Low level.";
-    }
-    else {
-        statusColor = '#449231';
-        status = 'Low';
-    }
-    options.chartColor = statusColor;
-    options.chartStatus = status;
+    let tooltipMessage = "Overall Prediction Accuracy is " + accuracy + "%.";
 
-    data.datasets[0].data = [estimatedRisk, 100 - estimatedRisk];
-    data.datasets[0].backgroundColor = [statusColor, '#E5E5E5'];
-    data.datasets[0].borderColor = [statusColor, '#E5E5E5'];
+    options.accuracy=accuracy;
+
+    data.datasets[0].data = [accuracy, 100 - accuracy];
+    data.datasets[0].backgroundColor = ['#1363DF', '#E5E5E5'];
+    data.datasets[0].borderColor = ['#1363DF', '#E5E5E5'];
 
     if (chartRef.current) {
-        chartRef.current.data.datasets[0].data = [estimatedRisk, 100 - estimatedRisk];
-        chartRef.current.data.datasets[0].backgroundColor = [statusColor, '#E5E5E5'];
-        chartRef.current.data.datasets[0].borderColor = [statusColor, '#E5E5E5'];
-        chartRef.current.options.chartColor = statusColor;
-        chartRef.current.options.chartStatus = status;
+        chartRef.current.data.datasets[0].data = [accuracy, 100 - accuracy];
         chartRef.current.update();
     }
 
     return (
-        <div className='RiskProgressChart'>
+        <div className='AccuracyChart'>
             <Tooltip placement="bottom" title={tooltipMessage}>
                 <Doughnut ref={chartRef}
                     data={data}

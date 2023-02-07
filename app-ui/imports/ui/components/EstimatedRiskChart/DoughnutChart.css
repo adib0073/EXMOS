@@ -1,4 +1,8 @@
-.RiskProgressChart{
-    height: 9vw;
+.AccuracyChart{
+    height: 15vh;
+    width: 8vw;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
 }
   
