@@ -63,7 +63,7 @@ export const DCE = ({ userid }) => {
                                     <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                                 </div>
                             </div>
-                            <div className="chart-container" id="AccuracyChart">
+                            <div className="chart-container">
                                 <div className='chart-container-viz'>
                                     <DoughnutChart accuracy={chartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
@@ -75,16 +75,68 @@ export const DCE = ({ userid }) => {
                                 </div>
                                 <div className='chart-container-info'>
                                     <HollowBullet /> <b>{chartVals.pct}%</b> from previous score
-
                                 </div>
                             </div>
                         </div >
                         <div className="dce-container-left-r1c2">
-                            Left Col - Row 1 - Sub Col 2
+                            <div className="chart-title-box">
+                                <div className="chart-title">
+                                    Key Insights
+                                </div>
+                                <div className="chart-icons">
+                                    <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                                </div>
+                            </div>
+                            <div className="chart-container">
+                                <div className="capsule-container">
+                                    <div className="capsule-div">
+                                        <div className="capsule-div-left">
+                                            {89}%
+                                        </div>
+                                        <div className="capsule-div-right">
+                                            {"Diabetic patients have"}  <b>{"BMI higher than 25"}</b>
+                                        </div>
+                                    </div>
+                                    <div className="capsule-div">
+                                        <div className="capsule-div-left">
+                                            {87}%
+                                        </div>
+                                        <div className="capsule-div-right">
+                                            {"Diabetic patients have"}  <b>{"Blood Sugar more than 6.5"}</b>
+                                        </div>
+                                    </div>
+                                    <div className="capsule-div">
+                                        <div className="capsule-div-left">
+                                            {49}%
+                                        </div>
+                                        <div className="capsule-div-right">
+                                            {"Diabetic patients have"}  <b>{"low exercise levels"}</b>
+                                        </div>
+                                    </div>
+                                    <div className="capsule-div">
+                                        <div className="capsule-div-left">
+                                            {38}%
+                                        </div>
+                                        <div className="capsule-div-right">
+                                            {"Diabetic patients have"}  <b>{"alcohol addiction"}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div >
                     </div >
                     <div className="dce-container-left-r2">
-                        Left Col - Row 2
+                        <div className="chart-title-box">
+                            <div className="chart-title">
+                                Data Quality Score
+                            </div>
+                            <div className="chart-icons">
+                                <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                            </div>
+                        </div>
+                        <div className="chart-container" id="AccuracyChart">
+
+                        </div>
                     </div >
                 </div >
                 <div className="dce-container-right-col">
