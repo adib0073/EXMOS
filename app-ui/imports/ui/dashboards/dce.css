@@ -1,5 +1,6 @@
 .dce-container {
     margin: 20px 90px 20px 90px;
+    padding: 20px;
     border: 1px;
     border-style: solid;
     border-color: black;
@@ -166,3 +167,30 @@
     flex: 10;
     font-size: 0.9vw;
 }
+
+/* DQ CHARTS */
+.dq-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.dq-div-left {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.dq-div-right {
+    display: flex;
+    flex: 2;
+}
+.dq-gauge-chart{
+    height: 15vh;
+    width: 4vw;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+  

@@ -125,9 +125,11 @@ def login_service(user_name, cohort):
     Method to relieve user details if exists
     or create a new user if doesn't exist
     """
-    db = get_database()
+    client, db = get_database()
     collection_name = db[USER_COLLECTION]
     user_details = collection_name.find_one({"UserName" : user_name})
+    # TO-DO
+    # Close connection after used
     
     # TO-DO: find and update last login time
     if  user_details is None:
@@ -137,9 +139,11 @@ def login_service(user_name, cohort):
         new_user["Cohort"] = cohort
         collection_name.insert_one(new_user)
         user_details = collection_name.find_one({"UserName" : user_name})
+        client.close()
         return (True, f"New record created for user: {user_name}", user_details)
     else:
         print("Record found")
+        client.close()
         return (True, f"Record found for user: {user_name}", user_details)
 
 

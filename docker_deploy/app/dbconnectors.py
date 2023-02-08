@@ -5,4 +5,4 @@ def get_database():
    # Create a connection using MongoClient.
    client = MongoClient(CONNECTION_STRING)
    # Create the database
-   return client[DBNAME]
+   return client, client[DBNAME]

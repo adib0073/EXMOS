@@ -7,6 +7,7 @@ import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.js
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API } from '../Constants.jsx';
 import axios from 'axios';
+import GaugeChart from 'react-gauge-chart'
 
 const GetChartValue = ({ userid, setChartVals }) => {
 
@@ -134,13 +135,38 @@ export const DCE = ({ userid }) => {
                                 <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                             </div>
                         </div>
-                        <div className="chart-container" id="AccuracyChart">
-
+                        <div className="chart-container">
+                            <div className="dq-div">
+                                <div className='dq-div-left'>
+                                    <GaugeChart
+                                        nrOfLevels={2}
+                                        arcsLength={[0.65, 0.35]}
+                                        percent={0.65}
+                                        textColor={"black"}
+                                        hideText={true}
+                                        colors={['#1363DF', '#E5E5E5']}
+                                        style={{width:"15vw"}}
+                                    />
+                                </div>
+                                <div className='dq-div-right'>
+                                    Reporting Quality issues here
+                                </div>
+                            </div>
                         </div>
                     </div >
                 </div >
                 <div className="dce-container-right-col">
-                    Right Col
+                    <div className="chart-title-box">
+                        <div className="chart-title">
+                            Data Summary
+                        </div>
+                        <div className="chart-icons">
+                            <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                        </div>
+                    </div>
+                    <div className="chart-container">
+
+                    </div>
                 </div >
             </div >
         </>
