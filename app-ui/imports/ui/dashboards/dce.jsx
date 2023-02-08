@@ -8,25 +8,45 @@ import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API } from '../Constants.jsx';
 import axios from 'axios';
 
-const GetChartValue = (userid) => {
+const GetChartValue = ({ userid, setChartVals }) => {
 
     axios.get(BASE_API + '/getpredchartvalues/?user=' + userid)
-    .then(function (response) {
-        console.log(response.data["OutputJson"]);
-        return response.data["OutputJson"]
-    }).catch(function (error) {
-        console.log(error);
-    });
+        .then(function (response) {
+            console.log(response.data["OutputJson"]);
+            setChartVals({
+                accuracy: response.data["OutputJson"]["Accuracy"],
+                nsamples: response.data["OutputJson"]["NumSamples"],
+                nfeats: response.data["OutputJson"]["NumFeatures"],
+                pct: response.data["OutputJson"]["ScoreChange"]
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
 
 
 }
 
 
-export const DCE = ({userid}) => {
+export const DCE = ({ userid }) => {
     const accuracyChartRef = useRef();
+    const [chartVals, setChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     // TO-DO: Handle null  cases
-    var chartVal = GetChartValue(userid);
-    console.log(chartVal)
+    useEffect(() => {
+        GetChartValue({ userid, setChartVals });
+    }, []);
+    console.log(chartVals)
+    // ## PAGE RELOAD IF NEEDED ##
+    /*window.addEventListener("beforeunload", (event) => {
+        getData();
+        console.log("API call before page reload");
+    });
+  
+    window.addEventListener("unload", (event) => {
+        getData();
+        console.log("API call after page reload");
+    });*/
+    // ## END OF PAGE RELOAD ##
 
     return (
         <>
@@ -45,16 +65,16 @@ export const DCE = ({userid}) => {
                             </div>
                             <div className="chart-container" id="AccuracyChart">
                                 <div className='chart-container-viz'>
-                                    <DoughnutChart accuracy={89} chartRef={accuracyChartRef} />
+                                    <DoughnutChart accuracy={chartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Training Samples : <b>{700}</b>
+                                    <HollowBullet /> Training Samples : <b>{chartVals.nsamples}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Features Considered : <b>{8}</b>
+                                    <HollowBullet /> Features Considered : <b>{chartVals.nfeats}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> <b>{3}%</b> from previous score
+                                    <HollowBullet /> <b>{chartVals.pct}%</b> from previous score
 
                                 </div>
                             </div>
