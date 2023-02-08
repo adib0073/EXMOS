@@ -15,6 +15,7 @@
     border-color: red;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .dce-container-left-r1 {
@@ -34,6 +35,7 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding: 10px;
+    flex: 1;
 }
 
 .dce-container-left-r1c2 {
@@ -47,6 +49,7 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding: 10px;
+    flex: 2;
 }
 
 .dce-container-left-r2 {
@@ -72,6 +75,8 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding: 10px;
+    flex: 1;
+    margin-left: 10px;
 }
 
 /* Common Visual Component Usage */
@@ -147,19 +152,21 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;    
+    border-radius: 20px;
     background-color: #1363DF;
     padding: 2px;
     margin-top: 10px;
 }
+
 .capsule-div-left {
-    border-radius: 20px;  
+    border-radius: 20px;
     color: #FFFFFF;
     flex: 1;
     padding: 0px 10px 0px 10px;
     font-size: 3vh;
     text-align: center;
 }
+
 .capsule-div-right {
     background-color: #FFFFFF;
     padding: 5px 10px 5px 5px;
@@ -176,21 +183,78 @@
     justify-content: center;
     padding: 10px;
 }
+
 .dq-div-left {
     display: flex;
+    flex-direction: column;
     flex: 1;
     justify-content: center;
     align-items: center;
 }
+
+.dq-div-left-info {
+    flex: 1;
+    font-size: 1vw;
+    font-weight: bold;
+}
+
 .dq-div-right {
     display: flex;
     flex: 2;
 }
-.dq-gauge-chart{
+.dq-div-rc1 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.dq-div-rc2 {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+.dq-div-rc-text {
+    display: flex;
+    flex: 1;
+    font-size: 1.5vh;
+}
+
+.dq-gauge-chart {
     height: 15vh;
     width: 4vw;
     justify-content: center;
     align-items: center;
     flex: 1;
 }
+/* SUMMARY CHARTS */
+/* chart-box */
+.chart-box {
+    display: flex;
+    flex-direction: row;
+  }
   
+/* chart-box-1 */
+.chart-box-1 {
+    border: 0px;
+    border-right: 1px;
+    border-style: dashed;
+    border-color: #C4C4C4;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* chart-box-2 */
+  .chart-box-2 {
+    margin: 0px 0px 0px 10px;
+    border: 2px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }

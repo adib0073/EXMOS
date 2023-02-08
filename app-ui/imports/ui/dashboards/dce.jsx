@@ -145,11 +145,35 @@ export const DCE = ({ userid }) => {
                                         textColor={"black"}
                                         hideText={true}
                                         colors={['#1363DF', '#E5E5E5']}
-                                        style={{width:"15vw"}}
+                                        style={{ width: "15vw" }}
                                     />
+                                    <div className='dq-div-left-info'>
+                                        Poor
+                                    </div>
                                 </div>
                                 <div className='dq-div-right'>
-                                    Reporting Quality issues here
+                                    <div className='dq-div-rc1'>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> 3% class imbalance
+                                        </div>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> - {5}% feature correlation
+                                        </div>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> -  {1}% data redundancy
+                                        </div>
+                                    </div>
+                                    <div className='dq-div-rc2'>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> - {3}% class imbalance
+                                        </div>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> - {5}% feature correlation
+                                        </div>
+                                        <div className='dq-div-rc-text'>
+                                            <HollowBullet /> -  {1}% data redundancy
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +189,14 @@ export const DCE = ({ userid }) => {
                         </div>
                     </div>
                     <div className="chart-container">
-
+                        <div className="chart-box">
+                            <div className="chart-box-1">
+                                Summary Charts Left
+                            </div>
+                            <div className="chart-box-2">
+                                Summary Charts Right
+                            </div>
+                        </div>
                     </div>
                 </div >
             </div >
