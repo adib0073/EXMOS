@@ -1,7 +1,7 @@
 .NavBarItems {
     /*background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);*/
     background: #FFFFFF;
-    height: 60px;
+    height: 8vh;
     display: flex;
     justify-content: center;
     align-items: center;

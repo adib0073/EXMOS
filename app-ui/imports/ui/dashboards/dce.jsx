@@ -8,6 +8,10 @@ import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
+// TO-DO - Delete following if not required
+import { distributionRecords } from '../records/distributionRecords.jsx';
+import { records } from '../records/records.jsx';
+import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 
 const GetChartValue = ({ userid, setChartVals }) => {
 
@@ -36,7 +40,6 @@ export const DCE = ({ userid }) => {
     useEffect(() => {
         GetChartValue({ userid, setChartVals });
     }, []);
-    console.log(chartVals)
     // ## PAGE RELOAD IF NEEDED ##
     /*window.addEventListener("beforeunload", (event) => {
         getData();
@@ -48,6 +51,7 @@ export const DCE = ({ userid }) => {
         console.log("API call after page reload");
     });*/
     // ## END OF PAGE RELOAD ##
+    console.log(records["2631"]["PatientInfo"]);
 
     return (
         <>
@@ -191,10 +195,165 @@ export const DCE = ({ userid }) => {
                     <div className="chart-container">
                         <div className="chart-box">
                             <div className="chart-box-1">
-                                Summary Charts Left
+                                <div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div>
+                                <div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div>
+                                <div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div>
+                                <div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div>
                             </div>
                             <div className="chart-box-2">
-                                Summary Charts Right
+                                <div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div><div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div><div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div><div className="summary-chart-box">
+                                    <span className="ValueLabel">
+                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    </span>
+                                    <br />
+                                    <ContinuousDistribution
+                                        patient={"2631"}
+                                        currentRisk={80}
+                                        //setRisk={setRisk}
+                                        measure={distributionRecords["bloodSugar"]}
+                                        index={0}
+                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
+                                    //setMeasureValue={setMeasureValue}
+                                    //setWhatIf={setWhatIf}
+                                    //setPRecords={setPRecords}
+                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
+                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
+                                    //updateVizSelected={updateVizSelected}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

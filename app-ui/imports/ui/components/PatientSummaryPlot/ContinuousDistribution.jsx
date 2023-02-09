@@ -41,7 +41,7 @@ function handleMouseMove(chart, eventParams, mousemove) {
 
 }
 
-const calculateRisk = (newValue, oldValue, lowVal, upVal, importanceFactor) => {
+const calculateRisk = (newValue, oldValue, lowVal, upVal, importanceFactor=5) => {
     let change = 0;
     if (oldValue >= lowVal && oldValue <= upVal) {
         if (newValue >= lowVal && newValue <= upVal) {
@@ -97,7 +97,7 @@ function handleMouseDown(chart,
             eventParams.patientValue[eventParams.index],
             eventParams.boundary.boundary_val1,
             eventParams.boundary.boundary_val2,
-            eventParams.risk.importanceFactor
+            //eventParams.risk.importanceFactor
         ));
 
     eventParams.stateUpdates.setMeasureValue(
@@ -161,17 +161,18 @@ export const ContinuousDistribution = (
     {
         patient,
         currentRisk,
-        setRisk,
+        //setRisk,
         measure,
         index,
         patientValue,
-        setMeasureValue,
-        setWhatIf,
-        setPRecords,
-        updateIsSelectedCCFE,
-        importanceFactor,
-        updateVizSelected
+        //setMeasureValue,
+        //setWhatIf,
+        //setPRecords,
+        //updateIsSelectedCCFE,
+        //importanceFactor,
+        //updateVizSelected
     }) => {
+    console.log(patientValue[index])
     let x_values = [0];
     let y_values = [0];
     let boundary_val1 = 0;
@@ -209,23 +210,23 @@ export const ContinuousDistribution = (
         if (x_values.indexOf(patientValue[index]) > boundary_ind1 && x_values.indexOf(patientValue[index]) <= boundary_ind2) {
             setCardColor("#449231");
             if (ctx.p0DataIndex > boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
-                return "#B4EDB3";
+                return "#67A3FF";
             }
-            return "#E5E5E5";
+            return "#C5C4C4";
         }
         else if (x_values.indexOf(patientValue[index]) <= boundary_ind1) {
             setCardColor("#D64242");
             if (ctx.p0DataIndex <= boundary_ind1) {
-                return "#FD8787";
+                return "#67A3FF";
             }
-            return "#E5E5E5";
+            return "#C5C4C4";
         }
         else {
             setCardColor("#D64242");
             if (ctx.p0DataIndex >= boundary_ind2) {
-                return "#FD8787";
+                return "#67A3FF";
             }
-            return "#E5E5E5";
+            return "#C5C4C4";
         }
     };
     // background color function
@@ -378,10 +379,11 @@ export const ContinuousDistribution = (
     const chartRef = useRef();
 
     const eventParams = {
-        stateUpdates: { setRisk, setMeasureValue, setCardColor },
+        //stateUpdates: { setRisk, setMeasureValue, setCardColor },
         boundary: { boundary_val1, boundary_val2 },
         markerFunction: drawMarker,
-        risk: { currentRisk, factorChange, importanceFactor },
+        //risk: { currentRisk, factorChange, importanceFactor },
+        risk: { currentRisk, factorChange },
         x_val: x_values,
         index: index,
         patient: patient,
@@ -416,6 +418,7 @@ export const ContinuousDistribution = (
             eventParams,
             event.nativeEvent);
     }
+    /*
     const resetRiskFactors = () => {
         setPRecords([
             records[patient]["PatientInfo"].bloodSugar.value,
@@ -425,18 +428,18 @@ export const ContinuousDistribution = (
             records[patient]["PatientInfo"].smokingStatus.value,
             records[patient]["PatientInfo"].physicalActivityLevel.value
         ]);
-        setRisk(records[patient]["Risk"]);
-        updateIsSelectedCCFE([false, false]);
-    }
+        //setRisk(records[patient]["Risk"]);
+        //updateIsSelectedCCFE([false, false]);
+    }*/
     const onDown = (event) => {
 
-        resetRiskFactors();
+        //resetRiskFactors();
         const { current: chart } = chartRef;
         if (!chart) {
             return;
         }
-        setWhatIf(true);
-        updateVizSelected([true, false]);
+        //setWhatIf(true);
+        //updateVizSelected([true, false]);
         handleMouseDown(chart,
             data,
             eventParams,
@@ -444,7 +447,7 @@ export const ContinuousDistribution = (
     };
 
     return (
-        <div className="SummaryCard" style={{ background: cardColor }}>
+        <div className="SummaryCard" style={{ background: "#1363DF" }}>
             <div className="SummaryValue">
                 {patientValue[index]}
             </div>

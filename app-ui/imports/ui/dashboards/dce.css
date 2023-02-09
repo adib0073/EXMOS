@@ -1,12 +1,12 @@
 .dce-container {
-    margin: 20px 90px 20px 90px;
-    padding: 20px;
+    margin: 30px 90px 20px 90px;
     border: 1px;
     border-style: solid;
     border-color: black;
     display: flex;
     justify-content: space-between;
     background-color: #E5E5E5;
+    height: 87vh;
 }
 
 .dce-container-left-col {
@@ -15,7 +15,8 @@
     border-color: red;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 2;
+    margin-bottom: 30px;
 }
 
 .dce-container-left-r1 {
@@ -23,6 +24,7 @@
     border-style: solid;
     border-color: transparent;
     display: flex;
+    flex: 1;
 }
 
 .dce-container-left-r1c1 {
@@ -62,7 +64,8 @@
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    padding: 10px;
+    padding: 10px;    
+    flex: 2;
 }
 
 .dce-container-right-col {
@@ -74,9 +77,10 @@
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    padding: 10px;
+    padding: 10px 20px 30px 10px;
     flex: 1;
     margin-left: 10px;
+    margin-bottom: 30px;
 }
 
 /* Common Visual Component Usage */
