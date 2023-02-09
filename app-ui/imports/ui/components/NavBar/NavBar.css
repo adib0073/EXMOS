@@ -49,8 +49,8 @@
 
 .nav-links:hover {
     text-decoration-line: underline;
-    text-decoration-color: #64C04D;
-    color: #64C04D;
+    text-decoration-color: #67A3FF;
+    color: #67A3FF;
     text-underline-offset: 0.7rem;
     /*border-radius: 4px;*/
     transition: all 0.2s ease-out;
@@ -97,7 +97,7 @@
     }
 
     .nav-links:hover {
-        background-color: #7577fa;
+        background-color: #67A3FF;
         border-radius: 0;
     }
 
