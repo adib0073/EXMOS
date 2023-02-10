@@ -165,6 +165,8 @@ export const ContinuousDistribution = (
         measure,
         index,
         patientValue,
+        yVal,
+        xVal
         //setMeasureValue,
         //setWhatIf,
         //setPRecords,
@@ -181,8 +183,8 @@ export const ContinuousDistribution = (
     let boundary_ind1 = 0;
     let boundary_ind2 = 0;
 
-    x_values = measure["data"];
-    y_values = measure["count"];
+    x_values = xVal;
+    y_values = yVal;
     boundary_val1 = measure["boundaryVal"][0];
     boundary_val2 = measure["boundaryVal"][1];
 

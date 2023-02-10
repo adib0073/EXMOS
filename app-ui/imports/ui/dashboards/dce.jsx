@@ -5,7 +5,7 @@ import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
-import { BASE_API } from '../Constants.jsx';
+import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 // TO-DO - Delete following if not required
@@ -13,12 +13,12 @@ import { distributionRecords } from '../records/distributionRecords.jsx';
 import { records } from '../records/records.jsx';
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 
-const GetPredChartValue = ({ userid, setChartVals }) => {
+const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
     axios.get(BASE_API + '/getpredchartvalues/?user=' + userid)
         .then(function (response) {
             console.log(response.data["OutputJson"]);
-            setChartVals({
+            setAccChartVals({
                 accuracy: response.data["OutputJson"]["Accuracy"],
                 nsamples: response.data["OutputJson"]["NumSamples"],
                 nfeats: response.data["OutputJson"]["NumFeatures"],
@@ -32,13 +32,39 @@ const GetPredChartValue = ({ userid, setChartVals }) => {
 
 }
 
+const GetDSChartValue = ({ userid, setDsChartVals }) => {
+
+    axios.get(BASE_API + '/getdatasummaryvalues/?user=' + userid)
+        .then(function (response) {
+            console.log(response.data["OutputJson"]);
+            setDsChartVals({
+                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
+                "Glucose": response.data["OutputJson"]["Glucose"],
+                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
+                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
+                "Insulin": response.data["OutputJson"]["Insulin"],
+                "BMI": response.data["OutputJson"]["BMI"],
+                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
+                "Age": response.data["OutputJson"]["Age"],
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+}
+
 
 export const DCE = ({ userid }) => {
     const accuracyChartRef = useRef();
-    const [chartVals, setChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
+    const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
+    const [dsChartVals, setDsChartVals] = useState(DATA_SUMMARY_DEFAULT_MODEL);
     // TO-DO: Handle null  cases
     useEffect(() => {
-        GetPredChartValue({ userid, setChartVals });
+        GetPredChartValue({ userid, setAccChartVals });
+        console.log(dsChartVals);
+        GetDSChartValue({ userid, setDsChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
     /*window.addEventListener("beforeunload", (event) => {
@@ -51,7 +77,7 @@ export const DCE = ({ userid }) => {
         console.log("API call after page reload");
     });*/
     // ## END OF PAGE RELOAD ##
-    console.log(records["2631"]["PatientInfo"]);
+    console.log(dsChartVals["Glucose"].xdata);
 
     return (
         <>
@@ -70,16 +96,16 @@ export const DCE = ({ userid }) => {
                             </div>
                             <div className="chart-container">
                                 <div className='chart-container-viz'>
-                                    <DoughnutChart accuracy={chartVals.accuracy} chartRef={accuracyChartRef} />
+                                    <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Training Samples : <b>{chartVals.nsamples}</b>
+                                    <HollowBullet /> Training Samples : <b>{accChartVals.nsamples}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Features Considered : <b>{chartVals.nfeats}</b>
+                                    <HollowBullet /> Features Considered : <b>{accChartVals.nfeats}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> <b>{chartVals.pct}%</b> from previous score
+                                    <HollowBullet /> <b>{accChartVals.pct}%</b> from previous score
                                 </div>
                             </div>
                         </div >
@@ -197,7 +223,7 @@ export const DCE = ({ userid }) => {
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {dsChartVals["Glucose"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -206,13 +232,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -226,13 +248,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -246,13 +264,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -266,13 +280,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div>
                             </div>
@@ -288,13 +298,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -307,13 +313,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -326,13 +328,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -345,13 +343,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[records["2631"]["PatientInfo"].bloodSugar.value]}
-                                    //setMeasureValue={setMeasureValue}
-                                    //setWhatIf={setWhatIf}
-                                    //setPRecords={setPRecords}
-                                    //updateIsSelectedCCFE={updateIsSelectedCCFE}
-                                    //importanceFactor={getImportanceFactor(patient, "bloodSugar")}
-                                    //updateVizSelected={updateVizSelected}
+                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        yVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].ydata}
                                     />
                                 </div>
                             </div>
