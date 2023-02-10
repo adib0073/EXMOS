@@ -128,8 +128,6 @@ def login_service(user_name, cohort):
     client, db = get_database()
     collection_name = db[USER_COLLECTION]
     user_details = collection_name.find_one({"UserName" : user_name})
-    # TO-DO
-    # Close connection after used
     
     # TO-DO: find and update last login time
     if  user_details is None:
@@ -145,6 +143,34 @@ def login_service(user_name, cohort):
         print("Record found")
         client.close()
         return (True, f"Record found for user: {user_name}", user_details)
+
+def data_summary_viz(user):
+    """
+    Fetch Data Summary Viz 
+    """
+    client, db = get_database()
+    collection_name = db[USER_COLLECTION]
+    user_details = collection_name.find_one({"UserName" : user})
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    else:
+        # TO-DO - Load Filters and Filter Data
+        data, labels = load_training_data()
+        output_json = {}
+        for feat in ALL_FEATURES:
+            output_json[feat] = {
+                "name" : feat,                
+                "description" : user_details[feat]["Description"],
+                "unit" : user_details[feat]["Unit"],
+                "data" : data[feat].tolist(),
+                "upperLimit" : user_details[feat]["UpperLimit"],
+                "lowerLimit" : user_details[feat]["LowerLimit"],
+                "average" : np.round(np.mean(data[feat].values),1),
+                "isSelected" : user_details[feat]["Selected"],           
+            }
+        return (True, f"Successful. Data summary details founde for user: {user}", output_json)
+
 
 
 

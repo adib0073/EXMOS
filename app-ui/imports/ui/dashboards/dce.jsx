@@ -13,7 +13,7 @@ import { distributionRecords } from '../records/distributionRecords.jsx';
 import { records } from '../records/records.jsx';
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 
-const GetChartValue = ({ userid, setChartVals }) => {
+const GetPredChartValue = ({ userid, setChartVals }) => {
 
     axios.get(BASE_API + '/getpredchartvalues/?user=' + userid)
         .then(function (response) {
@@ -38,7 +38,7 @@ export const DCE = ({ userid }) => {
     const [chartVals, setChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     // TO-DO: Handle null  cases
     useEffect(() => {
-        GetChartValue({ userid, setChartVals });
+        GetPredChartValue({ userid, setChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
     /*window.addEventListener("beforeunload", (event) => {

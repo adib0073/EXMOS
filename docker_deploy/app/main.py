@@ -164,3 +164,15 @@ async def GetPredictedChartValues(user: str):
 		}
 
 	return response
+
+@app.get("/getdatasummaryvalues/", response_model=OutputwithPayloadDataModel)
+async def GetDataSummaryValues(user: str):
+	# Call method to get data summary value for user
+	code, message, output_json = data_summary_viz(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
+	}
+	return response
