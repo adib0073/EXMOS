@@ -210,7 +210,7 @@ export const DCE = ({ userid }) => {
                 <div className="dce-container-right-col">
                     <div className="chart-title-box">
                         <div className="chart-title">
-                            Data Summary
+                            Data Density Distribution
                         </div>
                         <div className="chart-icons">
                             <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
@@ -230,7 +230,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
+                                        average={[dsChartVals["Glucose"].average]}
                                         yVal={dsChartVals["Glucose"].ydata}
                                         xVal={dsChartVals["Glucose"].xdata}
                                         uLimit={dsChartVals["Glucose"].upperLimit}
@@ -248,9 +248,9 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["BloodPressure"].average]}
+                                        average={[dsChartVals["BloodPressure"].average]}
                                         yVal={dsChartVals["BloodPressure"].ydata}
-                                        xVal={dsChartVals["BloodPressure"].xdata}                                        
+                                        xVal={dsChartVals["BloodPressure"].xdata}
                                         uLimit={dsChartVals["BloodPressure"].upperLimit}
                                         lLimit={dsChartVals["BloodPressure"].lowerLimit}
                                     />
@@ -266,7 +266,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Insulin"].average]}
+                                        average={[dsChartVals["Insulin"].average]}
                                         yVal={dsChartVals["Insulin"].ydata}
                                         xVal={dsChartVals["Insulin"].xdata}
                                         uLimit={dsChartVals["Insulin"].upperLimit}
@@ -275,7 +275,7 @@ export const DCE = ({ userid }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                    {"Pregnancies"}:
+                                        {"Pregnancies"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -284,7 +284,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Pregnancies"].average]}
+                                        average={[dsChartVals["Pregnancies"].average]}
                                         yVal={dsChartVals["Pregnancies"].ydata}
                                         xVal={dsChartVals["Pregnancies"].xdata}
                                         uLimit={dsChartVals["Pregnancies"].upperLimit}
@@ -304,7 +304,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["SkinThickness"].average]}
+                                        average={[dsChartVals["SkinThickness"].average]}
                                         yVal={dsChartVals["SkinThickness"].ydata}
                                         xVal={dsChartVals["SkinThickness"].xdata}
                                         uLimit={dsChartVals["SkinThickness"].upperLimit}
@@ -321,7 +321,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Age"].average]}
+                                        average={[dsChartVals["Age"].average]}
                                         yVal={dsChartVals["Age"].ydata}
                                         xVal={dsChartVals["Age"].xdata}
                                         uLimit={dsChartVals["Age"].upperLimit}
@@ -338,7 +338,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["DiabetesPedigreeFunction"].average]}
+                                        average={[dsChartVals["DiabetesPedigreeFunction"].average]}
                                         yVal={dsChartVals["DiabetesPedigreeFunction"].ydata}
                                         xVal={dsChartVals["DiabetesPedigreeFunction"].xdata}
                                         uLimit={dsChartVals["DiabetesPedigreeFunction"].upperLimit}
@@ -355,7 +355,7 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["BMI"].average]}
+                                        average={[dsChartVals["BMI"].average]}
                                         yVal={dsChartVals["BMI"].ydata}
                                         xVal={dsChartVals["BMI"].xdata}
                                         uLimit={dsChartVals["BMI"].upperLimit}

@@ -164,7 +164,7 @@ export const ContinuousDistribution = (
         //setRisk,
         measure,
         index,
-        patientValue,
+        average,
         yVal,
         xVal,
         uLimit,
@@ -185,14 +185,9 @@ export const ContinuousDistribution = (
     console.log("Min x:", Math.min(...x_values))
     boundary_val1 = Math.max(lLimit, Math.min(...x_values));
     boundary_val2 = Math.min(uLimit, Math.max(...x_values));
-    console.log(boundary_val1, boundary_val2)
 
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
-
-    //TO-DO : NEED TO FIND BOUNDARY INDEX VALUES
-
-    console.log(boundary_ind1, boundary_ind2)
 
     const highlightRegion = (ctx) => {
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
@@ -345,8 +340,9 @@ export const ContinuousDistribution = (
             ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
 
             // Current Marker
-            const value_marker = x_values.indexOf(patientValue[index]);
-            drawMarker(ctx, top, height, x, y, '#244CB1', value_marker);
+            var markerVal = x_values.reduce((prev, curr) => Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev);
+            var markerIndx = x_values.indexOf(markerVal);
+            drawMarker(ctx, top, height, x, y, '#244CB1', markerIndx);
         }
     }
 
@@ -361,7 +357,6 @@ export const ContinuousDistribution = (
         x_val: x_values,
         index: index,
         patient: patient,
-        patientValue: patientValue,
     };
 
     const onMove = (event) => {
@@ -388,7 +383,7 @@ export const ContinuousDistribution = (
         }
         handleMouseUp(chart,
             data,
-            patientValue[index],
+            average,
             eventParams,
             event.nativeEvent);
     }
@@ -423,7 +418,7 @@ export const ContinuousDistribution = (
     return (
         <div className="SummaryCard" style={{ background: "#1363DF" }}>
             <div className="SummaryValue">
-                {patientValue[index]}
+                {average}
             </div>
             <div className="ContDistPlot">
                 <Line data={data}
