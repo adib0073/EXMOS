@@ -63,7 +63,6 @@ export const DCE = ({ userid }) => {
     // TO-DO: Handle null  cases
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
-        console.log(dsChartVals);
         GetDSChartValue({ userid, setDsChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
@@ -77,7 +76,6 @@ export const DCE = ({ userid }) => {
         console.log("API call after page reload");
     });*/
     // ## END OF PAGE RELOAD ##
-    console.log(dsChartVals["Glucose"].xdata);
 
     return (
         <>
@@ -223,7 +221,7 @@ export const DCE = ({ userid }) => {
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["Glucose"].name}:
+                                        {"Glucose"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -234,12 +232,14 @@ export const DCE = ({ userid }) => {
                                         index={0}
                                         patientValue={[dsChartVals["Glucose"].average]}
                                         yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        xVal={dsChartVals["Glucose"].xdata}
+                                        uLimit={dsChartVals["Glucose"].upperLimit}
+                                        lLimit={dsChartVals["Glucose"].lowerLimit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Blood Pressure"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -248,14 +248,16 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["BloodPressure"].average]}
+                                        yVal={dsChartVals["BloodPressure"].ydata}
+                                        xVal={dsChartVals["BloodPressure"].xdata}                                        
+                                        uLimit={dsChartVals["BloodPressure"].upperLimit}
+                                        lLimit={dsChartVals["BloodPressure"].lowerLimit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Insulin"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -264,14 +266,16 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["Insulin"].average]}
+                                        yVal={dsChartVals["Insulin"].ydata}
+                                        xVal={dsChartVals["Insulin"].xdata}
+                                        uLimit={dsChartVals["Insulin"].upperLimit}
+                                        lLimit={dsChartVals["Insulin"].lowerLimit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                    {"Pregnancies"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -280,16 +284,18 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["Pregnancies"].average]}
+                                        yVal={dsChartVals["Pregnancies"].ydata}
+                                        xVal={dsChartVals["Pregnancies"].xdata}
+                                        uLimit={dsChartVals["Pregnancies"].upperLimit}
+                                        lLimit={dsChartVals["Pregnancies"].lowerLimit}
                                     />
                                 </div>
                             </div>
                             <div className="chart-box-2">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Skin Thickness"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -298,13 +304,15 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["SkinThickness"].average]}
+                                        yVal={dsChartVals["SkinThickness"].ydata}
+                                        xVal={dsChartVals["SkinThickness"].xdata}
+                                        uLimit={dsChartVals["SkinThickness"].upperLimit}
+                                        lLimit={dsChartVals["SkinThickness"].lowerLimit}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Age"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -313,13 +321,15 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["Age"].average]}
+                                        yVal={dsChartVals["Age"].ydata}
+                                        xVal={dsChartVals["Age"].xdata}
+                                        uLimit={dsChartVals["Age"].upperLimit}
+                                        lLimit={dsChartVals["Age"].lowerLimit}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Diabetes Pedigree Function"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -328,13 +338,15 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["DiabetesPedigreeFunction"].average]}
+                                        yVal={dsChartVals["DiabetesPedigreeFunction"].ydata}
+                                        xVal={dsChartVals["DiabetesPedigreeFunction"].xdata}
+                                        uLimit={dsChartVals["DiabetesPedigreeFunction"].upperLimit}
+                                        lLimit={dsChartVals["DiabetesPedigreeFunction"].lowerLimit}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {distributionRecords["bloodSugar"]["variable"]}:
+                                        {"Body Mass Index"}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -343,9 +355,11 @@ export const DCE = ({ userid }) => {
                                         //setRisk={setRisk}
                                         measure={distributionRecords["bloodSugar"]}
                                         index={0}
-                                        patientValue={[dsChartVals["Glucose"].average]}
-                                        yVal={dsChartVals["Glucose"].ydata}
-                                        xVal={dsChartVals["Glucose"].ydata}
+                                        patientValue={[dsChartVals["BMI"].average]}
+                                        yVal={dsChartVals["BMI"].ydata}
+                                        xVal={dsChartVals["BMI"].xdata}
+                                        uLimit={dsChartVals["BMI"].upperLimit}
+                                        lLimit={dsChartVals["BMI"].lowerLimit}
                                     />
                                 </div>
                             </div>

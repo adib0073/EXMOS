@@ -41,7 +41,7 @@ function handleMouseMove(chart, eventParams, mousemove) {
 
 }
 
-const calculateRisk = (newValue, oldValue, lowVal, upVal, importanceFactor=5) => {
+const calculateRisk = (newValue, oldValue, lowVal, upVal, importanceFactor = 5) => {
     let change = 0;
     if (oldValue >= lowVal && oldValue <= upVal) {
         if (newValue >= lowVal && newValue <= upVal) {
@@ -166,15 +166,11 @@ export const ContinuousDistribution = (
         index,
         patientValue,
         yVal,
-        xVal
-        //setMeasureValue,
-        //setWhatIf,
-        //setPRecords,
-        //updateIsSelectedCCFE,
-        //importanceFactor,
-        //updateVizSelected
+        xVal,
+        uLimit,
+        lLimit
     }) => {
-    console.log(patientValue[index])
+
     let x_values = [0];
     let y_values = [0];
     let boundary_val1 = 0;
@@ -185,49 +181,25 @@ export const ContinuousDistribution = (
 
     x_values = xVal;
     y_values = yVal;
-    boundary_val1 = measure["boundaryVal"][0];
-    boundary_val2 = measure["boundaryVal"][1];
+    console.log("Low Limit:", lLimit)
+    console.log("Min x:", Math.min(...x_values))
+    boundary_val1 = Math.max(lLimit, Math.min(...x_values));
+    boundary_val2 = Math.min(uLimit, Math.max(...x_values));
+    console.log(boundary_val1, boundary_val2)
 
-    for (i = 0; i < x_values.length; i++) {
-        if (x_values[i] < boundary_val1) {
-            boundary_ind1 = i;
-        }
-        if (x_values[i] > boundary_val2) {
-            boundary_ind2 = i - 1
-            break;
-        }
-    }
-    let initialCardColor = "#449231";
+    boundary_ind1 = x_values.indexOf(boundary_val1);
+    boundary_ind2 = x_values.indexOf(boundary_val2);
 
-    if (patientValue[index] >= boundary_val1 && patientValue[index] <= boundary_val2) {
-        initialCardColor = "#449231";
-    }
-    else {
-        initialCardColor = "#D64242";
-    }
+    //TO-DO : NEED TO FIND BOUNDARY INDEX VALUES
 
-    const [cardColor, setCardColor] = useState(initialCardColor);
+    console.log(boundary_ind1, boundary_ind2)
 
     const highlightRegion = (ctx) => {
-        if (x_values.indexOf(patientValue[index]) > boundary_ind1 && x_values.indexOf(patientValue[index]) <= boundary_ind2) {
-            setCardColor("#449231");
-            if (ctx.p0DataIndex > boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
-                return "#67A3FF";
-            }
-            return "#C5C4C4";
-        }
-        else if (x_values.indexOf(patientValue[index]) <= boundary_ind1) {
-            setCardColor("#D64242");
-            if (ctx.p0DataIndex <= boundary_ind1) {
-                return "#67A3FF";
-            }
-            return "#C5C4C4";
+        if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
+            return "#67A3FF";
         }
         else {
-            setCardColor("#D64242");
-            if (ctx.p0DataIndex >= boundary_ind2) {
-                return "#67A3FF";
-            }
+
             return "#C5C4C4";
         }
     };
@@ -321,8 +293,8 @@ export const ContinuousDistribution = (
                         size: 11
                     },
                     callback: (value, index, values) => {
-                        if (index == boundary_ind1 + 1 || index == boundary_ind2) {
-                            return x_values[index];
+                        if (index == boundary_ind1 || index == boundary_ind2) {
+                            return Math.round((x_values[index] + Number.EPSILON) * 100) / 100;
                         }
                     }
                 },
@@ -366,7 +338,7 @@ export const ContinuousDistribution = (
             ctx.strokeStyle = '#244CB1';
             ctx.setLineDash([5, 10]);
             ctx.lineDashOffset = 2;
-            ctx.strokeRect(x.getPixelForValue(boundary_ind1 + 1), top, 0, height);
+            ctx.strokeRect(x.getPixelForValue(boundary_ind1), top, 0, height);
 
             // Higher Boundary Line
             ctx.strokeStyle = '#244CB1';
