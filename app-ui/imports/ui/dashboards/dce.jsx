@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import NavBar from '../components/NavBar/NavBar.jsx';
+import {NavBar} from '../components/NavBar/NavBar.jsx';
 import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
@@ -17,7 +17,7 @@ const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
     axios.get(BASE_API + '/getpredchartvalues/?user=' + userid)
         .then(function (response) {
-            console.log(response.data["OutputJson"]);
+            //console.log(response.data["OutputJson"]);
             setAccChartVals({
                 accuracy: response.data["OutputJson"]["Accuracy"],
                 nsamples: response.data["OutputJson"]["NumSamples"],
@@ -36,7 +36,7 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
 
     axios.get(BASE_API + '/getdatasummaryvalues/?user=' + userid)
         .then(function (response) {
-            console.log(response.data["OutputJson"]);
+            //console.log(response.data["OutputJson"]);
             setDsChartVals({
                 "Pregnancies": response.data["OutputJson"]["Pregnancies"],
                 "Glucose": response.data["OutputJson"]["Glucose"],
@@ -56,30 +56,38 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
 }
 
 
-export const DCE = ({ userid }) => {
+export const DCE = ({ user }) => {
+    var userid = user.id;
+    var cohort = user.cohort;
+    console.log("DCE page:", userid)
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [dsChartVals, setDsChartVals] = useState(DATA_SUMMARY_DEFAULT_MODEL);
+
     // TO-DO: Handle null  cases
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
         GetDSChartValue({ userid, setDsChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
-    /*window.addEventListener("beforeunload", (event) => {
-        getData();
+    /*
+    window.addEventListener("beforeunload", (event) => {
+        GetPredChartValue({ userid, setAccChartVals });
+        GetDSChartValue({ userid, setDsChartVals });
         console.log("API call before page reload");
     });
   
     window.addEventListener("unload", (event) => {
-        getData();
+        GetPredChartValue({ userid, setAccChartVals });
+        GetDSChartValue({ userid, setDsChartVals });
         console.log("API call after page reload");
-    });*/
+    });
+    */
     // ## END OF PAGE RELOAD ##
 
     return (
         <>
-            <NavBar />
+            <NavBar user={user}/>
             <div className="dce-container">
                 <div className="dce-container-left-col">
                     <div className="dce-container-left-r1">

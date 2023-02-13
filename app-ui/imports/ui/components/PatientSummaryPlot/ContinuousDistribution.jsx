@@ -181,8 +181,7 @@ export const ContinuousDistribution = (
 
     x_values = xVal;
     y_values = yVal;
-    console.log("Low Limit:", lLimit)
-    console.log("Min x:", Math.min(...x_values))
+
     boundary_val1 = Math.max(lLimit, Math.min(...x_values));
     boundary_val2 = Math.min(uLimit, Math.max(...x_values));
 

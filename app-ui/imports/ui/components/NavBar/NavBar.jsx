@@ -1,39 +1,53 @@
-import React, { Component } from 'react';
-import {MenuItems} from "./MenuItems";
+import React, { useState } from 'react';
+import { Route, Routes, Link } from "react-router-dom"
+import { MenuItems } from "./MenuItems";
 import './NavBar.css';
 
-class NavBar extends Component {
-    state = { clicked: false}
+export const NavBar = ({ user }) => {
+    const [stateClick, setStateClick] = useState(false);
+    var cohort = user.cohort;
+    console.log("The cohort is:", cohort)
     handleClick = () => {
-        this.setState({clicked: !this.state.clicked})
+        setStateClick(!stateClick)
     }
-    render() {
-        return (
-            <nav className='NavBarItems'>
-                <h1 className='navbar-logo'>
-                    <b>EXMOS Dashboard</b>              
-                </h1>
-                <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview"  className="augment-logo"></img> 
-                <div className='menu-icon' onClick={this.handleClick}>
-                    <i className={this.state.clicked ? 'fas fa-times': 'fas fa-bars'}></i>
+    //console.log(cohort);
+    return (
+        <nav className='NavBarItems'>
+            <h1 className='navbar-logo'>
+                <b>EXMOS Dashboard</b>
+            </h1>
+            <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview" className="augment-logo"></img>
+            <div className='menu-icon' onClick={handleClick}>
+                <i className={stateClick? 'fas fa-times' : 'fas fa-bars'}></i>
 
-                </div>
-                <ul className={this.state.clicked ? 'nav-menu active' : 'nav-menu'}>
-                    {MenuItems.map((item, index) => {
+            </div>
+            <ul className={stateClick ? 'nav-menu active' : 'nav-menu'}>
+                {MenuItems.map((item, index) => {
+
+                    if (index == 0) {
                         return (
-                        <li key={index}> 
-                            <a className={item.cName} href={item.url}>
-                            {item.title}
-                            </a> 
-                        </li>
+                            <li key={index}>
+                                <Link to={item.url + cohort} className={item.cName}>
+                                    {item.title}
+                                </Link>
+                            </li>
                         )
-                    })}
-                    
-                </ul>
-            </nav>
+                    }
 
-        )
-    }
-}
+                    return (
+                        <li key={index}>
+                            <Link to={item.url} className={item.cName}>
+                                {item.title}
+                            </Link>
+                        </li>
+                    )
+                })}
 
-export default NavBar;
+            </ul>
+        </nav>
+
+    )
+
+};
+
+//export default NavBar;

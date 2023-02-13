@@ -1,12 +1,12 @@
 export const MenuItems = [
     {
         title: 'Dashboard',
-        url: '#',
+        url: '/dashboard/',
         cName: 'nav-links'
     },
     {
         title: 'Configuration',
-        url: '#',
+        url: '/configuration',
         cName: 'nav-links'
     },
     {

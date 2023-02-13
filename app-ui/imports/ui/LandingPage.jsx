@@ -8,7 +8,7 @@ import axios from 'axios';
 export const LandingPage = ({ user, setUser }) => {
     const navigate = useNavigate();
     const selectedDashType = () => {
-        console.log(user);
+        //console.log(user);
 
         axios.post(BASE_API + '/validateusers', {
             UserId: user.id,
@@ -22,7 +22,7 @@ export const LandingPage = ({ user, setUser }) => {
                 "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
             }
         }).then(function (response) {
-            console.log(response.data);
+            //console.log(response.data);
             if (response.data["StatusCode"]) {
                 navigate('/dashboard/'+user.cohort);
             }
