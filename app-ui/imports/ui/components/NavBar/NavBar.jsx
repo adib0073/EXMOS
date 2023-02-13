@@ -6,11 +6,11 @@ import './NavBar.css';
 export const NavBar = ({ user }) => {
     const [stateClick, setStateClick] = useState(false);
     var cohort = user.cohort;
-    console.log("The cohort is:", cohort)
+
     handleClick = () => {
         setStateClick(!stateClick)
     }
-    //console.log(cohort);
+
     return (
         <nav className='NavBarItems'>
             <h1 className='navbar-logo'>
@@ -18,7 +18,7 @@ export const NavBar = ({ user }) => {
             </h1>
             <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview" className="augment-logo"></img>
             <div className='menu-icon' onClick={handleClick}>
-                <i className={stateClick? 'fas fa-times' : 'fas fa-bars'}></i>
+                <i className={stateClick ? 'fas fa-times' : 'fas fa-bars'}></i>
 
             </div>
             <ul className={stateClick ? 'nav-menu active' : 'nav-menu'}>
@@ -42,12 +42,8 @@ export const NavBar = ({ user }) => {
                         </li>
                     )
                 })}
-
             </ul>
         </nav>
-
     )
 
 };
-
-//export default NavBar;
