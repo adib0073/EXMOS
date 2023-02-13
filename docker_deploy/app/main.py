@@ -179,7 +179,7 @@ async def GetDataSummaryValues(user: str):
 
 @app.get("/getdataquality/", response_model=OutputwithPayloadDataModel)
 async def GetDataQuality(user: str):
-	# Call method to get data summary value for user
+	# Call method to get data quality value for user
 	# code, message, output_json = data_summary_viz(user)
 
 	response = {
@@ -190,6 +190,22 @@ async def GetDataQuality(user: str):
 			"quality_class" : "Poor",
 			"issues" : ["class imbalance", "outliers", "feature correlation", "data redundancy", "data drift", "data leakage"],
 			"issue_val" : [5, 0.2, 2, 0.5, 3, 1]
+		}
+	}
+	return response
+
+@app.get("/getkeyinsights/", response_model=OutputwithPayloadDataModel)
+async def GetKeyInsights(user: str):
+	# Call method to get data quality value for user
+	# code, message, output_json = data_summary_viz(user)
+
+	response = {
+		"StatusCode": True,
+		"StatusMessage": f"Key Inights fetched for user: {user}",
+		"OutputJson": {
+			"pct_list" : [71, 52, 39, 29],
+			"input_list" : ["Insulin feature has ", "Diabetic patients have ", "Non-diabetic patients have ", "Diabetic patients have "],
+			"insight_list" : ["value equal to zero", "BMI more than 25", "diabetes pedigree function less than 0.5", "blood pressure more than 80"]
 		}
 	}
 	return response

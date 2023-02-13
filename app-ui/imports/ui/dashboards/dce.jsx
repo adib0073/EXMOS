@@ -74,6 +74,24 @@ const GetDQChartValue = ({ userid, setDqChartVals }) => {
 
 }
 
+const GetKIChartValue = ({ userid, setKiChartVals }) => {
+
+    axios.get(BASE_API + '/getkeyinsights/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setKiChartVals({
+                "pct_list": response.data["OutputJson"]["pct_list"],
+                "input_list": response.data["OutputJson"]["input_list"],
+                "insight_list": response.data["OutputJson"]["insight_list"]
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+}
+
 export const DCE = ({ user }) => {
     var userid = user.id;
     var cohort = user.cohort;
@@ -87,11 +105,16 @@ export const DCE = ({ user }) => {
         "issues": ["class imbalance", "outliers", "feature correlation", "data redundancy", "data drift", "data leakage"],
         "issue_val": [0, 0, 0, 0, 0, 0]
     });
-
+    const [kiChartVals, setKiChartVals] = useState({
+        "pct_list": [0, 0, 0, 0],
+        "input_list": ["Not available. ", "Not available. ", "Not available. ", "Not available. "],
+        "insight_list": ["Try later", "Try later", "Try later", "Try later"],
+    });
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
         GetDSChartValue({ userid, setDsChartVals });
         GetDQChartValue({ userid, setDqChartVals });
+        GetKIChartValue({ userid, setKiChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
     /*
@@ -152,34 +175,34 @@ export const DCE = ({ user }) => {
                                 <div className="capsule-container">
                                     <div className="capsule-div">
                                         <div className="capsule-div-left">
-                                            {89}%
+                                            {kiChartVals["pct_list"][0]}%
                                         </div>
                                         <div className="capsule-div-right">
-                                            {"Diabetic patients have"}  <b>{"BMI higher than 25"}</b>
+                                            {kiChartVals["input_list"][0]}  <b>{kiChartVals["insight_list"][0]}</b>
                                         </div>
                                     </div>
                                     <div className="capsule-div">
                                         <div className="capsule-div-left">
-                                            {87}%
+                                            {kiChartVals["pct_list"][1]}%
                                         </div>
                                         <div className="capsule-div-right">
-                                            {"Diabetic patients have"}  <b>{"Blood Sugar more than 6.5"}</b>
+                                            {kiChartVals["input_list"][1]}  <b>{kiChartVals["insight_list"][1]}</b>
                                         </div>
                                     </div>
                                     <div className="capsule-div">
                                         <div className="capsule-div-left">
-                                            {49}%
+                                            {kiChartVals["pct_list"][2]}%
                                         </div>
                                         <div className="capsule-div-right">
-                                            {"Diabetic patients have"}  <b>{"low exercise levels"}</b>
+                                            {kiChartVals["input_list"][2]}  <b>{kiChartVals["insight_list"][2]}</b>
                                         </div>
                                     </div>
                                     <div className="capsule-div">
                                         <div className="capsule-div-left">
-                                            {38}%
+                                            {kiChartVals["pct_list"][3]}%
                                         </div>
                                         <div className="capsule-div-right">
-                                            {"Diabetic patients have"}  <b>{"alcohol addiction"}</b>
+                                            {kiChartVals["input_list"][3]}  <b>{kiChartVals["insight_list"][3]}</b>
                                         </div>
                                     </div>
                                 </div>
