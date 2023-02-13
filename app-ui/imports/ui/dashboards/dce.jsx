@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-import {NavBar} from '../components/NavBar/NavBar.jsx';
+import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
@@ -55,6 +55,24 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
 
 }
 
+const GetDQChartValue = ({ userid, setDqChartVals }) => {
+
+    axios.get(BASE_API + '/getdataquality/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setDqChartVals({
+                "score": response.data["OutputJson"]["score"],
+                "quality_class": response.data["OutputJson"]["quality_class"],
+                "issues": response.data["OutputJson"]["issues"],
+                "issue_val": response.data["OutputJson"]["issue_val"]
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+}
 
 export const DCE = ({ user }) => {
     var userid = user.id;
@@ -63,11 +81,17 @@ export const DCE = ({ user }) => {
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [dsChartVals, setDsChartVals] = useState(DATA_SUMMARY_DEFAULT_MODEL);
+    const [dqChartVals, setDqChartVals] = useState({
+        "score": 0.0,
+        "quality_class": "Unknown",
+        "issues": ["class imbalance", "outliers", "feature correlation", "data redundancy", "data drift", "data leakage"],
+        "issue_val": [0, 0, 0, 0, 0, 0]
+    });
 
-    // TO-DO: Handle null  cases
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
         GetDSChartValue({ userid, setDsChartVals });
+        GetDQChartValue({ userid, setDqChartVals });
     }, []);
     // ## PAGE RELOAD IF NEEDED ##
     /*
@@ -87,7 +111,7 @@ export const DCE = ({ user }) => {
 
     return (
         <>
-            <NavBar user={user}/>
+            <NavBar user={user} />
             <div className="dce-container">
                 <div className="dce-container-left-col">
                     <div className="dce-container-left-r1">
@@ -176,38 +200,38 @@ export const DCE = ({ user }) => {
                                 <div className='dq-div-left'>
                                     <GaugeChart
                                         nrOfLevels={2}
-                                        arcsLength={[0.65, 0.35]}
-                                        percent={0.65}
+                                        arcsLength={[dqChartVals["score"], 1 - dqChartVals["score"]]}
+                                        percent={dqChartVals["score"]}
                                         textColor={"black"}
                                         hideText={true}
                                         colors={['#1363DF', '#E5E5E5']}
                                         style={{ width: "15vw" }}
                                     />
                                     <div className='dq-div-left-info'>
-                                        Poor
+                                        {dqChartVals["quality_class"]}
                                     </div>
                                 </div>
                                 <div className='dq-div-right'>
                                     <div className='dq-div-rc1'>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> 3% class imbalance
+                                            <HollowBullet /> {dqChartVals["issue_val"][0]}% {dqChartVals["issues"][0]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {5}% feature correlation
+                                            <HollowBullet /> - {dqChartVals["issue_val"][1]}% {dqChartVals["issues"][1]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> -  {1}% data redundancy
+                                            <HollowBullet /> -  {dqChartVals["issue_val"][2]}% {dqChartVals["issues"][2]}
                                         </div>
                                     </div>
                                     <div className='dq-div-rc2'>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {3}% class imbalance
+                                            <HollowBullet /> - {dqChartVals["issue_val"][3]}% {dqChartVals["issues"][3]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {5}% feature correlation
+                                            <HollowBullet /> - {dqChartVals["issue_val"][4]}% {dqChartVals["issues"][4]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> -  {1}% data redundancy
+                                            <HollowBullet /> -  {dqChartVals["issue_val"][5]}% {dqChartVals["issues"][5]}
                                         </div>
                                     </div>
                                 </div>
