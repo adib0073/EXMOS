@@ -147,20 +147,13 @@ async def validate_user(user: ValidateUserModel):
 @app.get("/getpredchartvalues/", response_model=OutputwithPayloadDataModel)
 async def GetPredictedChartValues(user: str):
 
-	# Call method to validate user
-	# code, message, output_json = login_service(user.UserId, user.Cohort)
-
-	res_dict = {
-		"Accuracy" : 85,
-		"NumSamples" : 700,
-		"NumFeatures" : 8,
-		"ScoreChange" : 3
-	}
+	# Call method to get prediction chart value
+	code, message, output_json = generate_pred_chart_data(user)
 
 	response = {
-		"StatusCode": True,
-		"StatusMessage": user,
-		"OutputJson": res_dict
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
 		}
 
 	return response

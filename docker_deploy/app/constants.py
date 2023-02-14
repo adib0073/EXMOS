@@ -81,5 +81,6 @@ USER_DETAIL_JSON = {
             "DefaultLowerLimit": 20,
             "Unit": "years",
             "Description": "Age in years"
-        }
+        },
+   "CurrentScore" : 80,
 }

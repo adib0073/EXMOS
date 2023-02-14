@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 from constants import *
-from dbconnectors import get_database
+from dbconnectors import get_database, fetch_user_details, update_user_details
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -56,25 +56,30 @@ def normalize_data():
     pass
 
 
-def load_training_data(filters = None):
+def load_training_data(filters = None, selected_features = None):
     data = pd.read_csv("data/training_data.csv")
     if filters is not None:
         for i in range(len(DEFAULT_VALUES)):
             data = data[(data[ALL_FEATURES[i]] >= filters[i][0]) & (data[ALL_FEATURES[i]] <= filters[i][1])]
 
-
     x_data = data.drop(["Outcome"],axis='columns')
     y_data = data.filter(["Outcome"],axis='columns')
+
+    if selected_features is not None and len(selected_features) > 0:
+        x_data = x_data[selected_features]
+
     return x_data, y_data
 
-def load_test_data():
+def load_test_data(selected_features = None):
     data = pd.read_csv("data/test_data.csv")
     x_data = data.drop(["Outcome"],axis='columns')
     y_data = data.filter(["Outcome"],axis='columns')
+    if selected_features is not None and len(selected_features) > 0:
+        x_data = x_data[selected_features]
 
     return x_data, y_data
 
-def training_model(x_data, y_data):
+def training_model(x_data, y_data, selected_features = None):
 
     numeric_transformer = Pipeline(steps=[('scaler', StandardScaler())])
     column_transformer = ColumnTransformer(transformers=[
@@ -84,11 +89,11 @@ def training_model(x_data, y_data):
                         ('classifier', RandomForestClassifier(n_estimators=300,
                                                             random_state=123))])
     model = clf.fit(x_data, y_data)
-    x_test, y_test = load_test_data()
+    x_test, y_test = load_test_data(selected_features)
     acc = 100 * model.score(x_data, y_data)
     test_acc = 100 * model.score(x_test, y_test)
 
-    return f"Training Accuracy: {acc}; Test Accuracy {test_acc}"
+    return acc, test_acc
 
 def retrain_selected_features(x_data, y_data, features_to_include):
 
@@ -148,9 +153,7 @@ def data_summary_viz(user):
     """
     Fetch Data Summary Viz 
     """
-    client, db = get_database()
-    collection_name = db[USER_COLLECTION]
-    user_details = collection_name.find_one({"UserName" : user})
+    client, user_details = fetch_user_details(user)
     client.close()
     if  user_details is None:
         return (False, f"Invalid username: {user}", user_details)
@@ -172,6 +175,47 @@ def data_summary_viz(user):
             }
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
+def generate_pred_chart_data(user):
+    """
+    # get data filter settings
+	# apply filters and retrain and generate new stats - update previous and new accuracy in mongo data
+    """
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    else:
+        selected_features = []
+        filters = []
+        for feature in ALL_FEATURES:
+            filters.append((user_details[feature]["LowerLimit"], user_details[feature]["UpperLimit"]))
+            if user_details[feature]["Selected"]:
+                selected_features.append(feature)
+            
+        # fetch data
+        data, labels = load_training_data(filters, selected_features)
+        # train model
+        train_score, test_score = training_model(data, labels, selected_features = None)
+        # generate test accuracy
+        prev_score = user_details["CurrentScore"]
+        
+        # calc score change
+        score_change = 0
+        if prev_score is None:
+            score_change = 0
+        else:
+            score_change = test_score - prev_score
+            # Update new accuracy
+            update_user_details(user, {"CurrentScore" : test_score})
 
+
+        output_json = {
+            "Accuracy" : np.ceil(test_score),
+            "NumSamples" : data.shape[0],
+            "NumFeatures" : data.shape[1],
+            "ScoreChange" : np.ceil(score_change)
+        }
+
+        return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
 
