@@ -175,6 +175,10 @@ def data_summary_viz(user):
             }
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
+def load_filtered_user_data(user):
+    pass
+
+
 def generate_pred_chart_data(user):
     """
     # get data filter settings
@@ -195,7 +199,7 @@ def generate_pred_chart_data(user):
         # fetch data
         data, labels = load_training_data(filters, selected_features)
         # train model
-        train_score, test_score = training_model(data, labels, selected_features = None)
+        train_score, test_score = training_model(data, labels, selected_features)
         # generate test accuracy
         prev_score = user_details["CurrentScore"]
         
@@ -219,3 +223,5 @@ def generate_pred_chart_data(user):
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
 
+def key_insights_gen(user):
+    pass
