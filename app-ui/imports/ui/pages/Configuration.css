@@ -10,47 +10,58 @@
     padding-bottom: 10vh;
 }
 
-.tab {
+ul.tab {
     background: #fff;
     border-radius: 20px 20px 0px 0px;
-    height: 10vh;
     width: 26%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    padding: 0px;
+    padding-bottom: 5px;
+    flex: 1;
+    margin-bottom: -8px;
+    font-size: 2vh;
+    background: rgba(255, 255, 255, 0.6);
 }
 
-/* Style the buttons inside the tab */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 1.1vw;
-    color: #999999;
+ul.tab li {
+    list-style: none;
+    flex: 1;
+    border-top-left-radius: 20px;
     padding: 10px;
-    width: 50%;
-    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s;
+    color: #999999;
 }
 
-/* Change background color of buttons on hover */
-.tab button:hover {
-    color: #67A3FF;
+ul.tab li:nth-child(2) {
+    flex: 1;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 20px;
 }
 
-/* Create an active/current tablink class */
-.tab button:active {
-    color: #67A3FF;
+ul.tab li:hover {
+    background: rgba(50, 224, 196, 0.15);
+}
 
+ul.tab li.active {
+    background: #fff;
+    color: #67A3FF;
+    font-weight: 600;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .config-display {
-    position: relative;
     padding: 32px;
-    height: 90vh;
+    height: 80vh;
     width: 100%;
     background-color: #fff;
     z-index: 10;
     display: flex;
-    flex-direction: column;    
+    flex: 10;
+    flex-direction: column;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
