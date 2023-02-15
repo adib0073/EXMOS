@@ -1,0 +1,56 @@
+.config-container {
+    margin: 30px 90px 20px 90px;
+    border: 1px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    flex-direction: column;
+    background-color: #E5E5E5;
+    height: 87vh;
+    padding-bottom: 10vh;
+}
+
+.tab {
+    background: #fff;
+    border-radius: 20px 20px 0px 0px;
+    height: 10vh;
+    width: 26%;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1vw;
+    color: #999999;
+    padding: 10px;
+    width: 50%;
+    border-radius: 20px 20px 0px 0px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    color: #67A3FF;
+}
+
+/* Create an active/current tablink class */
+.tab button:active {
+    color: #67A3FF;
+
+}
+
+.config-display {
+    position: relative;
+    padding: 32px;
+    height: 90vh;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;    
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

@@ -33,8 +33,6 @@ export const LandingPage = ({ user, setUser }) => {
         }).catch(function (error) {
             console.log(error);
         });
-
-
     }
 
     const handleChange = e => {
