@@ -175,9 +175,17 @@ def data_summary_viz(user):
             }
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
-def load_filtered_user_data(user):
-    pass
-
+def load_filtered_user_data(user_details):
+    selected_features = []
+    filters = []
+    for feature in ALL_FEATURES:
+        filters.append((user_details[feature]["LowerLimit"], user_details[feature]["UpperLimit"]))
+        if user_details[feature]["Selected"]:
+            selected_features.append(feature)
+            
+    # fetch data
+    data, labels = load_training_data(filters, selected_features)
+    return filters, selected_features, data, labels
 
 def generate_pred_chart_data(user):
     """
@@ -189,15 +197,7 @@ def generate_pred_chart_data(user):
     if  user_details is None:
         return (False, f"Invalid username: {user}", user_details)
     else:
-        selected_features = []
-        filters = []
-        for feature in ALL_FEATURES:
-            filters.append((user_details[feature]["LowerLimit"], user_details[feature]["UpperLimit"]))
-            if user_details[feature]["Selected"]:
-                selected_features.append(feature)
-            
-        # fetch data
-        data, labels = load_training_data(filters, selected_features)
+        filters, selected_features, data, labels = load_filtered_user_data(user_details)
         # train model
         train_score, test_score = training_model(data, labels, selected_features)
         # generate test accuracy
@@ -212,7 +212,6 @@ def generate_pred_chart_data(user):
             # Update new accuracy
             update_user_details(user, {"CurrentScore" : test_score})
 
-
         output_json = {
             "Accuracy" : np.ceil(test_score),
             "NumSamples" : data.shape[0],
@@ -222,6 +221,67 @@ def generate_pred_chart_data(user):
 
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
+def data_features_ki(data, labels):
+    xy_data = data.copy()
+    xy_data['target'] = labels
+
 
 def key_insights_gen(user):
-    pass
+    """
+    Method to generate insights
+    """
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    # Diabetic ratio
+    xy_data = data.copy()
+    xy_data['target'] = labels
+    pct_list = []
+    input_list = []
+    insight_list = []
+    diabetic_count = len(xy_data[xy_data['target'] == 1])
+    dc_pct = np.round(100 * (diabetic_count/(len(xy_data))), 0)
+    pct_list.append(dc_pct)
+    input_list.append("Patients have ")
+    insight_list.append("diabetes")
+    # Zero Counts insights
+    for feat in ACTIONABLE_FEATURES:
+        if feat not in selected_features:
+            continue # Skip for filtered features
+        zero_counts_pct = np.round(100 * (len(data[data[feat] == 0.0])/len(data)), 0)
+        pct_list.append(zero_counts_pct)
+        input_list.append(f"{FRIENDLY_NAMES[feat]} feature has ")
+        insight_list.append("value equal to zero")
+        # 90th and 10th Percentile Insights
+        # Greater than
+        qv = np.round(data[feat].quantile(0.9), 1)
+        qvc_pct = np.round(100 * (len(data[data[feat] > qv])/len(data)), 0)
+        pct_list.append(qvc_pct)
+        input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
+        insight_list.append(f"greater than {qv}")
+        # Lesser than
+        qv = np.round(data[feat].quantile(0.1), 1)
+        qvc_pct = np.round(100 * (len(data[data[feat] < qv])/len(data)), 0)
+        pct_list.append(qvc_pct)
+        input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
+        insight_list.append(f"lesser than {qv}")
+    
+    # Sorting in a dataframe
+    ki_df = pd.DataFrame()
+    ki_df['pct'] = pct_list
+    ki_df['input'] = input_list
+    ki_df['insight'] = insight_list
+    ki_df = ki_df.sort_values(by=['pct'], ascending=False).head(4)
+
+
+    insights = {
+			"pct_list" : ki_df['pct'].tolist(),
+			"input_list" : ki_df["input"].tolist(),
+			"insight_list" : ki_df["insight"].tolist()
+		    }
+    return (True, f"Successful. Data summary details founde for user: {user}", insights)
+
+    

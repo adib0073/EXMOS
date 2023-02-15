@@ -190,15 +190,11 @@ async def GetDataQuality(user: str):
 @app.get("/getkeyinsights/", response_model=OutputwithPayloadDataModel)
 async def GetKeyInsights(user: str):
 	# Call method to get data quality value for user
-	# code, message, output_json = key_insights_gen(user)
+	code, message, output_json = key_insights_gen(user)
 
 	response = {
-		"StatusCode": True,
-		"StatusMessage": f"Key Inights fetched for user: {user}",
-		"OutputJson": {
-			"pct_list" : [71, 52, 39, 29],
-			"input_list" : ["Insulin feature has ", "Diabetic patients have ", "Non-diabetic patients have ", "Diabetic patients have "],
-			"insight_list" : ["value equal to zero", "BMI more than 25", "diabetes pedigree function less than 0.5", "blood pressure more than 80"]
-		}
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
 	}
 	return response

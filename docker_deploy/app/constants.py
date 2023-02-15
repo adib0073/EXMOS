@@ -84,3 +84,16 @@ USER_DETAIL_JSON = {
         },
    "CurrentScore" : 80,
 }
+# FRIENDLY NAMES
+FRIENDLY_NAMES = {
+    "Pregnancies" : "Pregnancies", 
+    "Glucose" : "Glucose", 
+    "BloodPressure" : "Blood Pressure", 
+    "SkinThickness" : "Skin Thickness",
+    "Insulin" : "Insulin", 
+    "BMI" : "Body Mass Index", 
+    "DiabetesPedigreeFunction" : "Diabetes Pedigree Function", 
+    "Age" : "Age"
+}
+# ACTIONABLE FEATURES
+ACTIONABLE_FEATURES = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI"]
