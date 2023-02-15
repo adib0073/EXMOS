@@ -210,7 +210,7 @@ def generate_pred_chart_data(user):
         else:
             score_change = test_score - prev_score
             # Update new accuracy
-            update_user_details(user, {"CurrentScore" : test_score})
+            # update_user_details(user, {"CurrentScore" : test_score})
 
         output_json = {
             "Accuracy" : np.ceil(test_score),
@@ -221,9 +221,6 @@ def generate_pred_chart_data(user):
 
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
-def data_features_ki(data, labels):
-    xy_data = data.copy()
-    xy_data['target'] = labels
 
 
 def key_insights_gen(user):
