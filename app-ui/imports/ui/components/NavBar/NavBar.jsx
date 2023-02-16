@@ -6,6 +6,9 @@ import './NavBar.css';
 export const NavBar = ({ user }) => {
     const [stateClick, setStateClick] = useState(false);
     var cohort = user.cohort;
+    if (cohort == null || cohort==""){
+        cohort = window.localStorage.getItem('cohort');
+    }
 
     handleClick = () => {
         setStateClick(!stateClick)

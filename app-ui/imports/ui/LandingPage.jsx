@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRef, useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { BASE_API } from './Constants';
 import axios from 'axios';
@@ -7,9 +9,15 @@ import axios from 'axios';
 
 export const LandingPage = ({ user, setUser }) => {
     const navigate = useNavigate();
-    const selectedDashType = () => {
-        //console.log(user);
+    useEffect(() => {
+        window.localStorage.setItem('userid', user.id);
+    }, [user.id]);
+    useEffect(() => {
+        window.localStorage.setItem('cohort', user.cohort);
+    }, [user.cohort]);
 
+    const selectedDashType = () => {
+        //console.log(user)'
         axios.post(BASE_API + '/validateusers', {
             UserId: user.id,
             Cohort: user.cohort
@@ -24,9 +32,9 @@ export const LandingPage = ({ user, setUser }) => {
         }).then(function (response) {
             //console.log(response.data);
             if (response.data["StatusCode"]) {
-                navigate('/dashboard/'+user.cohort);
+                navigate('/dashboard/' + user.cohort);
             }
-            else{
+            else {
                 console.log("Error reported. Login failed.")
                 // TO-DO: Navigate to Error Screen.
             }

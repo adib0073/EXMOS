@@ -95,6 +95,10 @@ const GetKIChartValue = ({ userid, setKiChartVals }) => {
 export const DCE = ({ user }) => {
     var userid = user.id;
     var cohort = user.cohort;
+    if (userid == null || userid==""){
+        userid = window.localStorage.getItem('userid');
+        console.log('Found null. Replace with ', userid);
+    }
     console.log("DCE page:", userid)
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
