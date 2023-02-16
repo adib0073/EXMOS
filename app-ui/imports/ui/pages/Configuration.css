@@ -65,3 +65,100 @@ ul.tab li.active {
     flex-direction: column;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.config-display-fc-r1 {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.config-display-fc-r1-text {
+    font-size: 0.95vw;
+    margin-right: 10px;
+    font-weight: 500;
+    color: #6C6C6C;
+}
+
+.config-display-fc-r1-icon {
+    margin-left: auto;
+    padding: 0px 2px 0px 5px;
+    cursor: help;
+    display: flex;
+}
+
+.config-display-fc-r2 {
+    flex: 6;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+    display: flex;
+    flex-direction: row;
+}
+
+.config-display-fc-r2c1 {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-display-fc-r2c2 {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-display-fc-r2c3 {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cd-chart-container {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: purple;
+    display: flex;
+    flex: 1;
+}
+
+.config-display-fc-r3 {
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.config-display-fc-r3-text {
+    font-size: 0.8vw;
+    margin-right: 10px;
+}
+
+.config-display-fc-r3-item {
+    margin-left: auto;
+    padding: 0px 2px 0px 5px;
+    cursor: pointer;
+    display: flex;
+}

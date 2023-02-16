@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './Configuration.css'
+import { DataIssueConfig } from './DataIssueConfig.jsx';
+import { FeatureConfig } from './FeatureConfig.jsx';
 
 export const Configuration = ({ user, setUser }) => {
     const [activeTab, setActiveTab] = useState("tab1");
@@ -24,7 +26,7 @@ export const Configuration = ({ user, setUser }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? "Configure Features as component" : "Correct data issues as component"}
+                    {activeTab === "tab1" ? <FeatureConfig /> : <DataIssueConfig />}
                 </div>
             </div>
         </>);

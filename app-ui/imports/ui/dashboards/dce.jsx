@@ -97,9 +97,7 @@ export const DCE = ({ user }) => {
     var cohort = user.cohort;
     if (userid == null || userid==""){
         userid = window.localStorage.getItem('userid');
-        console.log('Found null. Replace with ', userid);
     }
-    console.log("DCE page:", userid)
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [dsChartVals, setDsChartVals] = useState(DATA_SUMMARY_DEFAULT_MODEL);
@@ -120,21 +118,6 @@ export const DCE = ({ user }) => {
         GetDQChartValue({ userid, setDqChartVals });
         GetKIChartValue({ userid, setKiChartVals });
     }, []);
-    // ## PAGE RELOAD IF NEEDED ##
-    /*
-    window.addEventListener("beforeunload", (event) => {
-        GetPredChartValue({ userid, setAccChartVals });
-        GetDSChartValue({ userid, setDsChartVals });
-        console.log("API call before page reload");
-    });
-  
-    window.addEventListener("unload", (event) => {
-        GetPredChartValue({ userid, setAccChartVals });
-        GetDSChartValue({ userid, setDsChartVals });
-        console.log("API call after page reload");
-    });
-    */
-    // ## END OF PAGE RELOAD ##
 
     return (
         <>
