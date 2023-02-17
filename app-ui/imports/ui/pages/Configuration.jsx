@@ -7,6 +7,10 @@ import { FeatureConfig } from './FeatureConfig.jsx';
 
 export const Configuration = ({ user, setUser }) => {
     const [activeTab, setActiveTab] = useState("tab1");
+    var userid = user.id;
+    if (userid == null || userid==""){
+        userid = window.localStorage.getItem('userid');
+    }
     const handleTab1View = () => {
         setActiveTab("tab1");
     };
@@ -26,7 +30,7 @@ export const Configuration = ({ user, setUser }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig /> : <DataIssueConfig />}
+                    {activeTab === "tab1" ? <FeatureConfig userid={userid} /> : <DataIssueConfig />}
                 </div>
             </div>
         </>);

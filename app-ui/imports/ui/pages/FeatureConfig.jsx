@@ -1,9 +1,20 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
+import { FEATURE_CONFIG_DATA } from '../Constants.jsx';
 
-export const FeatureConfig = () => {
+const GetConfigData = ({ userid, setFeatureConfig }) => {
+};
+
+export const FeatureConfig = ({ userid }) => {
+    const [featureConfig, setFeatureConfig] = useState(FEATURE_CONFIG_DATA);
+
+    useEffect(() => {
+        GetConfigData({ userid, setFeatureConfig });
+    }, []);
+
     return (
         <>
             <div className='config-display-fc-r1'>
@@ -23,7 +34,7 @@ export const FeatureConfig = () => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    Feature Name
+                                    {featureConfig["target"].name}
                                 </div>
                                 <div className='cd-chart-left-control'>
                                     Control
@@ -36,70 +47,150 @@ export const FeatureConfig = () => {
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["Glucose"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 2
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["Glucose"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 2
+                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["BMI"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 3
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["BMI"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 3
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='config-display-fc-r2c2'>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["Insulin"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 4
-
-                        </div>                    </div>
-                    <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
-                        </div>
-                        <div className='cd-chart-box'>
-                            Chart 5
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["Insulin"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 4
+                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["Age"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 6
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["Age"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 5
+                            </div>
+                        </div>
+                    </div>
+                    <div className='cd-chart-container'>
+                        <div className='cd-chart-tick-box'>
+                            {featureConfig["Pregnancies"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
+                        </div>
+                        <div className='cd-chart-box'>
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["Pregnancies"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 6
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='config-display-fc-r2c3'>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <UnselectedIcon />
+                            {featureConfig["BloodPressure"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 7
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["BloodPressure"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 7
+                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["SkinThickness"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 8
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["SkinThickness"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 8
+                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            <SelectedIcon />
+                            {featureConfig["DiabetesPedigreeFunction"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
-                            Chart 9
+                            <div className='cd-chart-left'>
+                                <div className='cd-chart-left-text'>
+                                    {featureConfig["DiabetesPedigreeFunction"].name}
+                                </div>
+                                <div className='cd-chart-left-control'>
+                                    Control
+                                </div>
+                            </div>
+                            <div className='cd-chart-right'>
+                                Chart 9
+                            </div>
                         </div>
                     </div>
                 </div>

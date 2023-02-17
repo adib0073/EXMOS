@@ -175,15 +175,21 @@ ul.tab li.active {
 .cd-chart-left{
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1;    
+    margin: 10px;
 }
 .cd-chart-left-text{
     flex: 1;
 }
 .cd-chart-left-control{
+    padding: 10px;
     flex: 10;
 }
 .cd-chart-right{
     display: flex;
     flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: #999999;
+    margin: 10px;
 }

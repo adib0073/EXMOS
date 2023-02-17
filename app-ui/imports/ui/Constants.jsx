@@ -91,3 +91,59 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         }
 };
+// DEAFULT FEATURE CONFIGURATION DATA
+export const FEATURE_CONFIG_DATA = {
+  "Pregnancies": {
+        "name": "Pregnancies",
+        "description": "Number of times pregnant",
+        "unit": null,
+        "isSelected": true
+      },
+      "Glucose": {
+        "name": "Glucose",
+        "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test",
+        "unit": "mg/dl",
+        "isSelected": true
+      },
+      "BloodPressure": {
+        "name": "Blood Pressure",
+        "description": "Diastolic blood pressure",
+        "unit": "mm Hg",
+        "isSelected": true
+      },
+      "SkinThickness": {
+        "name": "Skin Thickness",
+        "description": "Triceps skin fold thickness",
+        "unit": "mm",
+        "isSelected": true
+      },
+      "Insulin": {
+        "name": "Insulin",
+        "description": "2-Hour serum insulin",
+        "unit": "mm",
+        "isSelected": true
+      },
+      "BMI": {
+        "name": "Body Mass Index",
+        "description": "Body mass index",
+        "unit": "kg/m^2",
+        "isSelected": true
+      },
+      "DiabetesPedigreeFunction": {
+        "name": "Diabetes Pedigree Function",
+        "description": "Diabetes pedigree function",
+        "unit": null,
+        "isSelected": true
+      },
+      "Age": {
+        "name": "Age",
+        "description": "Age in years",
+        "unit": "years",
+        "isSelected": true
+      },
+      "target" : {
+        "name":"Diabetes Status",        
+        "isSelected": true
+      }
+
+};
