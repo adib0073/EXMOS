@@ -97,48 +97,44 @@ ul.tab li.active {
     border-color: red;
     display: flex;
     flex-direction: row;
+    padding: 20px;
 }
 
 .config-display-fc-r2c1 {
     flex: 1;
     border: 1px;
     border-style: solid;
-    border-color: green;
+    border-color: #C5C4C4;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .config-display-fc-r2c2 {
     flex: 1;
     border: 1px;
     border-style: solid;
-    border-color: green;
+    border-color: #C5C4C4;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .config-display-fc-r2c3 {
     flex: 1;
     border: 1px;
     border-style: solid;
-    border-color: green;
+    border-color: #C5C4C4;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .cd-chart-container {
     flex: 1;
     border: 1px;
     border-style: solid;
-    border-color: purple;
+    border-color: #C5C4C4;
     display: flex;
     flex: 1;
+    align-items: center;
 }
 
 .config-display-fc-r3 {
@@ -161,4 +157,33 @@ ul.tab li.active {
     padding: 0px 2px 0px 5px;
     cursor: pointer;
     display: flex;
+}
+.cd-chart-tick-box{
+    border: 1px;
+    border-style: solid;
+    border-color: transparent; 
+    padding: 20px 10px 20px 10px;
+    flex: 1;
+}
+.cd-chart-box{
+    border: 1px;
+    border-style: solid;
+    border-color: transparent; 
+    display: flex;
+    flex: 20;
+}
+.cd-chart-left{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.cd-chart-left-text{
+    flex: 1;
+}
+.cd-chart-left-control{
+    flex: 10;
+}
+.cd-chart-right{
+    display: flex;
+    flex: 1;
 }
