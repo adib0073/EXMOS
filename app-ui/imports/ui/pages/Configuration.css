@@ -149,6 +149,7 @@ ul.tab li.active {
 
 .config-display-fc-r3-text {
     font-size: 0.8vw;
+    font-weight: 500;
     margin-right: 10px;
 }
 
@@ -158,38 +159,74 @@ ul.tab li.active {
     cursor: pointer;
     display: flex;
 }
-.cd-chart-tick-box{
+
+.cd-chart-tick-box {
     border: 1px;
     border-style: solid;
-    border-color: transparent; 
+    border-color: transparent;
     padding: 20px 10px 20px 10px;
     flex: 1;
 }
-.cd-chart-box{
+
+.cd-chart-box {
     border: 1px;
     border-style: solid;
-    border-color: transparent; 
+    border-color: transparent;
     display: flex;
     flex: 20;
 }
-.cd-chart-left{
+
+.cd-chart-left {
     display: flex;
     flex-direction: column;
-    flex: 1;    
+    flex: 1;
     margin: 10px;
 }
-.cd-chart-left-text{
+
+.cd-chart-left-text {
     flex: 1;
 }
-.cd-chart-left-control{
+
+.cd-chart-left-control {
     padding: 10px;
     flex: 10;
 }
-.cd-chart-right{
+
+.cd-chart-right {
     display: flex;
     flex: 1;
     border: 1px;
     border-style: solid;
     border-color: #999999;
     margin: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel-button {
+    padding: 10px;
+    border: None;
+    font-weight: 600;
+    color: #6C6C6C;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    color: #565555;
+    background-color: #f1eded;
+}
+
+.train-button {
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #1363DF;
+    color: #fff;
+    border: None;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.train-button:hover {
+    background-color: #2774e8;
 }

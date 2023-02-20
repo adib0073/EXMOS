@@ -4,8 +4,15 @@ import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
 import { FEATURE_CONFIG_DATA } from '../Constants.jsx';
+import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
+};
+
+const handleCancelButton = ({ userid, setFeatureConfig }) => {
+};
+
+const handleTrainButton = ({ userid, setFeatureConfig }) => {
 };
 
 export const FeatureConfig = ({ userid }) => {
@@ -34,14 +41,14 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["target"].name}
+                                    <b>{featureConfig["target"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
                                     Control
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 1
+                               <ConfigBar x_values={["Diabetic", "Non-diabetic"]} y_values={[230, 410]}/>
                             </div>
                         </div>
                     </div>
@@ -146,7 +153,7 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["BloodPressure"].name}
+                                    <b>{featureConfig["BloodPressure"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
                                     Control
@@ -164,7 +171,7 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["SkinThickness"].name}
+                                    <b>{featureConfig["SkinThickness"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
                                     Control
@@ -200,8 +207,20 @@ export const FeatureConfig = ({ userid }) => {
                     * You can select/deselect features or filter feature values to tune the trained model
                 </div>
                 <div className='config-display-fc-r3-item'>
-                    Button1
-                    Button2
+                    <button
+                        className="cancel-button"
+                        type="submit"
+                        onClick={handleCancelButton}
+                    >
+                        Cancel changes
+                    </button>
+                    <button
+                        className="train-button"
+                        type="submit"
+                        onClick={handleTrainButton}
+                    >
+                        Save and Re-train
+                    </button>
                 </div>
             </div>
         </>
