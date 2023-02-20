@@ -5,6 +5,7 @@ import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
 import { FEATURE_CONFIG_DATA } from '../Constants.jsx';
 import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
+import { Input } from 'antd';
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
 };
@@ -44,11 +45,12 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["target"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <Input addonBefore={"Diabetic"} defaultValue={34} size="small" />
+                                    <Input addonBefore={"Non-Diabetic"} defaultValue={66} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                               <ConfigBar x_values={["Diabetic", "Non-diabetic"]} y_values={[230, 410]}/>
+                                <ConfigBar x_values={["Diabetic", "Non-diabetic"]} y_values={[230, 410]} />
                             </div>
                         </div>
                     </div>

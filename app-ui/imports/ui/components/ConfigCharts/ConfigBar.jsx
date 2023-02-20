@@ -3,7 +3,8 @@ import React from 'react';
 import { Bar as BarJS } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import './ConfigCharts.css'
+import './ConfigCharts.css';
+
 
 const labelWrapper = (value) => {
     let wrappedArray = []
