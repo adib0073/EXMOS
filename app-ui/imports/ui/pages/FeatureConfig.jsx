@@ -5,7 +5,9 @@ import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
 import { FEATURE_CONFIG_DATA } from '../Constants.jsx';
 import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
-import { Input } from 'antd';
+import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
+import 'antd/dist/antd.css';
+import { Input, Slider } from 'antd';
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
 };
@@ -61,10 +63,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["Glucose"].name}
+                                    <b>{featureConfig["Glucose"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[0, 120]} selectedLimit={[20, 100]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -79,10 +81,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["BMI"].name}
+                                    <b>{featureConfig["BMI"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 70]} selectedLimit={[18, 35]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -99,10 +101,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["Insulin"].name}
+                                    <b>{featureConfig["Insulin"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -117,10 +119,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["Age"].name}
+                                    <b>{featureConfig["Age"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -135,10 +137,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["Pregnancies"].name}
+                                    <b>{featureConfig["Pregnancies"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -158,7 +160,7 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["BloodPressure"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -176,7 +178,7 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["SkinThickness"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -191,10 +193,10 @@ export const FeatureConfig = ({ userid }) => {
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
                                 <div className='cd-chart-left-text'>
-                                    {featureConfig["DiabetesPedigreeFunction"].name}
+                                    <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    Control
+                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>

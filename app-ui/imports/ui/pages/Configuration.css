@@ -186,6 +186,7 @@ ul.tab li.active {
 .cd-chart-left-text {
     flex: 1;
     padding: 5px;
+    font-size: 0.8vw;
 }
 
 .cd-chart-left-control {
