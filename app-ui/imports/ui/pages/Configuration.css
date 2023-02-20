@@ -56,7 +56,7 @@ ul.tab li.active {
 
 .config-display {
     padding: 10px 30px 10px 30px;
-    height: 80vh;
+    height: 85vh;
     width: 100%;
     background-color: #fff;
     z-index: 10;
@@ -74,6 +74,7 @@ ul.tab li.active {
     display: flex;
     flex: 1;
     align-items: center;
+    padding-bottom: 10px;
 }
 
 .config-display-fc-r1-text {
@@ -92,7 +93,7 @@ ul.tab li.active {
 
 .config-display-fc-r2 {
     flex: 6;
-    border: 1px;
+    border: 0px;
     border-style: solid;
     border-color: transparent;
     display: flex;
@@ -102,27 +103,27 @@ ul.tab li.active {
 
 .config-display-fc-r2c1 {
     flex: 1;
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: #C5C4C4;
+    border-color: transparent;
     display: flex;
     flex-direction: column;
 }
 
 .config-display-fc-r2c2 {
     flex: 1;
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: #C5C4C4;
+    border-color: transparent;
     display: flex;
     flex-direction: column;
 }
 
 .config-display-fc-r2c3 {
     flex: 1;
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: #C5C4C4;
+    border-color: transparent;
     display: flex;
     flex-direction: column;
 }
@@ -145,12 +146,14 @@ ul.tab li.active {
     display: flex;
     flex: 1;
     align-items: center;
+    margin-top: 20px;
+    padding-bottom: 10px;
 }
 
 .config-display-fc-r3-text {
     font-size: 0.8vw;
     font-weight: 500;
-    margin-right: 10px;
+    margin-left: 20px;
 }
 
 .config-display-fc-r3-item {
@@ -161,7 +164,7 @@ ul.tab li.active {
 }
 
 .cd-chart-tick-box {
-    border: 1px;
+    border: 0px;
     border-style: solid;
     border-color: transparent;
     padding: 20px 10px 20px 10px;
@@ -169,9 +172,10 @@ ul.tab li.active {
 }
 
 .cd-chart-box {
-    border: 1px;
+    border: 0px;
+    border-left: 1px;
     border-style: solid;
-    border-color: transparent;
+    border-color: #C5C4C4;
     display: flex;
     flex: 20;
 }
@@ -206,12 +210,12 @@ ul.tab li.active {
 .cd-chart-right {
     display: flex;
     flex: 1;
-    border: 1px;
+    border: 2px;
     border-style: solid;
     border-color: #999999;
-    margin: 10px;
     justify-content: center;
     align-items: center;
+    margin: 10px 10px 10px 0px;
 }
 
 .cancel-button {

@@ -8,6 +8,7 @@ import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
 import 'antd/dist/antd.css';
 import { Input, Slider } from 'antd';
+import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
 };
@@ -70,7 +71,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 2
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -88,7 +93,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 3
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -108,7 +117,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 4
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -126,8 +139,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 5
-                            </div>
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
@@ -144,7 +160,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 6
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -164,7 +184,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 7
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -182,7 +206,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 8
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -200,7 +228,11 @@ export const FeatureConfig = ({ userid }) => {
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                Chart 9
+                                <ConfigArea
+                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
+                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
+                                    selectedLimit={[80, 98]}
+                                />
                             </div>
                         </div>
                     </div>
