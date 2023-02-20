@@ -146,7 +146,7 @@ ul.tab li.active {
     display: flex;
     flex: 1;
     align-items: center;
-    margin-top: 20px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -189,7 +189,6 @@ ul.tab li.active {
 
 .cd-chart-left-text {
     flex: 1;
-    padding: 5px;
     font-size: 0.8vw;
 }
 

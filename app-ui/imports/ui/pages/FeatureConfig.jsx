@@ -19,8 +19,21 @@ const handleCancelButton = ({ userid, setFeatureConfig }) => {
 const handleTrainButton = ({ userid, setFeatureConfig }) => {
 };
 
+const handleTickClick = () => {
+    console.log("Clicked");
+    setFeatureConfig(prevConfig => ({
+        ...prevConfig,
+        [featureName]: prevValue => ({
+            ...prevValue,
+            "isSelected":!isSelected
+        })
+    }));
+};
+
 export const FeatureConfig = ({ userid }) => {
     const [featureConfig, setFeatureConfig] = useState(FEATURE_CONFIG_DATA);
+
+    
 
     useEffect(() => {
         GetConfigData({ userid, setFeatureConfig });
@@ -59,7 +72,7 @@ export const FeatureConfig = ({ userid }) => {
                     </div>
                     <div className='cd-chart-container'>
                         <div className='cd-chart-tick-box'>
-                            {featureConfig["Glucose"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
+                            {featureConfig["Glucose"].isSelected ? <SelectedIcon onClick={handleTickClick}/> : <UnselectedIcon onClick={handleTickClick}/>}
                         </div>
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
@@ -143,7 +156,8 @@ export const FeatureConfig = ({ userid }) => {
                                     x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
                                     y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
                                     selectedLimit={[80, 98]}
-                                />                            </div>
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className='cd-chart-container'>
