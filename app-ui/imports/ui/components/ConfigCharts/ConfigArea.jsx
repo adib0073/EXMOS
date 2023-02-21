@@ -5,31 +5,26 @@ import { Line, getElementsAtEvent } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './ConfigCharts.css';
 
-
-const labelWrapper = (value) => {
-    let wrappedArray = []
-    for (let i = 0; i < value.length; i++) {
-        wrappedArray.push(value[i].split(" "));
-    }
-    return wrappedArray;
-};
-
-
 export const ConfigArea = ({ y_values, x_values, defaultLimit, selectedLimit }) => {
+
+    let filtered_x = x_values.filter((function (value) {
+        return value >= selectedLimit[0] && value<=selectedLimit[1];
+    }));
+
     let boundary_val1 = 0;
     let boundary_val2 = 0;
 
     let boundary_ind1 = 0;
     let boundary_ind2 = 0;
 
-    boundary_val1 = Math.max(selectedLimit[0], Math.min(...x_values));
-    boundary_val2 = Math.min(selectedLimit[1], Math.max(...x_values));
+    boundary_val1 = filtered_x[0]
+    boundary_val2 = filtered_x[filtered_x.length - 1]
 
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
     const highlightRegion = (ctx) => {
-        if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
+        if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
             return "#67A3FF";
         }
         else {
@@ -128,7 +123,7 @@ export const ConfigArea = ({ y_values, x_values, defaultLimit, selectedLimit }) 
                     },
                     callback: (value, index, values) => {
                         if (index == boundary_ind1 || index == boundary_ind2) {
-                            return Math.round((x_values[index] + Number.EPSILON) * 100) / 100;
+                            return Math.round((x_values[index] + Number.EPSILON) * 10) / 10;
                         }
                     }
                 },

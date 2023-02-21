@@ -15,7 +15,7 @@ import axios from 'axios';
 const GetConfigData = ({ userid, setFeatureConfig }) => {
     axios.get(BASE_API + '/getconfigdata/?user=' + userid)
         .then(function (response) {
-            console.log(response.data["OutputJson"]);
+            //console.log(response.data["OutputJson"]);
             setFeatureConfig({
                 "Pregnancies": response.data["OutputJson"]["Pregnancies"],
                 "Glucose": response.data["OutputJson"]["Glucose"],
@@ -52,6 +52,10 @@ export const FeatureConfig = ({ userid }) => {
         });
     };
 
+    const inputOnChange = (e) => {
+        console.log(e.target.value);
+    };
+
     useEffect(() => {
         GetConfigData({ userid, setFeatureConfig });
     }, []);
@@ -78,8 +82,8 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["target"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <Input addonBefore={featureConfig["target"]["categories"][0]} value={featureConfig["target"]["category_ratio"][0]} size="small" />
-                                    <Input addonBefore={featureConfig["target"]["categories"][1]} value={featureConfig["target"]["category_ratio"][1]} />
+                                    <Input addonBefore={featureConfig["target"]["categories"][0]} defaultValue={featureConfig["target"]["category_ratio"][0]} size="small" />
+                                    <Input addonBefore={featureConfig["target"]["categories"][1]} defaultValue={featureConfig["target"]["category_ratio"][1]} onChange={inputOnChange} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -97,7 +101,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Glucose"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["Glucose"].defaultLowerLimit, featureConfig["Glucose"].defaultUpperLimit]} selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["Glucose"].defaultLowerLimit, featureConfig["Glucose"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"Glucose"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -119,7 +129,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["BMI"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control' >
-                                    <ConfigSlider defaultLimit={[featureConfig["BMI"].defaultLowerLimit, featureConfig["BMI"].defaultUpperLimit]} selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["BMI"].defaultLowerLimit, featureConfig["BMI"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"BMI"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -143,7 +159,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Insulin"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["Insulin"].defaultLowerLimit, featureConfig["Insulin"].defaultUpperLimit]} selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["Insulin"].defaultLowerLimit, featureConfig["Insulin"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"Insulin"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -165,7 +187,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Age"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["Age"].defaultLowerLimit, featureConfig["Age"].defaultUpperLimit]} selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["Age"].defaultLowerLimit, featureConfig["Age"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"Age"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -187,7 +215,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Pregnancies"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["Pregnancies"].defaultLowerLimit, featureConfig["Pregnancies"].defaultUpperLimit]} selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["Pregnancies"].defaultLowerLimit, featureConfig["Pregnancies"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"Pregnancies"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -211,7 +245,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["BloodPressure"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["BloodPressure"].defaultLowerLimit, featureConfig["BloodPressure"].defaultUpperLimit]} selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["BloodPressure"].defaultLowerLimit, featureConfig["BloodPressure"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"BloodPressure"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -233,7 +273,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["SkinThickness"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["SkinThickness"].defaultLowerLimit, featureConfig["SkinThickness"].defaultUpperLimit]} selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["SkinThickness"].defaultLowerLimit, featureConfig["SkinThickness"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"SkinThickness"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
@@ -255,7 +301,13 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[featureConfig["DiabetesPedigreeFunction"].defaultLowerLimit, featureConfig["DiabetesPedigreeFunction"].defaultUpperLimit]} selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]} />
+                                    <ConfigSlider
+                                        defaultLimit={[featureConfig["DiabetesPedigreeFunction"].defaultLowerLimit, featureConfig["DiabetesPedigreeFunction"].defaultUpperLimit]}
+                                        selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]}
+                                        featureConfig={featureConfig}
+                                        setFeatureConfig={setFeatureConfig}
+                                        featureName={"DiabetesPedigreeFunction"}
+                                    />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>

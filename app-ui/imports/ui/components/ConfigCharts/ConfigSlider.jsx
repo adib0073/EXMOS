@@ -2,11 +2,21 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Input, Slider } from 'antd';
 
-const handleSliderChange = (value) => {
-    console.log(value);
+const handleSliderChange = (value, featureName, featureConfig, setFeatureConfig) => {
+    
+    const updatedFeature = { ...featureConfig[featureName], lowerLimit: value[0], upperLimit: value[1]}
+    setFeatureConfig({
+        ...featureConfig,
+        [featureName]: updatedFeature
+    });
 };
 
-export const ConfigSlider = ({ defaultLimit, selectedLimit }) => {
+export const ConfigSlider = ({ defaultLimit,
+    selectedLimit,
+    featureConfig,
+    setFeatureConfig,
+    featureName
+}) => {
     return (<Slider
         range
         autoFocus={false}
@@ -34,7 +44,7 @@ export const ConfigSlider = ({ defaultLimit, selectedLimit }) => {
         defaultValue={selectedLimit}
         min={defaultLimit[0]}
         max={defaultLimit[1]}
-        onChange={handleSliderChange}
+        onChange={(value) => {handleSliderChange(value, featureName, featureConfig, setFeatureConfig)}}
         //dotStyle={{ borderColor: "#67A3FF" }}
         trackStyle={{ background: "#67A3FF" }}
         handleStyle={{ borderColor: "#67A3FF" }}
