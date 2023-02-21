@@ -34,14 +34,18 @@ const GetConfigData = ({ userid, setFeatureConfig }) => {
 };
 
 const handleCancelButton = (userid, setFeatureConfig) => {
-    console.log('Canceled');
     if (window.confirm('Do you want to revert all your changes?')) {
         GetConfigData({ userid, setFeatureConfig });
         window.location.reload();
     }
 };
 
-const handleTrainButton = ({ userid, setFeatureConfig }) => {
+const handleTrainButton = (userid, setFeatureConfig) => {
+    if (window.confirm('Do you want to save and re-train the machine learning model?')) {
+        //GetConfigData({ userid, setFeatureConfig });
+        console.log('Selected for re-train');
+        window.location.reload();
+    }
 };
 
 
