@@ -1,8 +1,8 @@
 .dce-container {
     margin: 30px 90px 20px 90px;
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: black;
+    border-color: transparent;
     display: flex;
     justify-content: space-between;
     background-color: #E5E5E5;
@@ -10,9 +10,9 @@
 }
 
 .dce-container-left-col {
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: red;
+    border-color: transparent;
     display: flex;
     flex-direction: column;
     flex: 2;
@@ -69,9 +69,9 @@
 }
 
 .dce-container-right-col {
-    border: 1px;
+    border: 0px;
     border-style: solid;
-    border-color: red;
+    border-color: transparent;
     display: flex;
     flex-direction: column;
     background: #FFFFFF;

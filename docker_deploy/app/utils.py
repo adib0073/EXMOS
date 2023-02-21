@@ -149,7 +149,7 @@ def login_service(user_name, cohort):
         client.close()
         return (True, f"Record found for user: {user_name}", user_details)
 
-def data_summary_viz(user):
+def prepare_user_data(user):
     """
     Fetch Data Summary Viz 
     """
@@ -157,23 +157,37 @@ def data_summary_viz(user):
     client.close()
     if  user_details is None:
         return (False, f"Invalid username: {user}", user_details)
-    else:
-        # TO-DO - Load Filters and Filter Data
-        data, labels = load_training_data()
-        output_json = {}
-        for feat in ALL_FEATURES:
-            output_json[feat] = {
-                "name" : feat,                
-                "description" : user_details[feat]["Description"],
-                "unit" : user_details[feat]["Unit"],
-                "ydata" : np.histogram(data[feat].tolist(), bins=30)[0].tolist(),
-                "xdata" : np.histogram(data[feat].tolist(), bins=30)[1].tolist(),
-                "upperLimit" : user_details[feat]["UpperLimit"],
-                "lowerLimit" : user_details[feat]["LowerLimit"],
-                "average" : np.round(np.mean(data[feat].values),1),
-                "isSelected" : user_details[feat]["Selected"],           
-            }
-        return (True, f"Successful. Data summary details founde for user: {user}", output_json)
+
+    # Load Filters and Filter Data
+    filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    output_json = {}
+    for feat in ALL_FEATURES:
+        output_json[feat] = {
+            "name" : feat,                
+            "description" : user_details[feat]["Description"],
+            "unit" : user_details[feat]["Unit"],
+            "ydata" : np.histogram(data[feat].tolist(), bins=30)[0].tolist(),
+            "xdata" : np.histogram(data[feat].tolist(), bins=30)[1].tolist(),
+            "upperLimit" : user_details[feat]["UpperLimit"],
+            "lowerLimit" : user_details[feat]["LowerLimit"],
+            "average" : np.round(np.mean(data[feat].values),1),
+            "isSelected" : user_details[feat]["Selected"],  
+            # Add defaults
+            "defaultUpperLimit" : user_details[feat]["DefaultUpperLimit"],
+            "defaultLowerLimit" : user_details[feat]["DefaultLowerLimit"],         
+        }
+    # Add additional details for target variable
+    diabetic_count = len(labels[labels[TARGET_VARIABLE] == 1])
+    dc_pct = np.round(100 * (diabetic_count/(len(labels))), 0)
+
+    output_json['target'] = {
+        "name" : "Diabetes Status",
+        "categories" : ["Diabetic", "Non-diabetic"],
+        "category_ratio" : [dc_pct, 100 - dc_pct],
+        "isSelected" : True
+    }
+
+    return (True, f"Successful. Data summary details founde for user: {user}", output_json)
 
 def load_filtered_user_data(user_details):
     selected_features = []
@@ -281,4 +295,3 @@ def key_insights_gen(user):
 		    }
     return (True, f"Successful. Data summary details founde for user: {user}", insights)
 
-    

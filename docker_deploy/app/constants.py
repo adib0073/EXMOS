@@ -97,3 +97,5 @@ FRIENDLY_NAMES = {
 }
 # ACTIONABLE FEATURES
 ACTIONABLE_FEATURES = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI"]
+#target variable
+TARGET_VARIABLE = "Outcome"

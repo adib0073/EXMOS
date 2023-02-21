@@ -28,8 +28,6 @@ const GetPredChartValue = ({ userid, setAccChartVals }) => {
         }).catch(function (error) {
             console.log(error);
         });
-
-
 }
 
 const GetDSChartValue = ({ userid, setDsChartVals }) => {
@@ -51,8 +49,6 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
         }).catch(function (error) {
             console.log(error);
         });
-
-
 }
 
 const GetDQChartValue = ({ userid, setDqChartVals }) => {
@@ -70,8 +66,6 @@ const GetDQChartValue = ({ userid, setDqChartVals }) => {
         }).catch(function (error) {
             console.log(error);
         });
-
-
 }
 
 const GetKIChartValue = ({ userid, setKiChartVals }) => {
@@ -88,8 +82,6 @@ const GetKIChartValue = ({ userid, setKiChartVals }) => {
         }).catch(function (error) {
             console.log(error);
         });
-
-
 }
 
 export const DCE = ({ user }) => {

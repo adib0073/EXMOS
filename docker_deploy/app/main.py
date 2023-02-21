@@ -161,7 +161,7 @@ async def GetPredictedChartValues(user: str):
 @app.get("/getdatasummaryvalues/", response_model=OutputwithPayloadDataModel)
 async def GetDataSummaryValues(user: str):
 	# Call method to get data summary value for user
-	code, message, output_json = data_summary_viz(user)
+	code, message, output_json = prepare_user_data(user)
 
 	response = {
 		"StatusCode": code,
@@ -191,6 +191,18 @@ async def GetDataQuality(user: str):
 async def GetKeyInsights(user: str):
 	# Call method to get data quality value for user
 	code, message, output_json = key_insights_gen(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
+	}
+	return response
+
+@app.get("/getconfigdata/", response_model=OutputwithPayloadDataModel)
+async def GetConfigData(user: str):
+	# Call method to get data quality value for user
+	code, message, output_json = prepare_user_data(user)
 
 	response = {
 		"StatusCode": code,

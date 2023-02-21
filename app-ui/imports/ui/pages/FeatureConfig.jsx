@@ -3,14 +3,34 @@ import { useEffect, useState } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
-import { FEATURE_CONFIG_DATA } from '../Constants.jsx';
+import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
 import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
 import 'antd/dist/antd.css';
 import { Input, Slider } from 'antd';
 import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
+import axios from 'axios';
+
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
+    axios.get(BASE_API + '/getconfigdata/?user=' + userid)
+        .then(function (response) {
+            console.log(response.data["OutputJson"]);
+            setFeatureConfig({
+                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
+                "Glucose": response.data["OutputJson"]["Glucose"],
+                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
+                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
+                "Insulin": response.data["OutputJson"]["Insulin"],
+                "BMI": response.data["OutputJson"]["BMI"],
+                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
+                "Age": response.data["OutputJson"]["Age"],
+                "target": response.data["OutputJson"]["target"]
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
 };
 
 const handleCancelButton = ({ userid, setFeatureConfig }) => {
@@ -19,28 +39,17 @@ const handleCancelButton = ({ userid, setFeatureConfig }) => {
 const handleTrainButton = ({ userid, setFeatureConfig }) => {
 };
 
-const handleTickClick = () => {
-    console.log("Clicked");
-    setFeatureConfig(prevConfig => ({
-        ...prevConfig,
-        [featureName]: prevValue => ({
-            ...prevValue,
-            "isSelected": !isSelected
-        })
-    }));
-};
 
 export const FeatureConfig = ({ userid }) => {
-    const [featureConfig, setFeatureConfig] = useState(FEATURE_CONFIG_DATA);
+    const [featureConfig, setFeatureConfig] = useState(DATA_SUMMARY_DEFAULT_MODEL);
 
     const handleTickClick = (feature) => {
-        console.log(featureConfig[feature]);
-        const updatedFeature = {...featureConfig[feature], isSelected: !featureConfig[feature].isSelected}
-        console.log(featureConfig[feature]);
+        const updatedFeature = { ...featureConfig[feature], isSelected: !featureConfig[feature].isSelected }
 
         setFeatureConfig({
             ...featureConfig,
-            [feature]: updatedFeature});
+            [feature]: updatedFeature
+        });
     };
 
     useEffect(() => {
@@ -69,12 +78,12 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["target"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <Input addonBefore={"Diabetic"} defaultValue={34} size="small" />
-                                    <Input addonBefore={"Non-Diabetic"} defaultValue={66} />
+                                    <Input addonBefore={featureConfig["target"]["categories"][0]} value={featureConfig["target"]["category_ratio"][0]} size="small" />
+                                    <Input addonBefore={featureConfig["target"]["categories"][1]} value={featureConfig["target"]["category_ratio"][1]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
-                                <ConfigBar x_values={["Diabetic", "Non-diabetic"]} y_values={[230, 410]} />
+                                <ConfigBar x_values={featureConfig["target"]["categories"]} y_values={featureConfig["target"]["category_ratio"]} />
                             </div>
                         </div>
                     </div>
@@ -88,14 +97,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Glucose"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[0, 120]} selectedLimit={[20, 100]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["Glucose"].defaultLowerLimit, featureConfig["Glucose"].defaultUpperLimit]} selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["Glucose"].xdata}
+                                    y_values={featureConfig["Glucose"].ydata}
+                                    selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -110,14 +119,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["BMI"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control' >
-                                    <ConfigSlider defaultLimit={[10, 70]} selectedLimit={[18, 35]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["BMI"].defaultLowerLimit, featureConfig["BMI"].defaultUpperLimit]} selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["BMI"].xdata}
+                                    y_values={featureConfig["BMI"].ydata}
+                                    selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -134,14 +143,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Insulin"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["Insulin"].defaultLowerLimit, featureConfig["Insulin"].defaultUpperLimit]} selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["Insulin"].xdata}
+                                    y_values={featureConfig["Insulin"].ydata}
+                                    selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -156,14 +165,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Age"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["Age"].defaultLowerLimit, featureConfig["Age"].defaultUpperLimit]} selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["Age"].xdata}
+                                    y_values={featureConfig["Age"].ydata}
+                                    selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -178,14 +187,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["Pregnancies"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["Pregnancies"].defaultLowerLimit, featureConfig["Pregnancies"].defaultUpperLimit]} selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["Pregnancies"].xdata}
+                                    y_values={featureConfig["Pregnancies"].ydata}
+                                    selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -202,14 +211,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["BloodPressure"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["BloodPressure"].defaultLowerLimit, featureConfig["BloodPressure"].defaultUpperLimit]} selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["BloodPressure"].xdata}
+                                    y_values={featureConfig["BloodPressure"].ydata}
+                                    selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -224,14 +233,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["SkinThickness"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["SkinThickness"].defaultLowerLimit, featureConfig["SkinThickness"].defaultUpperLimit]} selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["SkinThickness"].xdata}
+                                    y_values={featureConfig["SkinThickness"].ydata}
+                                    selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
                                 />
                             </div>
                         </div>
@@ -246,14 +255,14 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <ConfigSlider defaultLimit={[10, 220]} selectedLimit={[50, 200]} />
+                                    <ConfigSlider defaultLimit={[featureConfig["DiabetesPedigreeFunction"].defaultLowerLimit, featureConfig["DiabetesPedigreeFunction"].defaultUpperLimit]} selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>
                                 <ConfigArea
-                                    x_values={[70, 75, 80, 83, 85, 90, 92, 95, 98, 100, 105, 110, 112, 120, 125]}
-                                    y_values={[20, 40, 80, 150, 80, 25, 30, 10, 32, 20, 30, 30, 40, 15, 25]}
-                                    selectedLimit={[80, 98]}
+                                    x_values={featureConfig["DiabetesPedigreeFunction"].xdata}
+                                    y_values={featureConfig["DiabetesPedigreeFunction"].ydata}
+                                    selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]}
                                 />
                             </div>
                         </div>

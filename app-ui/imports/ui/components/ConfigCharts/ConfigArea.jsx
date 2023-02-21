@@ -176,7 +176,7 @@ export const ConfigArea = ({ y_values, x_values, defaultLimit, selectedLimit }) 
 
             // Higher Boundary Line
             ctx.strokeStyle = '#244CB1';
-            ctx.strokeRect(x.getPixelForValue(boundary_ind2+1), top, 0, height);
+            ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
 
             // Current Marker
             //var markerVal = x_values.reduce((prev, curr) => Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev);
