@@ -25,7 +25,7 @@ const handleTickClick = () => {
         ...prevConfig,
         [featureName]: prevValue => ({
             ...prevValue,
-            "isSelected":!isSelected
+            "isSelected": !isSelected
         })
     }));
 };
@@ -33,7 +33,15 @@ const handleTickClick = () => {
 export const FeatureConfig = ({ userid }) => {
     const [featureConfig, setFeatureConfig] = useState(FEATURE_CONFIG_DATA);
 
-    
+    const handleTickClick = (feature) => {
+        console.log(featureConfig[feature]);
+        const updatedFeature = {...featureConfig[feature], isSelected: !featureConfig[feature].isSelected}
+        console.log(featureConfig[feature]);
+
+        setFeatureConfig({
+            ...featureConfig,
+            [feature]: updatedFeature});
+    };
 
     useEffect(() => {
         GetConfigData({ userid, setFeatureConfig });
@@ -71,8 +79,8 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
-                            {featureConfig["Glucose"].isSelected ? <SelectedIcon onClick={handleTickClick}/> : <UnselectedIcon onClick={handleTickClick}/>}
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Glucose") }}>
+                            {featureConfig["Glucose"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
                             <div className='cd-chart-left'>
@@ -93,7 +101,7 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("BMI") }}>
                             {featureConfig["BMI"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -101,7 +109,7 @@ export const FeatureConfig = ({ userid }) => {
                                 <div className='cd-chart-left-text'>
                                     <b>{featureConfig["BMI"].name}</b>
                                 </div>
-                                <div className='cd-chart-left-control'>
+                                <div className='cd-chart-left-control' >
                                     <ConfigSlider defaultLimit={[10, 70]} selectedLimit={[18, 35]} />
                                 </div>
                             </div>
@@ -117,7 +125,7 @@ export const FeatureConfig = ({ userid }) => {
                 </div>
                 <div className='config-display-fc-r2c2'>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Insulin") }}>
                             {featureConfig["Insulin"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -139,7 +147,7 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Age") }}>
                             {featureConfig["Age"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -161,7 +169,7 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Pregnancies") }}>
                             {featureConfig["Pregnancies"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -185,7 +193,7 @@ export const FeatureConfig = ({ userid }) => {
                 </div>
                 <div className='config-display-fc-r2c3'>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("BloodPressure") }}>
                             {featureConfig["BloodPressure"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -207,7 +215,7 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("SkinThickness") }}>
                             {featureConfig["SkinThickness"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>
@@ -229,7 +237,7 @@ export const FeatureConfig = ({ userid }) => {
                         </div>
                     </div>
                     <div className='cd-chart-container'>
-                        <div className='cd-chart-tick-box'>
+                        <div className='cd-chart-tick-box' onClick={() => { handleTickClick("DiabetesPedigreeFunction") }}>
                             {featureConfig["DiabetesPedigreeFunction"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                         </div>
                         <div className='cd-chart-box'>

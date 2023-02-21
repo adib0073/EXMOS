@@ -15,7 +15,7 @@ export const ConfigSlider = ({ defaultLimit, selectedLimit }) => {
             [defaultLimit[0]]: {
                 style: {
                     color: '#6C6C6C',
-                    marginTop: "-25%",
+                    marginTop: "-30px",
                     fontSize: "11px"
                 },
                 label: defaultLimit[0],
@@ -25,7 +25,7 @@ export const ConfigSlider = ({ defaultLimit, selectedLimit }) => {
             [defaultLimit[1]]: {
                 style: {
                     color: '#6C6C6C',
-                    marginTop: "-25%",
+                    marginTop: "-30px",
                     fontSize: "11px"
                 },
                 label: defaultLimit[1],
