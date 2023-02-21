@@ -33,7 +33,12 @@ const GetConfigData = ({ userid, setFeatureConfig }) => {
         });
 };
 
-const handleCancelButton = ({ userid, setFeatureConfig }) => {
+const handleCancelButton = (userid, setFeatureConfig) => {
+    console.log('Canceled');
+    if (window.confirm('Do you want to revert all your changes?')) {
+        GetConfigData({ userid, setFeatureConfig });
+        window.location.reload();
+    }
 };
 
 const handleTrainButton = ({ userid, setFeatureConfig }) => {
@@ -329,7 +334,7 @@ export const FeatureConfig = ({ userid }) => {
                     <button
                         className="cancel-button"
                         type="submit"
-                        onClick={handleCancelButton}
+                        onClick={() => {handleCancelButton(userid, setFeatureConfig)}}
                     >
                         Cancel changes
                     </button>
