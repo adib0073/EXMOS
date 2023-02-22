@@ -11,76 +11,76 @@ USER_DETAIL_JSON = {
     "UserName": None,
     "Cohort": None,  
     "Pregnancies": {
-            "Selected": True,
-            "UpperLimit": 15,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 15,
-            "DefaultLowerLimit": 0,
-            "Unit": None,
-            "Description": "Number of times pregnant"
+            "isSelected": True,
+            "upperLimit": 15,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 15,
+            "defaultLowerLimit": 0,
+            "unit": None,
+            "description": "Number of times pregnant"
             },
     "Glucose": {
-            "Selected": True,
-            "UpperLimit": 199,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 199,
-            "DefaultLowerLimit": 0,
-            "Unit": "mg/dl",
-            "Description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test"
+            "isSelected": True,
+            "upperLimit": 199,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 199,
+            "defaultLowerLimit": 0,
+            "unit": "mg/dl",
+            "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test"
             },
     "BloodPressure": {
-            "Selected": True,
-            "UpperLimit": 122,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 122,
-            "DefaultLowerLimit": 0,
-            "Unit": "mm Hg",
-            "Description": "Diastolic blood pressure"
+            "isSelected": True,
+            "upperLimit": 122,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 122,
+            "defaultLowerLimit": 0,
+            "unit": "mm Hg",
+            "description": "Diastolic blood pressure"
             },
   "SkinThickness": {
-           "Selected": True,
-            "UpperLimit": 99,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 99,
-            "DefaultLowerLimit": 0,
-            "Unit": "mm",
-            "Description": "Triceps skin fold thickness"
+            "isSelected": True,
+            "upperLimit": 99,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 99,
+            "defaultLowerLimit": 0,
+            "unit": "mm",
+            "description": "Triceps skin fold thickness"
             },
   "Insulin": {
-           "Selected": True,
-            "UpperLimit": 850,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 850,
-            "DefaultLowerLimit": 0,
-            "Unit": "mm",
-            "Description": "2-Hour serum insulin"
+            "isSelected": True,
+            "upperLimit": 850,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 850,
+            "defaultLowerLimit": 0,
+            "unit": "mm",
+            "description": "2-Hour serum insulin"
             },
   "BMI": {
-           "Selected": True,
-            "UpperLimit": 67.1,
-            "LowerLimit": 0,
-            "DefaultUpperLimit": 67.1,
-            "DefaultLowerLimit": 0,
-            "Unit": "kg/m^2",
-            "Description": "Body mass index"
+            "isSelected": True,
+            "upperLimit": 67.1,
+            "lowerLimit": 0,
+            "defaultUpperLimit": 67.1,
+            "defaultLowerLimit": 0,
+            "unit": "kg/m^2",
+            "description": "Body mass index"
             },
   "DiabetesPedigreeFunction": {
-           "Selected": True,
-            "UpperLimit": 2.39,
-            "LowerLimit": 0.07,
-            "DefaultUpperLimit": 2.39,
-            "DefaultLowerLimit": 0.07,
-            "Unit": None,
-            "Description": "Diabetes pedigree function"
+            "isSelected": True,
+            "upperLimit": 2.39,
+            "lowerLimit": 0.07,
+            "defaultUpperLimit": 2.39,
+            "defaultLowerLimit": 0.07,
+            "unit": None,
+            "description": "Diabetes pedigree function"
             },
   "Age": {
-           "Selected": True,
-            "UpperLimit": 85,
-            "LowerLimit": 20,
-            "DefaultUpperLimit": 85,
-            "DefaultLowerLimit": 20,
-            "Unit": "years",
-            "Description": "Age in years"
+            "isSelected": True,
+            "upperLimit": 85,
+            "lowerLimit": 20,
+            "defaultUpperLimit": 85,
+            "defaultLowerLimit": 20,
+            "unit": "years",
+            "description": "Age in years"
         },
    "CurrentScore" : 80,
 }

@@ -210,3 +210,16 @@ async def GetConfigData(user: str):
 		"OutputJson": output_json
 	}
 	return response
+
+@app.post("/configandretrain", response_model=OutputwithPayloadDataModel)
+async def config_and_retrain(config_data: ConfigDataModel):
+
+	# Call method to validate user
+	code, message, output_json = retrain_config_data(config_data)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
+	}
+	return response

@@ -160,21 +160,33 @@ def prepare_user_data(user):
 
     # Load Filters and Filter Data
     filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    # Load unfiltered data
+    unfiltered_data, _ = load_training_data(filters)
+
     output_json = {}
     for feat in ALL_FEATURES:
+        if feat not in selected_features:
+            y_val = np.histogram(unfiltered_data[feat].tolist(), bins=30)[0].tolist()
+            x_val = np.histogram(unfiltered_data[feat].tolist(), bins=30)[0].tolist()
+            avg = np.round(np.mean(unfiltered_data[feat].values),1)
+        else:
+            y_val = np.histogram(data[feat].tolist(), bins=30)[0].tolist()
+            x_val = np.histogram(data[feat].tolist(), bins=30)[1].tolist()
+            avg = np.round(np.mean(data[feat].values),1)
+
         output_json[feat] = {
             "name" : feat,                
-            "description" : user_details[feat]["Description"],
-            "unit" : user_details[feat]["Unit"],
-            "ydata" : np.histogram(data[feat].tolist(), bins=30)[0].tolist(),
-            "xdata" : np.histogram(data[feat].tolist(), bins=30)[1].tolist(),
-            "upperLimit" : user_details[feat]["UpperLimit"],
-            "lowerLimit" : user_details[feat]["LowerLimit"],
-            "average" : np.round(np.mean(data[feat].values),1),
-            "isSelected" : user_details[feat]["Selected"],  
+            "description" : user_details[feat]["description"],
+            "unit" : user_details[feat]["unit"],
+            "ydata" : y_val,
+            "xdata" : x_val,
+            "upperLimit" : user_details[feat]["upperLimit"],
+            "lowerLimit" : user_details[feat]["lowerLimit"],
+            "average" : avg,
+            "isSelected" : user_details[feat]["isSelected"],  
             # Add defaults
-            "defaultUpperLimit" : user_details[feat]["DefaultUpperLimit"],
-            "defaultLowerLimit" : user_details[feat]["DefaultLowerLimit"],         
+            "defaultUpperLimit" : user_details[feat]["defaultUpperLimit"],
+            "defaultLowerLimit" : user_details[feat]["defaultLowerLimit"],         
         }
     # Add additional details for target variable
     diabetic_count = len(labels[labels[TARGET_VARIABLE] == 1])
@@ -193,8 +205,8 @@ def load_filtered_user_data(user_details):
     selected_features = []
     filters = []
     for feature in ALL_FEATURES:
-        filters.append((user_details[feature]["LowerLimit"], user_details[feature]["UpperLimit"]))
-        if user_details[feature]["Selected"]:
+        filters.append((user_details[feature]["lowerLimit"], user_details[feature]["upperLimit"]))
+        if user_details[feature]["isSelected"]:
             selected_features.append(feature)
             
     # fetch data
@@ -294,4 +306,25 @@ def key_insights_gen(user):
 			"insight_list" : ki_df["insight"].tolist()
 		    }
     return (True, f"Successful. Data summary details founde for user: {user}", insights)
+
+
+def retrain_config_data(config_data):
+    user = config_data.UserId
+    # Update records
+    for feature in ALL_FEATURES:
+        updated_feature = config_data.JsonData[feature]
+        for unwanted_val in ["xdata", "ydata", "average"]:
+            del updated_feature[unwanted_val]
+        update_user_details(user, {feature : updated_feature})
+    # re-train model with updated data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    # train model
+    train_score, test_score = training_model(data, labels, selected_features)
+    update_user_details(user, {"CurrentScore" : test_score})
+
+    return (True, f"Success. New score is :{test_score}", user_details)
 

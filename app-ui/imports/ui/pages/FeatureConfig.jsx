@@ -32,6 +32,41 @@ const GetConfigData = ({ userid, setFeatureConfig }) => {
             console.log(error);
         });
 };
+const PostConfigData =  ({ userid, featureConfig, setFeatureConfig }) => {
+    axios.post(BASE_API + '/configandretrain', {
+        UserId: userid,
+        JsonData :featureConfig
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        //console.log(response.data);
+        if (response.data["StatusCode"]) {
+            setFeatureConfig({
+                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
+                "Glucose": response.data["OutputJson"]["Glucose"],
+                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
+                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
+                "Insulin": response.data["OutputJson"]["Insulin"],
+                "BMI": response.data["OutputJson"]["BMI"],
+                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
+                "Age": response.data["OutputJson"]["Age"],
+                //"target": response.data["OutputJson"]["target"] - # TO-DO: Handle this
+            });
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
 
 const handleCancelButton = (userid, setFeatureConfig) => {
     if (window.confirm('Do you want to revert all your changes?')) {
@@ -40,9 +75,9 @@ const handleCancelButton = (userid, setFeatureConfig) => {
     }
 };
 
-const handleTrainButton = (userid, setFeatureConfig) => {
+const handleTrainButton = (userid, featureConfig, setFeatureConfig) => {
     if (window.confirm('Do you want to save and re-train the machine learning model?')) {
-        //GetConfigData({ userid, setFeatureConfig });
+        PostConfigData({ userid, featureConfig, setFeatureConfig });
         console.log('Selected for re-train');
         window.location.reload();
     }
@@ -345,7 +380,7 @@ export const FeatureConfig = ({ userid }) => {
                     <button
                         className="train-button"
                         type="submit"
-                        onClick={handleTrainButton}
+                        onClick={() => {handleTrainButton(userid, featureConfig, setFeatureConfig)}}
                     >
                         Save and Re-train
                     </button>

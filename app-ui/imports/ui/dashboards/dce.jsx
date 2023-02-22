@@ -8,10 +8,9 @@ import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
+import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 // TO-DO - Delete following if not required
 import { distributionRecords } from '../records/distributionRecords.jsx';
-import { records } from '../records/records.jsx';
-import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
