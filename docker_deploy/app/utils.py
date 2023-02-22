@@ -166,12 +166,12 @@ def prepare_user_data(user):
     output_json = {}
     for feat in ALL_FEATURES:
         if feat not in selected_features:
-            y_val = np.histogram(unfiltered_data[feat].tolist(), bins=30)[0].tolist()
-            x_val = np.histogram(unfiltered_data[feat].tolist(), bins=30)[0].tolist()
+            y_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[0].tolist()
+            x_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(unfiltered_data[feat].values),1)
         else:
-            y_val = np.histogram(data[feat].tolist(), bins=30)[0].tolist()
-            x_val = np.histogram(data[feat].tolist(), bins=30)[1].tolist()
+            y_val = np.histogram(data[feat].tolist(), bins=15)[0].tolist()
+            x_val = np.histogram(data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(data[feat].values),1)
 
         output_json[feat] = {

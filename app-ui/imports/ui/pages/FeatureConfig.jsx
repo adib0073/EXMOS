@@ -126,8 +126,8 @@ export const FeatureConfig = ({ userid }) => {
                                     <b>{featureConfig["target"].name}</b>
                                 </div>
                                 <div className='cd-chart-left-control'>
-                                    <Input addonBefore={featureConfig["target"]["categories"][0]} defaultValue={featureConfig["target"]["category_ratio"][0]} size="small" />
-                                    <Input addonBefore={featureConfig["target"]["categories"][1]} defaultValue={featureConfig["target"]["category_ratio"][1]} onChange={inputOnChange} />
+                                    <Input addonBefore={featureConfig["target"]["categories"][0]} key={featureConfig["target"]["categories"][0]+featureConfig["target"]["category_ratio"][0]} defaultValue={featureConfig["target"]["category_ratio"][0]} size="small" />
+                                    <Input addonBefore={featureConfig["target"]["categories"][1]} key={featureConfig["target"]["categories"][1]+featureConfig["target"]["category_ratio"][1]} defaultValue={featureConfig["target"]["category_ratio"][1]} onChange={inputOnChange} />
                                 </div>
                             </div>
                             <div className='cd-chart-right'>

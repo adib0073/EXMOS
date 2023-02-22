@@ -41,6 +41,7 @@ export const ConfigSlider = ({ defaultLimit,
                 label: defaultLimit[1],
             },
         }}
+        key={featureName+selectedLimit[0]+selectedLimit[1]}
         defaultValue={selectedLimit}
         min={defaultLimit[0]}
         max={defaultLimit[1]}
