@@ -29,7 +29,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         },
         "BloodPressure": {
-          "name": "BloodPressure",
+          "name": "Blood Pressure",
           "description": "Diastolic blood pressure",
           "unit": "mm Hg",
           "ydata": [0],
@@ -42,7 +42,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         },
         "SkinThickness": {
-          "name": "SkinThickness",
+          "name": "Skin Thickness",
           "description": "Triceps skin fold thickness",
           "unit": "mm",
           "ydata": [0],
@@ -68,7 +68,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         },
         "BMI": {
-          "name": "BMI",
+          "name": "Body mass index",
           "description": "Body mass index",
           "unit": "kg/m^2",
           "ydata": [0],
@@ -81,7 +81,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         },
         "DiabetesPedigreeFunction": {
-          "name": "DiabetesPedigreeFunction",
+          "name": "Diabetes Pedigree Function",
           "description": "Diabetes pedigree function",
           "unit": null,
           "ydata": [0],

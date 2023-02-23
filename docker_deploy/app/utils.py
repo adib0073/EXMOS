@@ -166,11 +166,11 @@ def prepare_user_data(user):
     output_json = {}
     for feat in ALL_FEATURES:
         if feat not in selected_features:
-            y_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[0].tolist()
+            y_val = [0] + np.histogram(unfiltered_data[feat].tolist(), bins=15)[0].tolist()
             x_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(unfiltered_data[feat].values),1)
         else:
-            y_val = np.histogram(data[feat].tolist(), bins=15)[0].tolist()
+            y_val = [0] + np.histogram(data[feat].tolist(), bins=15)[0].tolist()
             x_val = np.histogram(data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(data[feat].values),1)
 
@@ -325,6 +325,8 @@ def retrain_config_data(config_data):
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
     update_user_details(user, {"CurrentScore" : test_score})
+    # Adding target in output json
+    user_details['target'] = config_data.JsonData['target']
 
     return (True, f"Success. New score is :{test_score}", user_details)
 
