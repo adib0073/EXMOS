@@ -83,6 +83,7 @@ USER_DETAIL_JSON = {
             "description": "Age in years"
         },
    "CurrentScore" : 80,
+   "PrevScore": 0
 }
 # FRIENDLY NAMES
 FRIENDLY_NAMES = {

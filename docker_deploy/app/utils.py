@@ -224,25 +224,22 @@ def generate_pred_chart_data(user):
         return (False, f"Invalid username: {user}", user_details)
     else:
         filters, selected_features, data, labels = load_filtered_user_data(user_details)
-        # train model
-        train_score, test_score = training_model(data, labels, selected_features)
-        # generate test accuracy
-        prev_score = user_details["CurrentScore"]
+
+        prev_score = user_details["PrevScore"]
+        curr_score = user_details["CurrentScore"]
         
         # calc score change
         score_change = 0
-        if prev_score is None:
+        if prev_score is None or prev_score == 0:
             score_change = 0
         else:
-            score_change = test_score - prev_score
-            # Update new accuracy
-            # update_user_details(user, {"CurrentScore" : test_score})
+            score_change = np.ceil(curr_score) - np.ceil(prev_score)
 
         output_json = {
-            "Accuracy" : np.ceil(test_score),
+            "Accuracy" : np.ceil(curr_score),
             "NumSamples" : data.shape[0],
             "NumFeatures" : data.shape[1],
-            "ScoreChange" : np.ceil(score_change)
+            "ScoreChange" : score_change
         }
 
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
@@ -324,7 +321,12 @@ def retrain_config_data(config_data):
     filters, selected_features, data, labels = load_filtered_user_data(user_details)
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
-    update_user_details(user, {"CurrentScore" : test_score})
+    # Update old score
+    prev_score = user_details["CurrentScore"]
+    if prev_score != test_score:
+        update_user_details(user, {"CurrentScore" : test_score})
+        update_user_details(user, {"PrevScore" : prev_score})
+    
     # Adding target in output json
     user_details['target'] = config_data.JsonData['target']
 
