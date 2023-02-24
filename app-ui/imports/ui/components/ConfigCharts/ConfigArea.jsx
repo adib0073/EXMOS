@@ -5,10 +5,16 @@ import { Line, getElementsAtEvent } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './ConfigCharts.css';
 
-export const ConfigArea = ({ y_values, x_values, defaultLimit, selectedLimit }) => {
+export const ConfigArea = ({
+    y_values,
+    x_values,
+    defaultLimit,
+    selectedLimit,
+    isActive
+}) => {
 
     let filtered_x = x_values.filter((function (value) {
-        return value >= selectedLimit[0] && value<=selectedLimit[1];
+        return value >= selectedLimit[0] && value <= selectedLimit[1];
     }));
 
     let boundary_val1 = 0;
@@ -23,9 +29,11 @@ export const ConfigArea = ({ y_values, x_values, defaultLimit, selectedLimit }) 
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
+    const chartColor = isActive ? "#67A3FF" : "#C5C4C4";
+
     const highlightRegion = (ctx) => {
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
-            return "#67A3FF";
+            return chartColor;
         }
         else {
 

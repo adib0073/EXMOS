@@ -138,7 +138,8 @@ export const ContinuousDistribution = (
         yVal,
         xVal,
         uLimit,
-        lLimit
+        lLimit,
+        isActive
     }) => {
 
     let x_values = [0];
@@ -158,9 +159,12 @@ export const ContinuousDistribution = (
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
+    const chartColor = isActive ? "#67A3FF" : "#E5E5E5";
+    const cardColor = isActive ? "#1363DF" : "#E5E5E5";
+
     const highlightRegion = (ctx) => {
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
-            return "#67A3FF";
+            return chartColor;
         }
         else {
 
@@ -371,7 +375,7 @@ export const ContinuousDistribution = (
     };
 
     return (
-        <div className="SummaryCard" style={{ background: "#1363DF" }}>
+        <div className="SummaryCard" style={{ background: cardColor }}>
             <div className="SummaryValue">
                 {average}
             </div>

@@ -167,6 +167,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Glucose"}
+                                            isActive = {featureConfig["Glucose"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -175,6 +176,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["Glucose"].xdata}
                                         y_values={featureConfig["Glucose"].ydata}
                                         selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]}
+                                        isActive = {featureConfig["Glucose"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -195,6 +197,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"BMI"}
+                                            isActive = {featureConfig["BMI"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -203,6 +206,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["BMI"].xdata}
                                         y_values={featureConfig["BMI"].ydata}
                                         selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
+                                        isActive = {featureConfig["BMI"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -225,6 +229,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Insulin"}
+                                            isActive = {featureConfig["Insulin"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -233,6 +238,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["Insulin"].xdata}
                                         y_values={featureConfig["Insulin"].ydata}
                                         selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
+                                        isActive = {featureConfig["Insulin"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -253,6 +259,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Age"}
+                                            isActive = {featureConfig["Age"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -261,6 +268,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["Age"].xdata}
                                         y_values={featureConfig["Age"].ydata}
                                         selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
+                                        isActive = {featureConfig["Age"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -281,6 +289,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Pregnancies"}
+                                            isActive = {featureConfig["Pregnancies"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -289,6 +298,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["Pregnancies"].xdata}
                                         y_values={featureConfig["Pregnancies"].ydata}
                                         selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]}
+                                        isActive = {featureConfig["Pregnancies"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -311,6 +321,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"BloodPressure"}
+                                            isActive = {featureConfig["BloodPressure"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -319,6 +330,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["BloodPressure"].xdata}
                                         y_values={featureConfig["BloodPressure"].ydata}
                                         selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
+                                        isActive = {featureConfig["BloodPressure"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -339,6 +351,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"SkinThickness"}
+                                            isActive = {featureConfig["SkinThickness"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -347,6 +360,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["SkinThickness"].xdata}
                                         y_values={featureConfig["SkinThickness"].ydata}
                                         selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
+                                        isActive = {featureConfig["SkinThickness"].isSelected}
                                     />
                                 </div>
                             </div>
@@ -367,6 +381,7 @@ export const FeatureConfig = ({ userid }) => {
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"DiabetesPedigreeFunction"}
+                                            isActive = {featureConfig["DiabetesPedigreeFunction"].isSelected}
                                         />
                                     </div>
                                 </div>
@@ -375,6 +390,7 @@ export const FeatureConfig = ({ userid }) => {
                                         x_values={featureConfig["DiabetesPedigreeFunction"].xdata}
                                         y_values={featureConfig["DiabetesPedigreeFunction"].ydata}
                                         selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]}
+                                        isActive = {featureConfig["DiabetesPedigreeFunction"].isSelected}
                                     />
                                 </div>
                             </div>

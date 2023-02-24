@@ -15,8 +15,11 @@ export const ConfigSlider = ({ defaultLimit,
     selectedLimit,
     featureConfig,
     setFeatureConfig,
-    featureName
+    featureName,
+    isActive
 }) => {
+    const chartColor = isActive ? "#67A3FF" : "#6C6C6C";
+
     return (<Slider
         range
         autoFocus={false}
@@ -47,9 +50,10 @@ export const ConfigSlider = ({ defaultLimit,
         max={defaultLimit[1]}
         onChange={(value) => {handleSliderChange(value, featureName, featureConfig, setFeatureConfig)}}
         //dotStyle={{ borderColor: "#67A3FF" }}
-        trackStyle={{ background: "#67A3FF" }}
-        handleStyle={{ borderColor: "#67A3FF" }}
+        trackStyle={{ background: chartColor }}
+        handleStyle={{ borderColor: chartColor }}
         railStyle={{ background: "#E5E5E5" }}
+        disabled ={!isActive}
     />);
 
 };
