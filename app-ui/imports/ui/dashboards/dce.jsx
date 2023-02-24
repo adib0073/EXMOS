@@ -3,6 +3,8 @@ import { useRef, useState, useEffect } from 'react';
 import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
+import { UpGreenArrow } from '../components/Icons/UpGreenArrow.jsx';
+import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
@@ -86,7 +88,7 @@ const GetKIChartValue = ({ userid, setKiChartVals }) => {
 export const DCE = ({ user }) => {
     var userid = user.id;
     var cohort = user.cohort;
-    if (userid == null || userid==""){
+    if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
     }
     const accuracyChartRef = useRef();
@@ -110,6 +112,9 @@ export const DCE = ({ user }) => {
         GetKIChartValue({ userid, setKiChartVals });
     }, []);
 
+    const greenFont = "#449231";
+    const redFont = "#D64242";
+
     return (
         <>
             <NavBar user={user} />
@@ -130,13 +135,17 @@ export const DCE = ({ user }) => {
                                     <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Training Samples : <b>{accChartVals.nsamples}</b>
+                                    <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> Features Considered : <b>{accChartVals.nfeats}</b>
+                                    <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> <b>{accChartVals.pct}%</b> from previous score
+                                    <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
+                                        {(accChartVals.pct > 0) ? <UpGreenArrow/> : <DownRedArrow/>}
+                                        <b> &nbsp;{accChartVals.pct}% </b>
+                                    </span>
+                                    from previous score
                                 </div>
                             </div>
                         </div >
