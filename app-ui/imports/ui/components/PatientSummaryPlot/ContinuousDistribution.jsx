@@ -3,7 +3,6 @@ import React from 'react';
 import { Line as LineJS } from 'chart.js/auto';
 import { Line, getElementsAtEvent } from 'react-chartjs-2';
 import './PatientSummaryPlot.css';
-import { records } from '../../records/records';
 
 // ** All Mouse Event Functions ** //
 // only active function for mouse move
@@ -115,18 +114,6 @@ function handleMouseDown(chart,
 // only active function for mouse leave element
 function handleMouseOut(chart, eventParams, event) {
     chart.update('none');
-    eventParams.stateUpdates.setMeasureValue(
-        [
-            records[eventParams.patient]["PatientInfo"].bloodSugar.value,
-            records[eventParams.patient]["PatientInfo"].waistMeasure.value,
-            records[eventParams.patient]["PatientInfo"].bmi.value,
-            records[eventParams.patient]["PatientInfo"].drinkingStatus.value,
-            records[eventParams.patient]["PatientInfo"].smokingStatus.value,
-            records[eventParams.patient]["PatientInfo"].physicalActivityLevel.value,
-        ]);
-
-
-    eventParams.stateUpdates.setRisk(eventParams.risk.currentRisk - factorChange);
     chart.update();
 }
 
@@ -138,18 +125,6 @@ function handleMouseUp(chart,
     event) {
 
     chart.update('none');
-    eventParams.stateUpdates.setMeasureValue(
-        [
-            records[eventParams.patient]["PatientInfo"].bloodSugar.value,
-            records[eventParams.patient]["PatientInfo"].waistMeasure.value,
-            records[eventParams.patient]["PatientInfo"].bmi.value,
-            records[eventParams.patient]["PatientInfo"].drinkingStatus.value,
-            records[eventParams.patient]["PatientInfo"].smokingStatus.value,
-            records[eventParams.patient]["PatientInfo"].physicalActivityLevel.value,
-        ]);
-
-
-    eventParams.stateUpdates.setRisk(eventParams.risk.currentRisk - factorChange);
     chart.update();
 }
 
@@ -159,11 +134,6 @@ let factorChange = 0;
 
 export const ContinuousDistribution = (
     {
-        patient,
-        currentRisk,
-        //setRisk,
-        measure,
-        index,
         average,
         yVal,
         xVal,
@@ -352,10 +322,8 @@ export const ContinuousDistribution = (
         boundary: { boundary_val1, boundary_val2 },
         markerFunction: drawMarker,
         //risk: { currentRisk, factorChange, importanceFactor },
-        risk: { currentRisk, factorChange },
+        risk: { factorChange },
         x_val: x_values,
-        index: index,
-        patient: patient,
     };
 
     const onMove = (event) => {
@@ -386,19 +354,7 @@ export const ContinuousDistribution = (
             eventParams,
             event.nativeEvent);
     }
-    /*
-    const resetRiskFactors = () => {
-        setPRecords([
-            records[patient]["PatientInfo"].bloodSugar.value,
-            records[patient]["PatientInfo"].waistMeasure.value,
-            records[patient]["PatientInfo"].bmi.value,
-            records[patient]["PatientInfo"].drinkingStatus.value,
-            records[patient]["PatientInfo"].smokingStatus.value,
-            records[patient]["PatientInfo"].physicalActivityLevel.value
-        ]);
-        //setRisk(records[patient]["Risk"]);
-        //updateIsSelectedCCFE([false, false]);
-    }*/
+
     const onDown = (event) => {
 
         //resetRiskFactors();

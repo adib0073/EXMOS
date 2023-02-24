@@ -12,7 +12,6 @@ import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 // TO-DO - Delete following if not required
-import { distributionRecords } from '../records/distributionRecords.jsx';
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
@@ -267,11 +266,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["Glucose"].average]}
                                         yVal={dsChartVals["Glucose"].ydata}
                                         xVal={dsChartVals["Glucose"].xdata}
@@ -285,11 +279,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["BloodPressure"].average]}
                                         yVal={dsChartVals["BloodPressure"].ydata}
                                         xVal={dsChartVals["BloodPressure"].xdata}
@@ -303,11 +292,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["Insulin"].average]}
                                         yVal={dsChartVals["Insulin"].ydata}
                                         xVal={dsChartVals["Insulin"].xdata}
@@ -321,11 +305,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["Pregnancies"].average]}
                                         yVal={dsChartVals["Pregnancies"].ydata}
                                         xVal={dsChartVals["Pregnancies"].xdata}
@@ -341,11 +320,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["SkinThickness"].average]}
                                         yVal={dsChartVals["SkinThickness"].ydata}
                                         xVal={dsChartVals["SkinThickness"].xdata}
@@ -358,11 +332,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["Age"].average]}
                                         yVal={dsChartVals["Age"].ydata}
                                         xVal={dsChartVals["Age"].xdata}
@@ -375,11 +344,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["DiabetesPedigreeFunction"].average]}
                                         yVal={dsChartVals["DiabetesPedigreeFunction"].ydata}
                                         xVal={dsChartVals["DiabetesPedigreeFunction"].xdata}
@@ -392,11 +356,6 @@ export const DCE = ({ user }) => {
                                     </span>
                                     <br />
                                     <ContinuousDistribution
-                                        patient={"2631"}
-                                        currentRisk={80}
-                                        //setRisk={setRisk}
-                                        measure={distributionRecords["bloodSugar"]}
-                                        index={0}
                                         average={[dsChartVals["BMI"].average]}
                                         yVal={dsChartVals["BMI"].ydata}
                                         xVal={dsChartVals["BMI"].xdata}
