@@ -175,7 +175,7 @@ def prepare_user_data(user):
             avg = np.round(np.mean(data[feat].values),1)
 
         output_json[feat] = {
-            "name" : feat,                
+            "name" : FRIENDLY_NAMES[feat],                
             "description" : user_details[feat]["description"],
             "unit" : user_details[feat]["unit"],
             "ydata" : y_val,
