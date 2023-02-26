@@ -30,6 +30,7 @@ export const ConfigArea = ({
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
     const chartColor = isActive ? "#67A3FF" : "#C5C4C4";
+    const pinColor = isActive ? "#244CB1" : "#C5C4C4";
 
     const highlightRegion = (ctx) => {
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
@@ -150,7 +151,7 @@ export const ConfigArea = ({
         ctx.setLineDash([0, 0]);
         ctx.lineDashOffset = 0;
 
-        const markerLength = 0.3 * height;
+        const markerLength = 0.5 * height;
         const startingPoint = top + (height - markerLength);
 
         let markerPosition = x.getPixelForValue(value_marker);
@@ -172,19 +173,10 @@ export const ConfigArea = ({
             ctx.save();
 
             // Lower Boundary Line   
-            ctx.strokeStyle = '#244CB1';
-            ctx.setLineDash([5, 10]);
-            ctx.lineDashOffset = 2;
-            ctx.strokeRect(x.getPixelForValue(boundary_ind1), top, 0, height);
-
-            // Higher Boundary Line
-            ctx.strokeStyle = '#244CB1';
-            ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
-
-            // Current Marker
-            //var markerVal = x_values.reduce((prev, curr) => Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev);
-            //var markerIndx = x_values.indexOf(markerVal);
-            //drawMarker(ctx, top, height, x, y, '#244CB1', markerIndx);
+            ctx.strokeStyle = pinColor;
+            drawMarker(ctx, top, height, x, y, ctx.strokeStyle, boundary_ind1);
+            // Upper Boundary Line   
+            drawMarker(ctx, top, height, x, y, ctx.strokeStyle, boundary_ind2);
         }
     }
 
