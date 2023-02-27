@@ -182,7 +182,8 @@ export const ConfigArea = ({
 
     const chartRef = useRef();
 
-    return (<div className="AreaPlotContainer">
+    return (
+    <div className="AreaPlotContainer" style={{cursor:!isActive?"not-allowed":"default"}}>
         <Line
             data={data}
             options={options}
