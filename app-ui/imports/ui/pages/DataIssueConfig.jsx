@@ -3,6 +3,7 @@ import { InfoLogo } from '../components/Icons/InfoLogo';
 import { Collapse, Checkbox, Select } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
+import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
 
 export const DataIssueConfig = () => {
 
@@ -22,8 +23,8 @@ export const DataIssueConfig = () => {
     };
 
     const selectGen = (issueName) => (
-        <Checkbox onChange={() => { handleTickClick(issueName) }}/>
-      );
+        <Checkbox onChange={() => { handleTickClick(issueName) }} />
+    );
 
     return (
         <>
@@ -53,7 +54,17 @@ export const DataIssueConfig = () => {
                             </Select>
                         </div>
                         <div className='data-issue-r2'>
-                            <p>{"Graphs"}</p>
+                            <div className='di-graph-left'>
+                                Before Correction
+                                <ConfigScatter x_values={[1, 2, 3, 4, 5]} y_values={[10, 20, 30, 40, 50]} outlierLimit={[15,40]}/>
+                            </div>
+                            <div className='di-graph-middle'>
+                                {"---->"}
+                            </div>
+                            <div className='di-graph-right'>
+                                After Correction
+                                <ConfigScatter x_values={[2, 3, 4]} y_values={[20, 30, 40]} outlierLimit={[15,40]} />
+                            </div>
                         </div>
                         <div className='data-issue-r3'>
                             <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>

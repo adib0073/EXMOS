@@ -199,10 +199,12 @@ ul.tab li.active {
     align-items: center;
     justify-content: center;
 }
-.ant-input-group-addon{
+
+.ant-input-group-addon {
     font-size: small;
 }
-.ant-input{
+
+.ant-input {
     font-size: small;
     padding-left: 5px;
 }
@@ -247,7 +249,54 @@ ul.tab li.active {
 }
 
 /* Data Issues Configurations */
-.data-issue-list{
+.data-issue-list {
     padding: 5px 50px 20px 50px;
     flex: 6;
+    max-height: 60vh;    
+    overflow-y: scroll;
+}
+
+.data-issue-r1 {
+    padding: 1px;
+}
+
+.data-issue-r2 {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;    
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.di-graph-left {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+.di-graph-middle {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.di-graph-right {
+    flex: 5;
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    padding: 0px;
+    margin: 0px;
+}
+
+.data-issue-r3 {
+    padding: 1px;
 }
