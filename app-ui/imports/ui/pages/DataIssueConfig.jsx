@@ -6,7 +6,7 @@ const { Option } = Select;
 import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
 import { BASE_API } from '../Constants';
 import axios from 'axios';
-
+import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
 
 const GetOutliers = ({ userid, setOutlierData }) => {
     console.log(userid);
@@ -123,7 +123,25 @@ export const DataIssueConfig = ({ userid }) => {
                         <p>{"Your dataset is skewed"}</p>
                     </Panel>
                     <Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
-                        <p>{"Your dataset class is imbalanced"}</p>
+                        <div className='data-issue-r1'>
+                            <span>The training data is imbalanced with {64}% {"non-diabetic"} patients and {36}% {"diabetic"} patients.</span>
+                        </div>
+                        <div className='data-issue-r2'>
+                            <div className='di-graph-left'>
+                                Before Correction
+                                <DataIssueBar x_values={["non-diabetic", "diabetic"]} y_values={[64, 36]} />
+                            </div>
+                            <div className='di-graph-middle'>
+                                {"---->"}
+                            </div>
+                            <div className='di-graph-right'>
+                                After Correction
+                                <DataIssueBar x_values={["non-diabetic", "diabetic"]} y_values={[50, 50]} />
+                            </div>
+                        </div>
+                        <div className='data-issue-r3'>
+                            <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
+                        </div>
                     </Panel>
                     <Panel header="Data Drift" key="5" extra={selectGen("drift")}>
                         <p>{"Your dataset is skewed"}</p>

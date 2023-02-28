@@ -7,8 +7,18 @@
 
 .ScatterPlotContainer {
     background: #FFFFFF;
-    height: 16vh;
+    height: 20vh;
     width: 20vw;
+    border: 2px;
+    border-style: solid;
+    border-color: black;    
+    padding: 2px 5px 5px 5px;
+}
+
+.DataIssueBarContainer {
+    background: #FFFFFF;
+    height: 12vh;
+    width: 10vw;
     border: 2px;
     border-style: solid;
     border-color: black;    
