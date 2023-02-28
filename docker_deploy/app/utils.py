@@ -18,20 +18,53 @@ def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     interquantile_range = quartile3 - quartile1
     up_limit = quartile3 + 1.5 * interquantile_range
     low_limit = quartile1 - 1.5 * interquantile_range
+    # Correct Thresholds
+    low_limit = max(low_limit, min(dataframe[col_name].to_list()))
+    up_limit = min(up_limit,  max(dataframe[col_name].to_list()))
+    
     return low_limit, up_limit
 
 def feature_wise_outlier(dataframe, col_name):
     low_limit, up_limit = outlier_thresholds(dataframe, col_name)
     if dataframe[(dataframe[col_name] > up_limit) | (dataframe[col_name] < low_limit)].any(axis=None):
-        return True
+        return (True, low_limit, up_limit)
     else:
-        return False
+        return (False, low_limit, up_limit)
 
-def detect_outliers(data, features):
+def detect_outliers(user):
+    '''
+    Method to detect feature-wise outlier and their corrected values
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    # Calculate feature wise outlier
     outliers = []
-    for f in features:
-        outliers.append(feature_wise_outlier(data, features))
-    return np.array(outliers).any()
+    for f in selected_features:
+        outlier_status, low_limit, up_limit = feature_wise_outlier(data, f)
+        original_feature_values = data[f].to_list()
+        # Get data after filering outliers
+        corrected_feature_values = data[(data[f] >= low_limit) & (data[f]<= up_limit)][f].to_list()
+        outliers.append(
+            {"feature": FRIENDLY_NAMES[f],
+             "status" : outlier_status,
+             "actuals" : {
+               "y_val" : np.histogram(original_feature_values, bins=15)[0].tolist() + [0],
+                "x_val" : np.histogram(original_feature_values, bins=15)[1].tolist()
+             },
+             "corrected" : {
+               "y_val" : np.histogram(corrected_feature_values, bins=15)[0].tolist() + [0],
+                "x_val" : np.histogram(corrected_feature_values, bins=15)[1].tolist()
+             },
+             "lower" : low_limit,
+             "upper" : up_limit
+             })
+    # Prepare output
+    return (True, f"Successful. Outlier information obtained for user: {user}", outliers)
 
 def remove_outliers():
     pass
@@ -166,11 +199,11 @@ def prepare_user_data(user):
     output_json = {}
     for feat in ALL_FEATURES:
         if feat not in selected_features:
-            y_val = [0] + np.histogram(unfiltered_data[feat].tolist(), bins=15)[0].tolist()
+            y_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[0].tolist() + [0]
             x_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(unfiltered_data[feat].values),1)
         else:
-            y_val = [0] + np.histogram(data[feat].tolist(), bins=15)[0].tolist()
+            y_val = np.histogram(data[feat].tolist(), bins=15)[0].tolist() + [0]
             x_val = np.histogram(data[feat].tolist(), bins=15)[1].tolist()
             avg = np.round(np.mean(data[feat].values),1)
 

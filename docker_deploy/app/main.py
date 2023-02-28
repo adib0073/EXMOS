@@ -83,27 +83,6 @@ async def check_duplicates():
 
 	return response	
 
-@app.get("/checkoutliers")
-async def check_outliers():
-	status_code = 0
-	status_message = "Pending execution"
-	data, labels = load_training_data()
-	checker = detect_outliers(data, list(data.columns))
-
-	if checker:
-		status_code = 1
-		status_message = "Outliers found"	
-	else:
-		status_code = 0
-		status_message = "Outliers not found"	
-	
-	response = { 
-		"StatusCode": status_code,
-		"StatusMessage": status_message,
-		}
-
-	return response
-
 @app.post("/filterfeatures", response_model=OutputDataModel)
 async def retrain_filtered_features(features: FeaturesToInclude):
 
@@ -201,7 +180,7 @@ async def GetKeyInsights(user: str):
 
 @app.get("/getconfigdata/", response_model=OutputwithPayloadDataModel)
 async def GetConfigData(user: str):
-	# Call method to get data quality value for user
+	# Call method to get configured data and features for user
 	code, message, output_json = prepare_user_data(user)
 
 	response = {
@@ -216,6 +195,18 @@ async def config_and_retrain(config_data: ConfigDataModel):
 
 	# Call method to validate user
 	code, message, output_json = retrain_config_data(config_data)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json
+	}
+	return response
+
+@app.get("/checkoutliers")
+async def check_outliers(user: str):
+	# Call method to get outlier information for data configured by the user
+	code, message, output_json = detect_outliers(user)
 
 	response = {
 		"StatusCode": code,
