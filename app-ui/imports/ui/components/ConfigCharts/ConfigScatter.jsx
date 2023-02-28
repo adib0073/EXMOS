@@ -11,8 +11,9 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
 
     let bgColor = [];
 
-    for (let i = 0; i < y_values.length; i++) {
-        if (y_values[i] > outlierLimit[1] || y_values[i] < outlierLimit[0]) {
+    for (let i = 0; i < x_values.length; i++) {
+        if (x_values[i] > outlierLimit[1] || x_values[i] < outlierLimit[0]) {
+            console.log(x_values[i]);
             bgColor.push("#D64242");
         }
         else {
@@ -26,7 +27,7 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
         datasets: [
             {
                 label: 'Count',
-                data: y_values,                          
+                data: y_values,
                 backgroundColor: bgColor,
             },
         ],
@@ -45,12 +46,14 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
         },
         scales: {
             x: {
-                type: 'linear',
+                type: 'linear',                
+                offset: true, 
                 position: 'bottom',
                 max: Math.max.apply(Math, x_values) * 1.2,
                 min: 0,
             },
             y: {
+                offset: true, 
                 max: Math.max.apply(Math, y_values) * 1.2,
             },
         }
@@ -66,9 +69,9 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
             options={options}
             ref={chartRef}
             redraw={true}
-            //onMouseDown={onDown}
-            //onMouseUp={onUp}
-            //plugins={[ChartDataLabels]}
+        //onMouseDown={onDown}
+        //onMouseUp={onUp}
+        //plugins={[ChartDataLabels]}
         />
     </div>);
 };

@@ -13,13 +13,13 @@ const GetOutliers = ({ userid, setOutlierData }) => {
     axios.get(BASE_API + '/checkoutliers/?user=' + userid)
         .then(function (response) {
             console.log(response.data["OutputJson"]);
-
+            setOutlierData(response.data["OutputJson"]);
         }).catch(function (error) {
             console.log(error);
         });
 };
 
-export const DataIssueConfig = ({userid}) => {
+export const DataIssueConfig = ({ userid }) => {
 
     const handleTickClick = (feature) => {
         console.log(feature);
@@ -32,15 +32,37 @@ export const DataIssueConfig = ({userid}) => {
         });
         */
     };
-    const onOutlierFilter = () => {
-        console.log("filter selected");
+    const onOutlierFilter = (value) => {
+        console.log(value);
+        outlierData.map((item, index) => {
+            if (item.feature == value) {
+                setOutlierMapData(item);
+            }
+        });
     };
 
     const selectGen = (issueName) => (
         <Checkbox onChange={() => { handleTickClick(issueName) }} />
     );
-    
-    const [outlierData, setOutlierData] = useState(null)
+
+    const [outlierData, setOutlierData] = useState([
+        {
+            "feature": "No feature",
+            "status": false,
+        }
+    ])
+    const [outlierMapData, setOutlierMapData] = useState({
+        "actuals": {
+            "y_val": [0],
+            "x_val": [0]
+        },
+        "corrected": {
+            "y_val": [0],
+            "x_val": [0]
+        },
+        "lower": 0,
+        "upper": 0
+    })
     useEffect(() => {
         GetOutliers({ userid, setOutlierData });
     }, []);
@@ -62,27 +84,32 @@ export const DataIssueConfig = ({userid}) => {
                         <div className='data-issue-r1'>
                             <span>{"Potential outliers have been found in the training dataset."}</span>
                             <Select
-                                value={"feature 1"}
+                                defaultValue={"Please select:"}
                                 style={{
                                     margin: '0 8px',
                                 }}
-                                onChange={onOutlierFilter}
-                            >
-                                <Option value="f1">feature 1</Option>
-                                <Option value="f2">feature 2</Option>
+                                onChange={onOutlierFilter}>
+
+                                {outlierData.map((item, index) => {
+                                    if (item.status) {
+                                        return (
+                                            <Option key={index} value={item.feature}>{item.feature}</Option>
+                                        );
+                                    }
+                                })}
                             </Select>
                         </div>
                         <div className='data-issue-r2'>
                             <div className='di-graph-left'>
                                 Before Correction
-                                <ConfigScatter x_values={[1, 2, 3, 4, 5]} y_values={[10, 20, 30, 40, 50]} outlierLimit={[15,40]}/>
+                                <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                             </div>
                             <div className='di-graph-middle'>
                                 {"---->"}
                             </div>
                             <div className='di-graph-right'>
                                 After Correction
-                                <ConfigScatter x_values={[2, 3, 4]} y_values={[20, 30, 40]} outlierLimit={[15,40]} />
+                                <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                             </div>
                         </div>
                         <div className='data-issue-r3'>

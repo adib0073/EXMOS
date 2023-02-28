@@ -53,12 +53,12 @@ def detect_outliers(user):
             {"feature": FRIENDLY_NAMES[f],
              "status" : outlier_status,
              "actuals" : {
-               "y_val" : np.histogram(original_feature_values, bins=15)[0].tolist() + [0],
-                "x_val" : np.histogram(original_feature_values, bins=15)[1].tolist()
+               "y_val" : np.histogram(original_feature_values, bins=30)[0].tolist() + [0],
+                "x_val" : np.histogram(original_feature_values, bins=30)[1].tolist()
              },
              "corrected" : {
-               "y_val" : np.histogram(corrected_feature_values, bins=15)[0].tolist() + [0],
-                "x_val" : np.histogram(corrected_feature_values, bins=15)[1].tolist()
+               "y_val" : np.histogram(corrected_feature_values, bins=30)[0].tolist() + [0],
+                "x_val" : np.histogram(corrected_feature_values, bins=30)[1].tolist()
              },
              "lower" : low_limit,
              "upper" : up_limit
