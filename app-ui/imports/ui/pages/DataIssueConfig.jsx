@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo';
 import { Collapse, Checkbox, Select } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
 import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
+import { BASE_API } from '../Constants';
+import axios from 'axios';
 
-export const DataIssueConfig = () => {
+
+const GetOutliers = ({ userid, setOutlierData }) => {
+    console.log(userid);
+    axios.get(BASE_API + '/checkoutliers/?user=' + userid)
+        .then(function (response) {
+            console.log(response.data["OutputJson"]);
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
+export const DataIssueConfig = ({userid}) => {
 
     const handleTickClick = (feature) => {
         console.log(feature);
@@ -25,6 +39,11 @@ export const DataIssueConfig = () => {
     const selectGen = (issueName) => (
         <Checkbox onChange={() => { handleTickClick(issueName) }} />
     );
+    
+    const [outlierData, setOutlierData] = useState(null)
+    useEffect(() => {
+        GetOutliers({ userid, setOutlierData });
+    }, []);
 
     return (
         <>

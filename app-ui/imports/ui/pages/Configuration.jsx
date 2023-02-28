@@ -30,7 +30,7 @@ export const Configuration = ({ user, setUser }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig userid={userid} /> : <DataIssueConfig />}
+                    {activeTab === "tab1" ? <FeatureConfig userid={userid} /> : <DataIssueConfig userid={userid}/>}
                 </div>
             </div>
         </>);
