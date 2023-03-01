@@ -43,9 +43,12 @@ def detect_outliers(user):
     
     filters, selected_features, data, labels = load_filtered_user_data(user_details)
     # Calculate feature wise outlier
+    isOutlier = False
     outliers = []
     for f in selected_features:
         outlier_status, low_limit, up_limit = feature_wise_outlier(data, f)
+        if outlier_status:
+            isOutlier = True
         original_feature_values = data[f].to_list()
         # Get data after filering outliers
         corrected_feature_values = data[(data[f] >= low_limit) & (data[f]<= up_limit)][f].to_list()
@@ -64,7 +67,7 @@ def detect_outliers(user):
              "upper" : up_limit
              })
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}", outliers)
+    return (True, f"Successful. Outlier information obtained for user: {user}", outliers, isOutlier)
 
 def remove_outliers():
     pass
@@ -119,7 +122,8 @@ def training_model(x_data, y_data, selected_features = None):
         ('numerical', numeric_transformer, list(x_data.columns)),
         ])
     clf = Pipeline(steps=[('preprocessor', column_transformer),
-                        ('classifier', RandomForestClassifier(n_estimators=300,
+                        ('classifier', RandomForestClassifier(n_estimators=300, 
+                                                            class_weight="balanced",
                                                             random_state=123))])
     model = clf.fit(x_data, y_data)
     x_test, y_test = load_test_data(selected_features)

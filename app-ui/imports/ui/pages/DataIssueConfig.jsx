@@ -8,12 +8,16 @@ import { BASE_API } from '../Constants';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
 
-const GetOutliers = ({ userid, setOutlierData }) => {
-    console.log(userid);
+const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
+    //console.log(userid);
     axios.get(BASE_API + '/checkoutliers/?user=' + userid)
         .then(function (response) {
-            console.log(response.data["OutputJson"]);
+            //console.log(response.data["OutputJson"]);
             setOutlierData(response.data["OutputJson"]);
+            setDisplayIssue(prevState => ({
+                ...prevState,
+                "outlier": response.data["isOutlier"]
+            }));
         }).catch(function (error) {
             console.log(error);
         });
@@ -21,6 +25,7 @@ const GetOutliers = ({ userid, setOutlierData }) => {
 
 export const DataIssueConfig = ({ userid }) => {
 
+    /* Methods */
     const handleTickClick = (feature) => {
         console.log(feature);
         /*
@@ -33,7 +38,6 @@ export const DataIssueConfig = ({ userid }) => {
         */
     };
     const onOutlierFilter = (value) => {
-        console.log(value);
         outlierData.map((item, index) => {
             if (item.feature == value) {
                 setOutlierMapData(item);
@@ -45,12 +49,24 @@ export const DataIssueConfig = ({ userid }) => {
         <Checkbox onChange={() => { handleTickClick(issueName) }} />
     );
 
+    /* Use State Initializations */
     const [outlierData, setOutlierData] = useState([
         {
             "feature": "No feature",
             "status": false,
         }
-    ])
+    ]);
+    const [displayIssue, setDisplayIssue] = useState(
+        {
+            "outlier": true,
+            "correlation": true,
+            "skew": true,
+            "imbalance": true,
+            "drift": true,
+            "overfit": true,
+        }
+    );
+
     const [outlierMapData, setOutlierMapData] = useState({
         "actuals": {
             "y_val": [0],
@@ -64,7 +80,7 @@ export const DataIssueConfig = ({ userid }) => {
         "upper": 0
     })
     useEffect(() => {
-        GetOutliers({ userid, setOutlierData });
+        GetOutliers({ userid, setOutlierData, setDisplayIssue });
     }, []);
 
     return (
@@ -80,42 +96,43 @@ export const DataIssueConfig = ({ userid }) => {
             </div>
             <div className='data-issue-list'>
                 <Collapse accordion>
-                    <Panel header="Data Outliers" key="1" extra={selectGen("outlier")}>
-                        <div className='data-issue-r1'>
-                            <span>{"Potential outliers have been found in the training dataset."}</span>
-                            <Select
-                                defaultValue={"Please select:"}
-                                style={{
-                                    margin: '0 8px',
-                                }}
-                                onChange={onOutlierFilter}>
+                    {displayIssue.outlier ?
+                        (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")} is>
+                            <div className='data-issue-r1'>
+                                <span>{"Potential outliers have been found in the training dataset."}</span>
+                                <Select
+                                    defaultValue={"Please select:"}
+                                    style={{
+                                        margin: '0 8px',
+                                    }}
+                                    onChange={onOutlierFilter}>
 
-                                {outlierData.map((item, index) => {
-                                    if (item.status) {
-                                        return (
-                                            <Option key={index} value={item.feature}>{item.feature}</Option>
-                                        );
-                                    }
-                                })}
-                            </Select>
-                        </div>
-                        <div className='data-issue-r2'>
-                            <div className='di-graph-left'>
-                                Before Correction
-                                <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                    {outlierData.map((item, index) => {
+                                        if (item.status) {
+                                            return (
+                                                <Option key={index} value={item.feature}>{item.feature}</Option>
+                                            );
+                                        }
+                                    })}
+                                </Select>
                             </div>
-                            <div className='di-graph-middle'>
-                                {"---->"}
+                            <div className='data-issue-r2'>
+                                <div className='di-graph-left'>
+                                    Before Correction
+                                    <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                </div>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
+                                </div>
+                                <div className='di-graph-right'>
+                                    After Correction
+                                    <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                </div>
                             </div>
-                            <div className='di-graph-right'>
-                                After Correction
-                                <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                            <div className='data-issue-r3'>
+                                <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
                             </div>
-                        </div>
-                        <div className='data-issue-r3'>
-                            <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
-                        </div>
-                    </Panel>
+                        </Panel>) : null}
                     <Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
                         <p>{"Your data has high correlation"}</p>
                     </Panel>

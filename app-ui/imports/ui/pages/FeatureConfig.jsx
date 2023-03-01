@@ -15,7 +15,7 @@ import axios from 'axios';
 const GetConfigData = ({ userid, setFeatureConfig }) => {
     axios.get(BASE_API + '/getconfigdata/?user=' + userid)
         .then(function (response) {
-            console.log(response.data["OutputJson"]);
+            //console.log(response.data["OutputJson"]);
             setFeatureConfig({
                 "Pregnancies": response.data["OutputJson"]["Pregnancies"],
                 "Glucose": response.data["OutputJson"]["Glucose"],

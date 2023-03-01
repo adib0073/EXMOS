@@ -13,7 +13,6 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
 
     for (let i = 0; i < x_values.length; i++) {
         if (x_values[i] > outlierLimit[1] || x_values[i] < outlierLimit[0]) {
-            console.log(x_values[i]);
             bgColor.push("#D64242");
         }
         else {
