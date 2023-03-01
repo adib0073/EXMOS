@@ -69,6 +69,50 @@ def detect_outliers(user):
     # Prepare output
     return (True, f"Successful. Outlier information obtained for user: {user}", outliers, isOutlier)
 
+def detect_imbalance(user):
+    '''
+    Method to detect class imbalance and their corrected values
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    filters, selected_features, data, labels = load_filtered_user_data(user_details)
+    # Calculate feature wise outlier
+    isImbalance = False
+    
+    diabetic_count = len(labels[labels[TARGET_VARIABLE] == 1])
+    dc_pct = np.round(100 * (diabetic_count/(len(labels))), 0)
+    ndc_pct = 100 - dc_pct
+
+    if ndc_pct/dc_pct > 1.4 or ndc_pct/dc_pct < 0.75:
+        isImbalance = True
+
+
+    majority = "diabetic"
+    minority = "non-diabetic"
+    maj_pct = dc_pct
+    min_pct = ndc_pct
+
+    if ndc_pct > dc_pct:
+        majority = "non-diabetic"
+        maj_pct = ndc_pct
+        minority = "diabetic"
+        min_pct = dc_pct
+
+
+    output_json = {
+        "majority" : majority,
+        "majority_pct": maj_pct, 
+        "minority" : minority,
+        "minority_pct" : min_pct
+    }
+    # Prepare output
+    return (True, f"Successful. Outlier information obtained for user: {user}", output_json, isImbalance)
+
+
 def remove_outliers():
     pass
 
@@ -133,6 +177,9 @@ def training_model(x_data, y_data, selected_features = None):
     return acc, test_acc
 
 def retrain_selected_features(x_data, y_data, features_to_include):
+    """
+    # TO-DO : Check if this method is being used
+    """
 
     if features_to_include is not None or len(features_to_include) > 0:
         x_data = x_data[features_to_include]
@@ -280,8 +327,6 @@ def generate_pred_chart_data(user):
         }
 
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)
-
-
 
 def key_insights_gen(user):
     """

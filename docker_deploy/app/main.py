@@ -215,3 +215,16 @@ async def check_outliers(user: str):
 		"isOutlier" : isOutlier
 	}
 	return response
+
+@app.get("/checkclassimbalance")
+async def check_imbalance(user: str):
+	# Call method to get outlier information for data configured by the user
+	code, message, output_json, isImbalance = detect_imbalance(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json,
+		"isOutlier" : isImbalance
+	}
+	return response
