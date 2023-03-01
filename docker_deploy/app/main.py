@@ -225,6 +225,6 @@ async def check_imbalance(user: str):
 		"StatusCode": code,
 		"StatusMessage": message,
 		"OutputJson": output_json,
-		"isOutlier" : isImbalance
+		"isImbalance" : isImbalance
 	}
 	return response

@@ -23,6 +23,21 @@ const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
         });
 };
 
+const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue }) => {
+    //console.log(userid);
+    axios.get(BASE_API + '/checkclassimbalance/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setImbalanceData(response.data["OutputJson"]);
+            setDisplayIssue(prevState => ({
+                ...prevState,
+                "imbalance": response.data["isImbalance"]
+            }));
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
 export const DataIssueConfig = ({ userid }) => {
 
     /* Methods */
@@ -56,6 +71,12 @@ export const DataIssueConfig = ({ userid }) => {
             "status": false,
         }
     ]);
+    const [imblanceData, setImbalanceData] = useState({
+        "majority": "non-diabetic",
+        "majority_pct": 0,
+        "minority": "diabetic",
+        "minority_pct": 0
+      });
     const [displayIssue, setDisplayIssue] = useState(
         {
             "outlier": true,
@@ -81,6 +102,7 @@ export const DataIssueConfig = ({ userid }) => {
     })
     useEffect(() => {
         GetOutliers({ userid, setOutlierData, setDisplayIssue });
+        GetImbalance({ userid, setImbalanceData, setDisplayIssue });
     }, []);
 
     return (
@@ -139,27 +161,28 @@ export const DataIssueConfig = ({ userid }) => {
                     <Panel header="Skewed Data" key="3" extra={selectGen("skew")}>
                         <p>{"Your dataset is skewed"}</p>
                     </Panel>
-                    <Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
+                    {displayIssue.imbalance ?
+                    (<Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
                         <div className='data-issue-r1'>
-                            <span>The training data is imbalanced with {64}% {"non-diabetic"} patients and {36}% {"diabetic"} patients.</span>
+                            <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
                         </div>
                         <div className='data-issue-r2'>
                             <div className='di-graph-left'>
                                 Before Correction
-                                <DataIssueBar x_values={["non-diabetic", "diabetic"]} y_values={[64, 36]} />
+                                <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
                             </div>
                             <div className='di-graph-middle'>
                                 {"---->"}
                             </div>
                             <div className='di-graph-right'>
                                 After Correction
-                                <DataIssueBar x_values={["non-diabetic", "diabetic"]} y_values={[50, 50]} />
+                                <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
                             </div>
                         </div>
                         <div className='data-issue-r3'>
                             <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
                         </div>
-                    </Panel>
+                    </Panel>) : null }
                     <Panel header="Data Drift" key="5" extra={selectGen("drift")}>
                         <p>{"Your dataset is skewed"}</p>
                     </Panel>
