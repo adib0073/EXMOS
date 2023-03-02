@@ -268,6 +268,8 @@ def prepare_user_data(user):
             "xdata" : x_val,
             "upperLimit" : user_details[feat]["upperLimit"],
             "lowerLimit" : user_details[feat]["lowerLimit"],
+            "q1" : NON_EXTREME_VALUES[feat][0],
+            "q3" : NON_EXTREME_VALUES[feat][1],
             "average" : avg,
             "isSelected" : user_details[feat]["isSelected"],  
             # Add defaults

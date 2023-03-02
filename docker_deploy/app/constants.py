@@ -52,7 +52,7 @@ USER_DETAIL_JSON = {
             "lowerLimit": 0,
             "defaultUpperLimit": 850,
             "defaultLowerLimit": 0,
-            "unit": "mm",
+            "unit": "mu U/ml",
             "description": "2-Hour serum insulin"
             },
   "BMI": {
@@ -71,7 +71,7 @@ USER_DETAIL_JSON = {
             "defaultUpperLimit": 2.39,
             "defaultLowerLimit": 0.07,
             "unit": None,
-            "description": "Diabetes pedigree function"
+            "description": "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history"
             },
   "Age": {
             "isSelected": True,
@@ -100,3 +100,14 @@ FRIENDLY_NAMES = {
 ACTIONABLE_FEATURES = ["Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI"]
 #target variable
 TARGET_VARIABLE = "Outcome"
+# NON-EXTREME VALUES
+NON_EXTREME_VALUES = {
+    "Pregnancies" : [-1, -1], 
+    "Glucose" : [30, 200], 
+    "BloodPressure" : [30, 100], 
+    "SkinThickness" : [2, 50],
+    "Insulin" : [5, -1], 
+    "BMI" : [10, 60], 
+    "DiabetesPedigreeFunction" : [-1,-1], 
+    "Age" : [-1,-1]
+}

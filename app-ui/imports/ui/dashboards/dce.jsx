@@ -35,7 +35,7 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
 
     axios.get(BASE_API + '/getdatasummaryvalues/?user=' + userid)
         .then(function (response) {
-            //console.log(response.data["OutputJson"]);
+            console.log(response.data["OutputJson"]);
             setDsChartVals({
                 "Pregnancies": response.data["OutputJson"]["Pregnancies"],
                 "Glucose": response.data["OutputJson"]["Glucose"],
@@ -297,6 +297,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Glucose"].upperLimit}
                                         lLimit={dsChartVals["Glucose"].lowerLimit}
                                         isActive={dsChartVals["Glucose"].isSelected}
+                                        q1={dsChartVals["Glucose"].q1}
+                                        q3={dsChartVals["Glucose"].q3}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -311,6 +313,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["BloodPressure"].upperLimit}
                                         lLimit={dsChartVals["BloodPressure"].lowerLimit}
                                         isActive={dsChartVals["BloodPressure"].isSelected}
+                                        q1={dsChartVals["BloodPressure"].q1}
+                                        q3={dsChartVals["BloodPressure"].q3}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -325,6 +329,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Insulin"].upperLimit}
                                         lLimit={dsChartVals["Insulin"].lowerLimit}
                                         isActive={dsChartVals["Insulin"].isSelected}
+                                        q1 = {dsChartVals["Insulin"].q1}
+                                        q3 = {dsChartVals["Insulin"].q3}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -339,6 +345,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Pregnancies"].upperLimit}
                                         lLimit={dsChartVals["Pregnancies"].lowerLimit}
                                         isActive={dsChartVals["Pregnancies"].isSelected}
+                                        q1 = {dsChartVals["Pregnancies"].q1}
+                                        q3 = {dsChartVals["Pregnancies"].q3}
                                     />
                                 </div>
                             </div>
@@ -355,6 +363,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["SkinThickness"].upperLimit}
                                         lLimit={dsChartVals["SkinThickness"].lowerLimit}
                                         isActive={dsChartVals["SkinThickness"].isSelected}
+                                        q1 = {dsChartVals["SkinThickness"].q1}
+                                        q3 = {dsChartVals["SkinThickness"].q3}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -368,6 +378,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Age"].upperLimit}
                                         lLimit={dsChartVals["Age"].lowerLimit}
                                         isActive={dsChartVals["Age"].isSelected}
+                                        q1 = {dsChartVals["Age"].q1}
+                                        q3 = {dsChartVals["Age"].q3}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -381,6 +393,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["DiabetesPedigreeFunction"].upperLimit}
                                         lLimit={dsChartVals["DiabetesPedigreeFunction"].lowerLimit}
                                         isActive={dsChartVals["DiabetesPedigreeFunction"].isSelected}
+                                        q1 = {dsChartVals["DiabetesPedigreeFunction"].q1}
+                                        q3 = {dsChartVals["DiabetesPedigreeFunction"].q3}
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
@@ -394,6 +408,8 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["BMI"].upperLimit}
                                         lLimit={dsChartVals["BMI"].lowerLimit}
                                         isActive={dsChartVals["BMI"].isSelected}
+                                        q1 = {dsChartVals["BMI"].q1}
+                                        q3 = {dsChartVals["BMI"].q3}
                                     />
                                 </div>
                             </div>

@@ -15,8 +15,8 @@ function handleMouseMove(chart, eventParams, mousemove) {
     const yVal = y.getValueForPixel(mousemove.offsetY);
     // modify existing marker
     ctx.strokeStyle = 'maroon';
-    ctx.setLineDash([0, 0]);
-    ctx.lineDashOffset = 0;
+    //ctx.setLineDash([0, 0]);
+    //ctx.lineDashOffset = 0;
 
     const markerLength = 0.3 * height;
     const startingPoint = top + (height - markerLength);
@@ -29,15 +29,16 @@ function handleMouseMove(chart, eventParams, mousemove) {
 
     let markerPosition = x.getPixelForValue(xVal);
 
-    ctx.strokeRect(markerPosition, startingPoint, 0, markerLength);
+    //ctx.strokeRect(markerPosition, startingPoint, 0, markerLength);
 
     const angle = Math.PI / 180;
+    /*
     ctx.beginPath();
     ctx.fillStyle = 'maroon';
     ctx.arc(markerPosition, startingPoint, 3, angle * 0, angle * 360, false);
     ctx.fill();
     ctx.closePath();
-
+    */
 }
 
 const calculateRisk = (newValue, oldValue, lowVal, upVal, importanceFactor = 5) => {
@@ -139,7 +140,9 @@ export const ContinuousDistribution = (
         xVal,
         uLimit,
         lLimit,
-        isActive
+        isActive,
+        q1,
+        q3,
     }) => {
 
     let x_values = [0];
@@ -156,19 +159,38 @@ export const ContinuousDistribution = (
     boundary_val1 = Math.max(lLimit, Math.min(...x_values));
     boundary_val2 = Math.min(uLimit, Math.max(...x_values));
 
+    if (q1 < 0) {
+        q1 = boundary_val1;
+    }
+    if (q3 < 0) {
+        q3 = boundary_val2;
+    }
+
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
-    const chartColor = isActive ? "#67A3FF" : "#E5E5E5";
+    let alpha = 1.0;
+
+    const chartColor = isActive ? `rgb(103, 163, 255, ${alpha})` : "#E5E5E5";
     const cardColor = isActive ? "#1363DF" : "#E5E5E5";
 
     const highlightRegion = (ctx) => {
+        console.log(q1);
+        /*
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
             return chartColor;
         }
         else {
 
             return "#C5C4C4";
+        }
+        */
+        if (x_values[ctx.p0DataIndex] >= q1 && x_values[ctx.p0DataIndex] <= q3) {
+            alpha = 1.0;
+            return chartColor;
+        }
+        else {
+            return isActive ? "#FFB1C1" : "#E5E5E5";;
         }
     };
     // background color function
@@ -200,8 +222,8 @@ export const ContinuousDistribution = (
         plugins: {
             legend: { display: false },
             tooltip: {
-                enabled: false,
-                displayColors: false,
+                enabled: true,
+                displayColors: true,
                 callbacks: {
                     label: function (context) {
                         let label = "Patient Counts " || '';
@@ -249,6 +271,8 @@ export const ContinuousDistribution = (
             },
             x: {
                 offset: true,
+                min: boundary_val1,
+                max: boundary_val2,
                 grid: {
                     display: false,
                     borderColor: 'black',
@@ -260,7 +284,8 @@ export const ContinuousDistribution = (
                     font: {
                         size: 11
                     },
-                    callback: (value, index, values) => {
+                    //stepSize: 5,
+                    callback: (value, index, ticks) => {
                         if (index == boundary_ind1 || index == boundary_ind2) {
                             return Math.round((x_values[index] + Number.EPSILON) * 100) / 100;
                         }
@@ -285,6 +310,7 @@ export const ContinuousDistribution = (
         const startingPoint = top + (height - markerLength);
 
         let markerPosition = x.getPixelForValue(value_marker);
+        //let markerPosition = x.getPixelForValue(average);
         ctx.strokeRect(markerPosition, startingPoint, 0, markerLength);
 
         const angle = Math.PI / 180;
@@ -306,16 +332,18 @@ export const ContinuousDistribution = (
             ctx.strokeStyle = '#244CB1';
             ctx.setLineDash([5, 10]);
             ctx.lineDashOffset = 2;
-            ctx.strokeRect(x.getPixelForValue(boundary_ind1), top, 0, height);
+            //ctx.strokeRect(x.getPixelForValue(boundary_ind1), top, 0, height);
+            //ctx.strokeRect(x.getPixelForValue(q1), top, 0, height);
 
             // Higher Boundary Line
             ctx.strokeStyle = '#244CB1';
-            ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
+            //ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
+            //ctx.strokeRect(x.getPixelForValue(q3), top, 0, height);
 
             // Current Marker
             var markerVal = x_values.reduce((prev, curr) => Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev);
             var markerIndx = x_values.indexOf(markerVal);
-            drawMarker(ctx, top, height, x, y, '#244CB1', markerIndx);
+            drawMarker(ctx, top, height, x, y, isActive ? "black":"#E5E5E5", markerIndx);
         }
     }
 
@@ -378,6 +406,9 @@ export const ContinuousDistribution = (
         <div className="SummaryCard" style={{ background: cardColor }}>
             <div className="SummaryValue">
                 {average}
+                <div className="SummaryAvg">
+                    AVERAGE
+                </div>
             </div>
             <div className="ContDistPlot">
                 <Line data={data}

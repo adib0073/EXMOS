@@ -13,6 +13,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 15,
           "defaultLowerLimit": 0,
           "average": 3.8,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "Glucose": {
@@ -26,6 +28,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 199,
           "defaultLowerLimit": 0,
           "average": 121,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "BloodPressure": {
@@ -39,6 +43,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 122,
           "defaultLowerLimit": 0,
           "average": 68.8,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "SkinThickness": {
@@ -52,12 +58,14 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 99,
           "defaultLowerLimit": 0,
           "average": 20.7,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "Insulin": {
           "name": "Insulin",
           "description": "2-Hour serum insulin",
-          "unit": "mm",
+          "unit": "mu U/ml",
           "ydata": [0],
           "xdata": [0],
           "upperLimit": 846,
@@ -65,6 +73,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 846,
           "defaultLowerLimit": 0,
           "average": 81,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "BMI": {
@@ -78,11 +88,13 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 67.1,
           "defaultLowerLimit": 0,
           "average": 32,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "DiabetesPedigreeFunction": {
           "name": "Diabetes Pedigree Function",
-          "description": "Diabetes pedigree function",
+          "description": "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history",
           "unit": null,
           "ydata": [0],
           "xdata": [0],
@@ -91,6 +103,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 2.39,
           "defaultLowerLimit": 0.07,
           "average": 0.5,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "Age": {
@@ -104,6 +118,8 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "defaultUpperLimit": 85,
           "defaultLowerLimit": 20,
           "average": 33.1,
+          "q1" : 0,
+          "q3": 0,
           "isSelected": true
         },
         "target" : {

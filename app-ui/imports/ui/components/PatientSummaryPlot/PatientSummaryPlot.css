@@ -99,6 +99,16 @@
   font-size: 1.5vw;
   color: #FFFFFF;
 }
+.SummaryAvg{
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.8vw;
+  color: #FFFFFF;
+}
 
 .ValueLabel {
   font-size: 1.0vw;
