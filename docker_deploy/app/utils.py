@@ -138,15 +138,17 @@ def normalize_data():
 
 def load_training_data(filters = None, selected_features = None):
     data = pd.read_csv("data/training_data.csv")
-    if filters is not None:
-        for i in range(len(DEFAULT_VALUES)):
-            data = data[(data[ALL_FEATURES[i]] >= filters[i][0]) & (data[ALL_FEATURES[i]] <= filters[i][1])]
+
+    if selected_features is not None and len(selected_features) > 0:
+        data = data[selected_features + ['Outcome']]
+    
+    if filters is not None and len(filters) > 0:
+        if selected_features is not None and len(selected_features) > 0:
+            for i in range(len(selected_features)):
+                data = data[(data[selected_features[i]] >= filters[i][0]) & (data[selected_features[i]] <= filters[i][1])]
 
     x_data = data.drop(["Outcome"],axis='columns')
     y_data = data.filter(["Outcome"],axis='columns')
-
-    if selected_features is not None and len(selected_features) > 0:
-        x_data = x_data[selected_features]
 
     return x_data, y_data
 
@@ -289,8 +291,8 @@ def load_filtered_user_data(user_details):
     selected_features = []
     filters = []
     for feature in ALL_FEATURES:
-        filters.append((user_details[feature]["lowerLimit"], user_details[feature]["upperLimit"]))
         if user_details[feature]["isSelected"]:
+            filters.append((user_details[feature]["lowerLimit"], user_details[feature]["upperLimit"]))        
             selected_features.append(feature)
             
     # fetch data
