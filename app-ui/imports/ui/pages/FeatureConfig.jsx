@@ -8,6 +8,7 @@ import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
 import 'antd/dist/antd.css';
 import { Input, message, Spin } from 'antd';
+import { AimOutlined } from '@ant-design/icons';
 import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
 import axios from 'axios';
 
@@ -134,7 +135,7 @@ export const FeatureConfig = ({ userid }) => {
                     <div className='config-display-fc-r2c1'>
                         <div className='cd-chart-container'>
                             <div className='cd-chart-tick-box'>
-                                <SelectedIcon />
+                                <AimOutlined style={{ fontSize: '24px', color:'#999999'}}/>
                             </div>
                             <div className='cd-chart-box'>
                                 <div className='cd-chart-left'>
