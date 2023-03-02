@@ -64,7 +64,7 @@
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    padding: 10px;    
+    padding: 10px;
     flex: 2;
 }
 
@@ -206,21 +206,28 @@
     display: flex;
     flex: 2;
 }
+
 .dq-div-rc1 {
     display: flex;
     flex: 1;
     flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
 }
+
 .dq-div-rc2 {
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
 }
+
 .dq-div-rc-text {
     display: flex;
     flex: 1;
     font-size: 1.5vh;
+    align-items: center;
 }
 
 .dq-gauge-chart {
@@ -230,13 +237,14 @@
     align-items: center;
     flex: 1;
 }
+
 /* SUMMARY CHARTS */
 /* chart-box */
 .chart-box {
     display: flex;
     flex-direction: row;
-  }
-  
+}
+
 /* chart-box-1 */
 .chart-box-1 {
     border: 0px;
@@ -248,10 +256,10 @@
     flex: 1;
     justify-content: center;
     align-items: center;
-  }
-  
-  /* chart-box-2 */
-  .chart-box-2 {
+}
+
+/* chart-box-2 */
+.chart-box-2 {
     margin: 0px 0px 0px 10px;
     border: 2px;
     border-style: solid;
@@ -261,4 +269,4 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-  }
+}

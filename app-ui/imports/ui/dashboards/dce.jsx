@@ -4,6 +4,7 @@ import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './dce.css'
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { UpGreenArrow } from '../components/Icons/UpGreenArrow.jsx';
+import { UpRedArrow } from '../components/Icons/UpRedArrow.jsx';
 import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
@@ -141,7 +142,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className='chart-container-info'>
                                     <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
-                                        {(accChartVals.pct > 0) ? <UpGreenArrow/> : <DownRedArrow/>}
+                                        {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
                                         <b> &nbsp;{accChartVals.pct}% </b>
                                     </span>
                                     from previous score
@@ -223,24 +224,48 @@ export const DCE = ({ user }) => {
                                 <div className='dq-div-right'>
                                     <div className='dq-div-rc1'>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> {dqChartVals["issue_val"][0]}% {dqChartVals["issues"][0]}
+                                            {dqChartVals.issue_val[0] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[0] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][0]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][0]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {dqChartVals["issue_val"][1]}% {dqChartVals["issues"][1]}
+                                            {dqChartVals.issue_val[1] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[1] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][1]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][1]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> -  {dqChartVals["issue_val"][2]}% {dqChartVals["issues"][2]}
+                                            {dqChartVals.issue_val[2] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[2] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][2]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][2]}
                                         </div>
                                     </div>
                                     <div className='dq-div-rc2'>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {dqChartVals["issue_val"][3]}% {dqChartVals["issues"][3]}
+                                            {dqChartVals.issue_val[3] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[3] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][3]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][3]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> - {dqChartVals["issue_val"][4]}% {dqChartVals["issues"][4]}
+                                            {dqChartVals.issue_val[4] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[4] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][4]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][4]}
                                         </div>
                                         <div className='dq-div-rc-text'>
-                                            <HollowBullet /> -  {dqChartVals["issue_val"][5]}% {dqChartVals["issues"][5]}
+                                            {dqChartVals.issue_val[5] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
+                                            <span style={{ color: (dqChartVals.issue_val[5] > 0) ? redFont : greenFont }}>
+                                                <b>&nbsp;{dqChartVals["issue_val"][5]}%&nbsp;</b>
+                                            </span>
+                                            {dqChartVals["issues"][5]}
                                         </div>
                                     </div>
                                 </div>
