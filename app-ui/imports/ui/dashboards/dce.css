@@ -15,7 +15,7 @@
     border-color: transparent;
     display: flex;
     flex-direction: column;
-    flex: 2;
+    flex: 1;
     margin-bottom: 30px;
 }
 
@@ -243,6 +243,11 @@
 .chart-box {
     display: flex;
     flex-direction: row;
+}
+.bottom-legend{
+    flex: 0.5;
+    text-align: center;
+    padding: 10px;
 }
 
 /* chart-box-1 */

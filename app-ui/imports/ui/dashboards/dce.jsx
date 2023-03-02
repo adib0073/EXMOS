@@ -8,6 +8,7 @@ import { UpRedArrow } from '../components/Icons/UpRedArrow.jsx';
 import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
+import { RectBlock } from '../components/Icons/RectBlock.jsx';
 import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
@@ -414,6 +415,9 @@ export const DCE = ({ user }) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="bottom-legend">
+                        <RectBlock color="#FFB1C1"/> Extreme Values &nbsp; <RectBlock color="#67A3FF"/> Non-extreme Values
                     </div>
                 </div >
             </div >
