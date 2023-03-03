@@ -165,6 +165,12 @@ export const ContinuousDistribution = (
     if (q3 < 0) {
         q3 = boundary_val2;
     }
+    // Finding q1 index
+    var estVal_q1 = x_values.reduce((prev, curr) => Math.abs(curr - q1) < Math.abs(prev - q1) ? curr : prev);
+    var q1_ind = x_values.indexOf(estVal_q1);
+    // Finding q3 index
+    var estVal_q3 = x_values.reduce((prev, curr) => Math.abs(curr - q3) < Math.abs(prev - q3) ? curr : prev);
+    var q3_ind = x_values.indexOf(estVal_q3);
 
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
@@ -286,7 +292,7 @@ export const ContinuousDistribution = (
                     },
                     //stepSize: 5,
                     callback: (value, index, ticks) => {
-                        if (index == boundary_ind1 || index == boundary_ind2) {
+                        if (index == boundary_ind1 || index == boundary_ind2 || index == q1_ind || index == q3_ind) {
                             return Math.round((x_values[index] + Number.EPSILON) * 100) / 100;
                         }
                     }
@@ -343,7 +349,7 @@ export const ContinuousDistribution = (
             // Current Marker
             var markerVal = x_values.reduce((prev, curr) => Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev);
             var markerIndx = x_values.indexOf(markerVal);
-            drawMarker(ctx, top, height, x, y, isActive ? "black":"#E5E5E5", markerIndx);
+            drawMarker(ctx, top, height, x, y, isActive ? "black" : "#E5E5E5", markerIndx);
         }
     }
 

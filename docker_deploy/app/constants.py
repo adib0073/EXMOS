@@ -107,7 +107,7 @@ NON_EXTREME_VALUES = {
     "BloodPressure" : [30, 100], 
     "SkinThickness" : [2, 50],
     "Insulin" : [5, -1], 
-    "BMI" : [10, 60], 
+    "BMI" : [10, -1], 
     "DiabetesPedigreeFunction" : [-1,-1], 
     "Age" : [-1,-1]
 }
