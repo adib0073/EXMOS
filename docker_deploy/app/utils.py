@@ -441,17 +441,15 @@ def detect_drift(user):
     data_drift_dataset_report.run(reference_data=train_data, 
                                   current_data=test_data)
     
-    
     drift_output = {}
     
     report_result = str(data_drift_dataset_report.json())
-    # drift_output = drift_output.replace("'", '"')
     report_result = json.loads(report_result)
     
     for metric in report_result['metrics']:
         if metric['metric'] == 'DataDriftTable':
             drift_output['overall'] = {
-                "drift_score" : metric['result']['share_of_drifted_columns'],
+                "drift_score" : np.round(metric['result']['share_of_drifted_columns']* 100, 2),
                 "isDrift" : metric['result']['share_of_drifted_columns'] > 0.0
             }
             drift_output['features'] = metric['result']['drift_by_columns']
@@ -463,3 +461,27 @@ def detect_drift(user):
     isDrift =  drift_output['overall']['isDrift']
     # Prepare output
     return (True, f"Successful. Outlier information obtained for user: {user}", drift_output, isDrift)
+
+def detect_skew(user):
+    '''
+    Method to detect class imbalance and their corrected values
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    # Get training data
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(user_details)
+    skewed_df = train_data.skew(axis = 0, skipna = True).abs()
+    # logging.error(train_data.skew(axis = 0, skipna = True))
+    skewed_features = np.count_nonzero( skewed_df.values > 1)
+    skew_pct = np.round(skewed_features/len(selected_features) * 100, 2)
+    isSkew =  skewed_features > 0
+    skew_json = {
+        "skew_score" : skew_pct,
+        "features" : train_data.skew(axis = 0, skipna = True).to_dict()
+    }
+    # Prepare output
+    return (True, f"Successful. Outlier information obtained for user: {user}", skew_json, isSkew)

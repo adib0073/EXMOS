@@ -241,3 +241,16 @@ async def check_drift(user: str):
 		"isDrift" : isDrift
 	}
 	return response
+
+@app.get("/checkskew")
+async def check_skew(user: str):
+	# Call method to check skewness information for data configured by the user
+	code, message, output_json, isSkew = detect_skew(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json,
+		"isDrift" : isSkew
+	}
+	return response
