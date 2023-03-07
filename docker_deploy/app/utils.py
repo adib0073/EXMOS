@@ -1,7 +1,7 @@
 '''
 All utility functions for training and inference
 '''
-
+import logging
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
@@ -10,7 +10,9 @@ import pandas as pd
 import numpy as np
 from constants import *
 from dbconnectors import get_database, fetch_user_details, update_user_details
-
+from evidently.metrics import DataDriftTable
+from evidently.report import Report
+import json
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     quartile1 = dataframe[col_name].quantile(q1)
@@ -418,3 +420,46 @@ def retrain_config_data(config_data):
 
     return (True, f"Success. New score is :{test_score}", user_details)
 
+def detect_drift(user):
+    '''
+    Method to detect class imbalance and their corrected values
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    # Get training data
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(user_details)
+    # Get test data
+    test_data, test_labels = load_test_data(selected_features)
+    
+    data_drift_dataset_report = Report(metrics=[
+    DataDriftTable(),
+    ])
+    data_drift_dataset_report.run(reference_data=train_data, 
+                                  current_data=test_data)
+    
+    
+    drift_output = {}
+    
+    report_result = str(data_drift_dataset_report.json())
+    # drift_output = drift_output.replace("'", '"')
+    report_result = json.loads(report_result)
+    
+    for metric in report_result['metrics']:
+        if metric['metric'] == 'DataDriftTable':
+            drift_output['overall'] = {
+                "drift_score" : metric['result']['share_of_drifted_columns'],
+                "isDrift" : metric['result']['share_of_drifted_columns'] > 0.0
+            }
+            drift_output['features'] = metric['result']['drift_by_columns']
+    for feat in drift_output['features'].keys():
+        del drift_output['features'][feat]['column_name']
+        del drift_output['features'][feat]['column_type']
+
+    # Drift details
+    isDrift =  drift_output['overall']['isDrift']
+    # Prepare output
+    return (True, f"Successful. Outlier information obtained for user: {user}", drift_output, isDrift)

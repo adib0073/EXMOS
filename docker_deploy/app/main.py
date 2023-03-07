@@ -218,7 +218,7 @@ async def check_outliers(user: str):
 
 @app.get("/checkclassimbalance")
 async def check_imbalance(user: str):
-	# Call method to get outlier information for data configured by the user
+	# Call method to get class imbalance information for data configured by the user
 	code, message, output_json, isImbalance = detect_imbalance(user)
 
 	response = {
@@ -226,5 +226,18 @@ async def check_imbalance(user: str):
 		"StatusMessage": message,
 		"OutputJson": output_json,
 		"isImbalance" : isImbalance
+	}
+	return response
+
+@app.get("/checkdatadrift")
+async def check_drift(user: str):
+	# Call method to data drift information for data configured by the user
+	code, message, output_json, isDrift = detect_drift(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json,
+		"isDrift" : isDrift
 	}
 	return response
