@@ -186,7 +186,7 @@ export const DataIssueConfig = ({ userid }) => {
                     <Panel header="Data Drift" key="5" extra={selectGen("drift")}>
                         <p>{"Your dataset is skewed"}</p>
                     </Panel>
-                    <Panel header="Overfitting Effect" key="6" extra={selectGen("overfit")}>
+                    <Panel header="Duplicate Data" key="6" extra={selectGen("overfit")}>
                         <p>{"Your dataset is skewed"}</p>
                     </Panel>
                 </Collapse>

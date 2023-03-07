@@ -62,27 +62,6 @@ async def check_missing_values():
 
 	return response
 
-@app.get("/checkduplicates")
-async def check_duplicates():
-	status_code = 0
-	status_message = "Pending execution"
-	data, labels = load_training_data()
-	checker = detect_duplicates(data)
-
-	if checker:
-		status_code = 1
-		status_message = "Data duplicates found"	
-	else:
-		status_code = 0
-		status_message = "Data duplicates not found"	
-	
-	response = { 
-		"StatusCode": status_code,
-		"StatusMessage": status_message,
-		}
-
-	return response	
-
 @app.post("/filterfeatures", response_model=OutputDataModel)
 async def retrain_filtered_features(features: FeaturesToInclude):
 
@@ -251,6 +230,19 @@ async def check_skew(user: str):
 		"StatusCode": code,
 		"StatusMessage": message,
 		"OutputJson": output_json,
-		"isDrift" : isSkew
+		"isSkew" : isSkew
+	}
+	return response
+
+@app.get("/checkduplicates")
+async def check_duplicates(user: str):
+	# Call method to check skewness information for data configured by the user
+	code, message, output_json, isDuplicate = detect_duplicates(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json,
+		"isDuplicate" : isDuplicate
 	}
 	return response

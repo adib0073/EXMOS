@@ -125,8 +125,7 @@ def detect_missing_values(data):
 def remove_missing_values():
     pass
 
-def detect_duplicates(data):
-    return data.duplicated().any()
+
 
 def remove_duplicates():
     pass
@@ -485,3 +484,26 @@ def detect_skew(user):
     }
     # Prepare output
     return (True, f"Successful. Outlier information obtained for user: {user}", skew_json, isSkew)
+
+def detect_duplicates(user):
+    '''
+    Method to detect class imbalance and their corrected values
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    # Get training data
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(user_details)
+    isDuplicate = bool(train_data.duplicated().any())
+    duplicate_features = np.count_nonzero(train_data.duplicated())
+    duplicate_pct = np.round(duplicate_features/len(train_data) * 100, 2)
+    
+    duplicate_json = {
+        "duplicate_score" : duplicate_pct,
+    }
+    
+    # Prepare output
+    return (True, f"Successful. Outlier information obtained for user: {user}",duplicate_json, isDuplicate)
