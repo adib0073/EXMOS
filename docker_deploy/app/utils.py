@@ -112,7 +112,7 @@ def detect_imbalance(user):
         "minority_pct" : min_pct
     }
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}", output_json, isImbalance)
+    return (True, f"Successful. Class imbalance information obtained for user: {user}", output_json, isImbalance)
 
 
 def remove_outliers():
@@ -459,7 +459,7 @@ def detect_drift(user):
     # Drift details
     isDrift =  drift_output['overall']['isDrift']
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}", drift_output, isDrift)
+    return (True, f"Successful. Drift information obtained for user: {user}", drift_output, isDrift)
 
 def detect_skew(user):
     '''
@@ -483,7 +483,7 @@ def detect_skew(user):
         "features" : train_data.skew(axis = 0, skipna = True).to_dict()
     }
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}", skew_json, isSkew)
+    return (True, f"Successful. Skewness information obtained for user: {user}", skew_json, isSkew)
 
 def detect_duplicates(user):
     '''
@@ -506,4 +506,43 @@ def detect_duplicates(user):
     }
     
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}",duplicate_json, isDuplicate)
+    return (True, f"Successful. Duplicate information obtained for user: {user}",duplicate_json, isDuplicate)
+
+def detect_correlation(user):
+    '''
+    Method to detect data correlation
+    '''
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if  user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    # Get training data
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(user_details)
+    
+    
+    isCorrelated = False
+    corr_list = []
+    corr_df = train_data.corr()
+    corr_df = corr_df.where(np.triu(np.ones(corr_df.shape),k=1).astype(np.bool))
+
+    for ind in range(len(corr_df)):
+        for col in corr_df.columns:
+            if (corr_df.iloc[ind][col]) > 0.5 or (corr_df.iloc[ind][col]) < -0.5:
+                corr_list.append(
+                    {
+                    "feature1" : corr_df.index[ind],
+                    "feature2" : col,
+                    "score" : corr_df.iloc[ind][col]
+                    }
+                )
+    if len(corr_list) > 0:
+        isCorrelated = True
+
+    # Prepare output
+    output_json = {
+        "corrScore" : np.round(len(corr_list)* 2/len(selected_features) * 100, 2),
+        "corrFeatures" : corr_list
+    }
+    return (True, f"Successful. Feature Correlation information obtained for user: {user}",output_json, isCorrelated)
