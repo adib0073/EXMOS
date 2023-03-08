@@ -236,7 +236,7 @@ async def check_skew(user: str):
 
 @app.get("/checkduplicates")
 async def check_duplicates(user: str):
-	# Call method to check skewness information for data configured by the user
+	# Call method to check duplicates information for data configured by the user
 	code, message, output_json, isDuplicate = detect_duplicates(user)
 
 	response = {
@@ -244,5 +244,18 @@ async def check_duplicates(user: str):
 		"StatusMessage": message,
 		"OutputJson": output_json,
 		"isDuplicate" : isDuplicate
+	}
+	return response
+
+@app.get("/checkcorrelation")
+async def check_correlation(user: str):
+	# Call method to check skewness information for data configured by the user
+	code, message, output_json, isCorreelated = detect_correlation(user)
+
+	response = {
+		"StatusCode": code,
+		"StatusMessage": message,
+		"OutputJson": output_json,
+		"isCorrelated" : isCorreelated
 	}
 	return response
