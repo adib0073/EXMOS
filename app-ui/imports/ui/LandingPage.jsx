@@ -1,11 +1,8 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { BASE_API } from './Constants';
 import axios from 'axios';
-
-
 
 export const LandingPage = ({ user, setUser }) => {
     const navigate = useNavigate();
