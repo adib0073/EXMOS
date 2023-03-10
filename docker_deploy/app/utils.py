@@ -429,14 +429,14 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
     ndc_pct = 100 - dc_pct
     imbalance_score = np.round(
         (1 - min(dc_pct, ndc_pct) / max(dc_pct, ndc_pct)) * 100, 2)
-    if imbalance_score > data_issue_json["imbalance"]["curr"]:
+    if imbalance_score != data_issue_json["imbalance"]["curr"]:
         data_issue_json["imbalance"]["prev"] = data_issue_json["imbalance"]["curr"]
         data_issue_json["imbalance"]["curr"] = imbalance_score
 
     # Duplicates
     duplicate_features = np.count_nonzero(data.duplicated())
     duplicate_pct = np.round(duplicate_features/len(data) * 100, 2)
-    if duplicate_pct > data_issue_json["duplicate"]["curr"]:
+    if duplicate_pct != data_issue_json["duplicate"]["curr"]:
         data_issue_json["duplicate"]["prev"] = data_issue_json["duplicate"]["curr"]
         data_issue_json["duplicate"]["curr"] = duplicate_pct
 
@@ -456,15 +456,15 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
             len(corrected_feature_values)
     # Prepare output
     out_pct = np.round(100 * (out_count/len(data)), 1)
-    if out_pct > data_issue_json["outlier"]["curr"]:
+    if out_pct != data_issue_json["outlier"]["curr"]:
         data_issue_json["outlier"]["prev"] = data_issue_json["outlier"]["curr"]
         data_issue_json["outlier"]["curr"] = out_pct
 
     # Skew
     skewed_df = data.skew(axis=0, skipna=True).abs()
     skewed_features = np.count_nonzero(skewed_df.values > 1)
-    skew_pct = np.round(skewed_features/len(data) * 100, 2)
-    if skew_pct > data_issue_json["skew"]["curr"]:
+    skew_pct = np.round(skewed_features/len(selected_features) * 100, 2)
+    if skew_pct != data_issue_json["skew"]["curr"]:
         data_issue_json["skew"]["prev"] = data_issue_json["skew"]["curr"]
         data_issue_json["skew"]["curr"] = skew_pct
 
@@ -483,7 +483,7 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
         if metric['metric'] == 'DataDriftTable':
             drift_pct = np.round(
                 metric['result']['share_of_drifted_columns'] * 100, 2)
-    if drift_pct > data_issue_json["drift"]["curr"]:
+    if drift_pct != data_issue_json["drift"]["curr"]:
         data_issue_json["drift"]["prev"] = data_issue_json["drift"]["curr"]
         data_issue_json["drift"]["curr"] = drift_pct
 
@@ -505,7 +505,7 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
                 )
 
     corr_pct = np.round(len(corr_list) * 2/len(selected_features) * 100, 2)
-    if corr_pct > data_issue_json["correlation"]["curr"]:
+    if corr_pct != data_issue_json["correlation"]["curr"]:
         data_issue_json["correlation"]["prev"] = data_issue_json["correlation"]["curr"]
         data_issue_json["correlation"]["curr"] = corr_pct
 
@@ -693,11 +693,11 @@ def data_quality_gen(user):
     data_issues = user_details["DataIssues"]
     data_issue_df = pd.DataFrame(data_issues).transpose()
 
-    data_issue_df['delta_pct'] = data_issue_df['curr'] - data_issue_df['prev']
+    data_issue_df['delta_pct'] = np.round(data_issue_df['curr'] - data_issue_df['prev'], 2)
     quality_score = (100 - (data_issue_df['curr'].mean()))/100
     quality_class = "Poor"
 
-    if quality_score > 0.75:
+    if quality_score > 0.80:
         quality_class = "Good"
     elif quality_score > 0.50:
         quality_class = "Moderate"
