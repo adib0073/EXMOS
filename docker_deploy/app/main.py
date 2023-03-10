@@ -131,17 +131,12 @@ async def GetDataSummaryValues(user: str):
 @app.get("/getdataquality/", response_model=OutputwithPayloadDataModel)
 async def GetDataQuality(user: str):
 	# Call method to get data quality value for user
-	# code, message, output_json = data_summary_viz(user)
+	code, message, output_json = data_quality_gen(user)
 
 	response = {
 		"StatusCode": True,
 		"StatusMessage": f"Data quality fetched for user: {user}",
-		"OutputJson": {
-			"score" : 0.55,
-			"quality_class" : "Poor",
-			"issues" : ["class imbalance", "outliers", "feature correlation", "data redundancy", "data drift", "data leakage"],
-			"issue_val" : [5, 0.2, 2, 0.5, 3, 1]
-		}
+		"OutputJson": output_json
 	}
 	return response
 
