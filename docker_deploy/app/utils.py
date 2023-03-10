@@ -47,6 +47,7 @@ def detect_outliers(user):
     # Calculate feature wise outlier
     isOutlier = False
     outliers = []
+    out_count = 0
     for f in selected_features:
         outlier_status, low_limit, up_limit = feature_wise_outlier(data, f)
         if outlier_status:
@@ -54,6 +55,8 @@ def detect_outliers(user):
         original_feature_values = data[f].to_list()
         # Get data after filering outliers
         corrected_feature_values = data[(data[f] >= low_limit) & (data[f]<= up_limit)][f].to_list()
+        # Calculate outlier percentage
+        out_count += len(original_feature_values) - len(corrected_feature_values)
         outliers.append(
             {"feature": FRIENDLY_NAMES[f],
              "status" : outlier_status,
@@ -69,7 +72,8 @@ def detect_outliers(user):
              "upper" : up_limit
              })
     # Prepare output
-    return (True, f"Successful. Outlier information obtained for user: {user}", outliers, isOutlier)
+    out_pct = np.round(100 *(out_count/len(data)),1)
+    return (True, f"Successful. Outlier information obtained for user: {user}", outliers, isOutlier, out_pct)
 
 def detect_imbalance(user):
     '''

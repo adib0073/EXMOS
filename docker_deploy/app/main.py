@@ -185,13 +185,14 @@ async def config_and_retrain(config_data: ConfigDataModel):
 @app.get("/checkoutliers")
 async def check_outliers(user: str):
 	# Call method to get outlier information for data configured by the user
-	code, message, output_json, isOutlier = detect_outliers(user)
+	code, message, output_json, isOutlier, out_pct = detect_outliers(user)
 
 	response = {
 		"StatusCode": code,
 		"StatusMessage": message,
 		"OutputJson": output_json,
-		"isOutlier" : isOutlier
+		"isOutlier" : isOutlier,
+		"OutlierScore" : out_pct
 	}
 	return response
 
