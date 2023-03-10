@@ -551,7 +551,7 @@ def detect_correlation(user):
     client, user_details = fetch_user_details(user)
     client.close()
     if user_details is None:
-        return (False, f"Invalid username: {user}", user_details)
+        return (False, f"Invalid username: {user}", user_details, False)
 
     # Get training data
     filters, selected_features, train_data, train_labels = load_filtered_user_data(
@@ -585,11 +585,35 @@ def detect_correlation(user):
 
 
 def data_quality_gen(user):
+    """
+    Method to estimate data quality based on data issues
+    """
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    
+    data_issues = user_details["DataIssues"]    
+    data_issue_df = pd.DataFrame(data_issues).transpose()
+    
+    data_issue_df['delta_pct'] = data_issue_df['curr'] - data_issue_df['prev']
+    logging.error(data_issue_df)
+    quality_score = (100 - (data_issue_df['curr'].mean()))/100
+    quality_class = "Poor"
+
+    if quality_score > 0.75:
+        quality_class = "Good"
+    elif quality_score > 0.50:
+        quality_class = "Moderate"
+
+    data_issue_df.sort_values(by="delta_pct", ascending=False, inplace=True)
+                
     output_json = {
-        "score": 0.55,
-        "quality_class": "Poor",
-        "issues": ["class imbalance", "outliers", "feature correlation", "data redundancy", "data drift", "data leakage"],
-        "issue_val": [5, 0.2, 2, 0.5, 3, 1]
+        "score": quality_score,
+        "quality_class": quality_class,
+        "issues": data_issue_df.index.tolist(),
+        "issue_val": data_issue_df["delta_pct"].tolist()
     }
 
     return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
