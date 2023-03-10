@@ -18,7 +18,7 @@ export const App = () => {
                     <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
                     <Route path="/dashboard/dce" element={<DCE user = {user}/>} />
                     <Route path="/dashboard/mce" element={<MCE user = {user} />} />
-                    <Route path="/dashboard/hyd" element={<HYB user = {user} />} />
+                    <Route path="/dashboard/hyb" element={<HYB user = {user} />} />
                     <Route path="/configuration" element={<Configuration user={user} setUser={setUser} />} />
                 </Routes>
             </BrowserRouter>

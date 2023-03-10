@@ -243,6 +243,7 @@ def login_service(user_name, cohort):
         new_user = USER_DETAIL_JSON
         new_user["UserName"] = user_name
         new_user["Cohort"] = cohort
+        new_user.update({"_id" : user_name+cohort})
         collection_name.insert_one(new_user)
         user_details = collection_name.find_one({"UserName": user_name})
         client.close()
