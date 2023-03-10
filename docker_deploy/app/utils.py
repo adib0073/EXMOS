@@ -493,7 +493,7 @@ def detect_duplicates(user):
     client, user_details = fetch_user_details(user)
     client.close()
     if  user_details is None:
-        return (False, f"Invalid username: {user}", user_details)
+        return (False, f"Invalid username: {user}", user_details, False)
     
     # Get training data
     filters, selected_features, train_data, train_labels = load_filtered_user_data(user_details)
