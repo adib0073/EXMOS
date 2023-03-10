@@ -419,6 +419,99 @@ def key_insights_gen(user):
     return (True, f"Successful. Data summary details founde for user: {user}", insights)
 
 
+def UpdateDataIssues(data, labels, data_issue_json, selected_features):
+    """
+    Updating the data issues
+    """
+    # Imbalance
+    diabetic_count = len(labels[labels[TARGET_VARIABLE] == 1])
+    dc_pct = np.round(100 * (diabetic_count/(len(labels))), 0)
+    ndc_pct = 100 - dc_pct
+    imbalance_score = np.round(
+        (1 - min(dc_pct, ndc_pct) / max(dc_pct, ndc_pct)) * 100, 2)
+    if imbalance_score > data_issue_json["imbalance"]["curr"]:
+        data_issue_json["imbalance"]["prev"] = data_issue_json["imbalance"]["curr"]
+        data_issue_json["imbalance"]["curr"] = imbalance_score
+
+    # Duplicates
+    duplicate_features = np.count_nonzero(data.duplicated())
+    duplicate_pct = np.round(duplicate_features/len(data) * 100, 2)
+    if duplicate_pct > data_issue_json["duplicate"]["curr"]:
+        data_issue_json["duplicate"]["prev"] = data_issue_json["duplicate"]["curr"]
+        data_issue_json["duplicate"]["curr"] = duplicate_pct
+
+    # Outlier
+    outliers = []
+    out_count = 0
+    for f in selected_features:
+        outlier_status, low_limit, up_limit = feature_wise_outlier(data, f)
+        if outlier_status:
+            isOutlier = True
+        original_feature_values = data[f].to_list()
+        # Get data after filering outliers
+        corrected_feature_values = data[(data[f] >= low_limit) & (
+            data[f] <= up_limit)][f].to_list()
+        # Calculate outlier percentage
+        out_count += len(original_feature_values) - \
+            len(corrected_feature_values)
+    # Prepare output
+    out_pct = np.round(100 * (out_count/len(data)), 1)
+    if out_pct > data_issue_json["outlier"]["curr"]:
+        data_issue_json["outlier"]["prev"] = data_issue_json["outlier"]["curr"]
+        data_issue_json["outlier"]["curr"] = out_pct
+
+    # Skew
+    skewed_df = data.skew(axis=0, skipna=True).abs()
+    skewed_features = np.count_nonzero(skewed_df.values > 1)
+    skew_pct = np.round(skewed_features/len(data) * 100, 2)
+    if skew_pct > data_issue_json["skew"]["curr"]:
+        data_issue_json["skew"]["prev"] = data_issue_json["skew"]["curr"]
+        data_issue_json["skew"]["curr"] = skew_pct
+
+    # Drift
+    test_data, test_labels = load_test_data(selected_features)
+    data_drift_dataset_report = Report(metrics=[
+        DataDriftTable(),
+    ])
+    data_drift_dataset_report.run(reference_data=data,
+                                  current_data=test_data)
+
+    report_result = str(data_drift_dataset_report.json())
+    report_result = json.loads(report_result)
+
+    for metric in report_result['metrics']:
+        if metric['metric'] == 'DataDriftTable':
+            drift_pct = np.round(
+                metric['result']['share_of_drifted_columns'] * 100, 2)
+    if drift_pct > data_issue_json["drift"]["curr"]:
+        data_issue_json["drift"]["prev"] = data_issue_json["drift"]["curr"]
+        data_issue_json["drift"]["curr"] = drift_pct
+
+    # Correlation
+    corr_list = []
+    corr_df = data.corr()
+    corr_df = corr_df.where(
+        np.triu(np.ones(corr_df.shape), k=1).astype(np.bool))
+
+    for ind in range(len(corr_df)):
+        for col in corr_df.columns:
+            if (corr_df.iloc[ind][col]) > 0.5 or (corr_df.iloc[ind][col]) < -0.5:
+                corr_list.append(
+                    {
+                        "feature1": corr_df.index[ind],
+                        "feature2": col,
+                        "score": corr_df.iloc[ind][col]
+                    }
+                )
+
+    corr_pct = np.round(len(corr_list) * 2/len(selected_features) * 100, 2)
+    if corr_pct > data_issue_json["correlation"]["curr"]:
+        data_issue_json["correlation"]["prev"] = data_issue_json["correlation"]["curr"]
+        data_issue_json["correlation"]["curr"] = corr_pct
+
+    return data_issue_json
+
+
 def retrain_config_data(config_data):
     user = config_data.UserId
     # Update records
@@ -441,7 +534,10 @@ def retrain_config_data(config_data):
     if prev_score != test_score:
         update_user_details(user, {"CurrentScore": test_score})
         update_user_details(user, {"PrevScore": prev_score})
-
+    # Update data issue scores
+    new_data_issues = UpdateDataIssues(
+        data, labels, user_details["DataIssues"], selected_features)
+    update_user_details(user, {"DataIssues": new_data_issues})
     # Adding target in output json
     user_details['target'] = config_data.JsonData['target']
 
