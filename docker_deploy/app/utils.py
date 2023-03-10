@@ -593,12 +593,11 @@ def data_quality_gen(user):
     client.close()
     if user_details is None:
         return (False, f"Invalid username: {user}", user_details)
-    
-    data_issues = user_details["DataIssues"]    
+
+    data_issues = user_details["DataIssues"]
     data_issue_df = pd.DataFrame(data_issues).transpose()
-    
+
     data_issue_df['delta_pct'] = data_issue_df['curr'] - data_issue_df['prev']
-    logging.error(data_issue_df)
     quality_score = (100 - (data_issue_df['curr'].mean()))/100
     quality_class = "Poor"
 
@@ -608,7 +607,7 @@ def data_quality_gen(user):
         quality_class = "Moderate"
 
     data_issue_df.sort_values(by="delta_pct", ascending=False, inplace=True)
-                
+
     output_json = {
         "score": quality_score,
         "quality_class": quality_class,

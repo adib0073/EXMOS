@@ -88,7 +88,7 @@ USER_DETAIL_JSON = {
     "PrevScore": 0,
     "DataIssues": {
         "outlier": {
-            "curr": 0,
+            "curr": 1,
             "prev": 0
         },
         "drift": {
@@ -96,7 +96,7 @@ USER_DETAIL_JSON = {
             "prev": 0
         },
         "correlation": {
-            "curr": 0,
+            "curr": 25,
             "prev": 0
         },
         "duplicate": {
@@ -104,11 +104,11 @@ USER_DETAIL_JSON = {
             "prev": 0
         },
         "imbalance": {
-            "curr": 0,
+            "curr": 43.75,
             "prev": 0
         },
         "skew": {
-            "curr": 0,
+            "curr": 50,
             "prev": 0
         },
     }
