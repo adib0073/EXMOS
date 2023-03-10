@@ -129,3 +129,13 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
           "isSelected": true
         }
 };
+
+// DATA ISSUE FRIENDLY NAMEs
+export const DATA_ISSUE_FRIENDLY_NAMEs = {
+  "drift" : "Data Drift",
+  "imbalance" : "Class Imbalance",
+  "skew" : "Data Skewness",
+  "duplicate" : "Data Duplicate",
+  "outlier" : "Data Outlier",
+  "correlation" : "Feature Correlation",
+}

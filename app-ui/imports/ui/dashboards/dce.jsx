@@ -9,7 +9,7 @@ import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { RectBlock } from '../components/Icons/RectBlock.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
+import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
@@ -229,21 +229,21 @@ export const DCE = ({ user }) => {
                                             <span style={{ color: (dqChartVals.issue_val[0] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][0]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][0]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][0]]}
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[1] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[1] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][1]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][1]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][1]]}
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[2] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[2] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][2]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][2]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][2]]}
                                         </div>
                                     </div>
                                     <div className='dq-div-rc2'>
@@ -252,21 +252,21 @@ export const DCE = ({ user }) => {
                                             <span style={{ color: (dqChartVals.issue_val[3] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][3]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][3]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][3]]}
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[4] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[4] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][4]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][4]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][4]]}
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[5] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[5] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][5]}%&nbsp;</b>
                                             </span>
-                                            {dqChartVals["issues"][5]}
+                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][5]]}
                                         </div>
                                     </div>
                                 </div>

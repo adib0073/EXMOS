@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo';
-import { Collapse, Checkbox, Select } from 'antd';
+import { Collapse, Checkbox, Select, Spin } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
 import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
@@ -188,8 +188,20 @@ export const DataIssueConfig = ({ userid }) => {
         GetDrift({ userid, setDriftData, setDisplayIssue });
         GetCorrelation({ userid, setCorrelationData, setDisplayIssue });
         GetSkew({ userid, setSkewData, setDisplayIssue });
+        setTimeout(function () {
+            setWaitFlag(false);
+        }, 2000);
     }, []);
+    const [waitFlag, setWaitFlag] = useState(true);
+
+    const loadingIndicator = (
+        <>
+            <Spin tip="Fetching current data issues ...  " size="large" />
+        </>
+    );
+
     return (
+        waitFlag ? loadingIndicator :
         <>
             <div className='config-display-fc-r1'>
                 <div className='config-display-fc-r1-text'>

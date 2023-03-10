@@ -204,7 +204,7 @@
 
 .dq-div-right {
     display: flex;
-    flex: 2;
+    flex: 2.5;
 }
 
 .dq-div-rc1 {
@@ -213,6 +213,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: baseline;
+    padding: 5px;
 }
 
 .dq-div-rc2 {
@@ -221,13 +222,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    padding: 5px;
 }
 
 .dq-div-rc-text {
     display: flex;
     flex: 1;
-    font-size: 1.5vh;
+    font-size: 1.7vh;
     align-items: center;
+    padding: 10px 0px 10px 0px;
 }
 
 .dq-gauge-chart {
