@@ -1,0 +1,40 @@
+.mce-container {
+    margin: 30px 180px 20px 180px;
+    border: 0px;
+    border-style: solid;
+    border-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E5E5E5;
+    height: 87vh;
+}
+.mce-container-r1 {
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+.mce-container-r1c1 {
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+    flex: 1;
+}
+.mce-container-r1c2 {
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+    flex: 2;
+}
+.mce-container-r2 {
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 30px;
+}
