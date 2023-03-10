@@ -219,7 +219,7 @@ export const DCE = ({ user }) => {
                                         style={{ width: "15vw" }}
                                     />
                                     <div className='dq-div-left-info'>
-                                        {dqChartVals["quality_class"]}
+                                        {dqChartVals["quality_class"]} - {Math.round((dqChartVals["score"] * 100 + Number.EPSILON) * 10) / 10} %
                                     </div>
                                 </div>
                                 <div className='dq-div-right'>
