@@ -54,12 +54,14 @@ const centerText = {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         // For Accuracy Value
-        ctx.fillText(options.accuracy, 0.48 * width, height / 2);
+        ctx.fillText(80, 0.5 * width, height / 2);
+        ctx.restore();
         
         // For % symbol
-        var pOffset = (options.accuracy === 100 ? 0.08 : (options.accuracy >= 10 ? 0.04 : 0))
+        var pOffset = (options.accuracy === 100 ? (0.0045 * fontHeight) : (options.accuracy >= 10 ? (0.003 * fontHeight) : (0.001 * fontHeight)))
         ctx.font = `bolder ${fontHeight * 0.6}px Noto Sans`;
-        ctx.fillText("%", (0.58 + pOffset) * width, height / 2);
+        ctx.textAlign = 'left';
+        ctx.fillText("%", (0.50 + pOffset) * width, height / 2);
         ctx.restore();
         chart.update();
     }
