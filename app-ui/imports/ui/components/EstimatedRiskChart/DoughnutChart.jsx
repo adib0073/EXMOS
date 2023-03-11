@@ -42,6 +42,7 @@ const centerText = {
     afterDatasetsDraw(chart, args, option) {
         chart.update('none');
         const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+        
         ctx.save();
         const fontHeight = 0.2 * height;
         ctx.font = `bolder ${fontHeight / 2}px Noto Sans`;
@@ -54,14 +55,16 @@ const centerText = {
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         // For Accuracy Value
-        ctx.fillText(80, 0.5 * width, height / 2);
+        options.accuracy = 100
+        ctx.fillText(options.accuracy, 0.5 * width, height / 2);
+
+        //console.log(ctx.measureText(options.accuracy));
         ctx.restore();
         
         // For % symbol
-        var pOffset = (options.accuracy === 100 ? (0.0045 * fontHeight) : (options.accuracy >= 10 ? (0.003 * fontHeight) : (0.001 * fontHeight)))
+        var pOffset = (options.accuracy === 100 ? (fontHeight * 0.9) : (options.accuracy >= 10 ? (fontHeight * 0.6) : (fontHeight * 0.3)))
         ctx.font = `bolder ${fontHeight * 0.6}px Noto Sans`;
-        ctx.textAlign = 'left';
-        ctx.fillText("%", (0.50 + pOffset) * width, height / 2);
+        ctx.fillText("%", width/2 + pOffset, height / 2);
         ctx.restore();
         chart.update();
     }
