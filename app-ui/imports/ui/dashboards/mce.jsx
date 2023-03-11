@@ -60,17 +60,17 @@ export const MCE = ({ user }) => {
                                 <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                             </div>
                         </div>
-                        <div className="chart-container">
-                            <div className='chart-container-viz'>
+                        <div className="chart-container-mce">
+                            <div className='chart-container-viz-mce'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info-mce'>
                                 <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info-mce'>
                                 <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info-mce'>
                                 <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
                                     {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
                                     <b> &nbsp;{accChartVals.pct}% </b>

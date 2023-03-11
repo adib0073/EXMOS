@@ -54,10 +54,9 @@ const centerText = {
         ctx.font = `bolder ${fontHeight * 1.2}px Noto Sans`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
+        
         // For Accuracy Value
-        options.accuracy = 100
         ctx.fillText(options.accuracy, 0.5 * width, height / 2);
-
         //console.log(ctx.measureText(options.accuracy));
         ctx.restore();
         
