@@ -695,7 +695,7 @@ def data_quality_gen(user):
     data_issue_df = pd.DataFrame(data_issues).transpose()
 
     data_issue_df['delta_pct'] = np.round(data_issue_df['curr'] - data_issue_df['prev'], 2)
-    quality_score = (100 - (data_issue_df['curr'].mean()))/100
+    quality_score = (100 - (data_issue_df['curr'].sum()/5))/100
     quality_class = "Poor"
 
     if quality_score > 0.80:

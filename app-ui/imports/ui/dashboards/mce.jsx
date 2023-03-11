@@ -80,11 +80,31 @@ export const MCE = ({ user }) => {
                         </div>
                     </div >
                     <div className="mce-container-r1c2">
-                        Chart 2
+                        <div className="chart-title-box">
+                            <div className="chart-title">
+                                Top Decision Rules
+                            </div>
+                            <div className="chart-icons">
+                                <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                            </div>
+                        </div>
+                        <div className="chart-container-mce">
+                            Chart here
+                        </div>
                     </div>
                 </div>
                 <div className="mce-container-r2">
-                    Bottom Charts
+                    <div className="chart-title-box">
+                        <div className="chart-title">
+                            Important Risk Factors
+                        </div>
+                        <div className="chart-icons">
+                            <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                        </div>
+                    </div>
+                    <div className="chart-container-mce">
+                        Chart here
+                    </div>
                 </div>
             </div>
         </>
