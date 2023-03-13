@@ -48,6 +48,9 @@ export const MCE = ({ user }) => {
     const greenFont = "#449231";
     const redFont = "#D64242";
 
+    // Top Rules
+    let display_rules = ["Rule #1", "Rule #2", "Rule #3", "Rule #4"]
+
     return (
         <>
             <NavBar user={user} />
@@ -100,15 +103,13 @@ export const MCE = ({ user }) => {
                                 </div>
                             </div>
                             <div className="top-rules-viz">
-                                <div className="top-rules-viz-item">
-                                    Rule 1
-                                </div>
-                                <div className="top-rules-viz-item">
-                                    Rule 2
-                                </div>
-                                <div className="top-rules-viz-item">
-                                    Rule 3
-                                </div>
+                                {display_rules.map((item, index) => {
+                                    return (
+                                        <div className="top-rules-viz-item">
+                                            {item}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
