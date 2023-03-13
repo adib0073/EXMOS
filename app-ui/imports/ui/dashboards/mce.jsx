@@ -106,19 +106,27 @@ export const MCE = ({ user }) => {
                     <div className="chart-container-mce">
                         <div className="chart-box-mce">
                             <div className="cc-mce-left">
-                                <HorizontalBarCharts />
+                                <HorizontalBarCharts
+                                    x_values={[40, 20, 15, 10, 5]}
+                                    y_labels={["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"]}
+                                    isActionable={true}
+                                />
                             </div>
                             <div className="cc-mce-right">
-                                <HorizontalBarCharts />
+                                <HorizontalBarCharts
+                                    x_values={[40, 15, 2]}
+                                    y_labels={["Degree Pedigree Function", "Pregnancies", "Age"]}
+                                    isActionable={false}
+                                />
                             </div>
                         </div>
-                    </div>
-                    <div className="chart-container-text">
-                        <div className="cc-text-left">
-                            <b>Actionable Features</b>
-                        </div>
-                        <div className="cc-text-right">
-                            <b>Non-actionable Features</b>
+                        <div className="chart-container-text">
+                            <div className="cc-text-left">
+                                <b>Actionable Features</b>
+                            </div>
+                            <div className="cc-text-right">
+                                <b>Non-actionable Features</b>
+                            </div>
                         </div>
                     </div>
                 </div>

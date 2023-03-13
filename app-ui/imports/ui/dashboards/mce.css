@@ -50,21 +50,26 @@
 .chart-container-mce {
     display: flex;
     flex: 12;
-    flex-direction: column;
+    flex-direction: column; 
+    justify-content: center;
 }
 .chart-box-mce {
     display: flex;
     flex-direction: row;    
     align-items: center;
     justify-content: center;
+    padding: 10px;
+    margin: 0 10px 0 10px;
 }
 .cc-mce-left{
     flex: 1;
-    padding: 10px;
+    border: 0px;
+    border-right: 1px;
+    border-style: dashed;
+    border-color: 'black';
 }
 .cc-mce-right{
-    flex: 1;
-    padding: 10px;
+    flex: 1;    
 }
 
 .chart-container-viz-mce {

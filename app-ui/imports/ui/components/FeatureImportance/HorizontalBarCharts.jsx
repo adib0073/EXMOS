@@ -6,16 +6,52 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './HorizontalBarCharts.css';
 import 'antd/dist/antd.css';
 
-export const HorizontalBarCharts = () => {
+export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
+
+    let bdColor = [];
+    let maxXval = Math.max.apply(Math, x_values);
+
+    for (let i = 0; i < x_values.length; i++) {
+        if (x_values[i] <= maxXval/3) {
+            if (isActionable){
+                bdColor.push("#67A3FF");
+            }
+            else{
+                bdColor.push("#C5C4C4");
+            }
+        }
+        else if (x_values[i] <= maxXval/2) {
+            if (isActionable){
+                bdColor.push("#1363DF");
+            }
+            else{
+                bdColor.push("#999999");
+            }
+        }
+        else {
+            if (isActionable){
+                bdColor.push("#244CB1");
+            }
+            else{
+                bdColor.push("#7B7B7B");
+            }
+        }
+    };
+
     let data = {
-        labels: ["feat1", "feat2", "feat3"],
+        labels: y_labels,
         datasets: [
             {
-                label: 'Feature Imporance',
-                data: [40, 20, 15],
-                backgroundColor: ["#244CB1", "#1363DF", "#67A3FF"],
-                borderColor: ["#244CB1", "#1363DF", "#67A3FF"],
+                //label: 'Feature Imporance',
+                data: x_values,
+                backgroundColor: bdColor,
+                borderColor: bdColor,
                 borderRadius: 100,
+                datalabels: {
+                    anchor: 'end',
+                    align: 'right',
+                    offset: 8,
+                }
 
             },
         ],
@@ -28,6 +64,20 @@ export const HorizontalBarCharts = () => {
         indexAxis: 'y',
         plugins: {
             legend: { display: false },
+            datalabels: {
+                formatter: function (value, context) {
+                    return value + "%";
+                },
+                textAlign: 'center',
+                color: "black",
+                font: function (context) {
+                    var width = context.chart.width;
+                    var size = Math.round(width / 36);
+                    return {
+                        size: size
+                    };
+                }
+            },
             tooltip: {
                 enabled: true,
                 displayColors: false,
@@ -36,10 +86,10 @@ export const HorizontalBarCharts = () => {
                         let label = "Importance " || '';
 
                         if (label) {
-                            label += '- ';
+                            label += ': ';
                         }
                         if (context.parsed.y !== null) {
-                            label += context.parsed.y;
+                            label += context.parsed.x + "%";
                         }
                         return label;
                     },
@@ -57,11 +107,55 @@ export const HorizontalBarCharts = () => {
                 }
             },
         },
+        scales: {
+            y: {
+                display: true,
+                beginAtZero: true,
+                grid: {
+                    display: false,
+                    borderColor: 'black',
+                    drawTicks: false,
+                },
+                ticks: {
+                    padding: 10,
+                    color: "black",
+                    font: function (context) {
+                        var width = context.chart.width;
+                        var size = Math.round(width / 32);
+                        return {
+                            size: size
+                        };
+                    },
+                },
+                offset: true,
+            },
+            x: {
+                display: false,
+                offset: false,
+                grid: {
+                    display: false,
+                    borderColor: 'black',
+                    drawTicks: false,
+                },
+                min: 0,
+                max: maxXval * 1.15,
+                ticks: {
+                    padding: 1,
+                    color: "#000000",
+                    font: {
+                        size: 9
+                    },
+                    callback: (value, index, values) => {
+                        return value;
+                    }
+                },
+                //text: "Features",
+            }
+        },
     };
 
-    //data.labels = labelWrapper(x_values);
-
-    //data.datasets[0].data = y_values;
+    data.labels = y_labels;
+    data.datasets[0].data = x_values;
 
     const chartRef = useRef();
 
