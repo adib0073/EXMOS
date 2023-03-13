@@ -50,6 +50,9 @@ export const MCE = ({ user }) => {
 
     // Top Rules
     let display_rules = ["Rule #1", "Rule #2", "Rule #3", "Rule #4"]
+    const handleFilterClick = (category) => {
+        setActiveFilter(category);
+    };
 
     return (
         <>
@@ -95,17 +98,17 @@ export const MCE = ({ user }) => {
                         </div>
                         <div className="chart-container-mce">
                             <div className="top-rules-filter">
-                                <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"}>
+                                <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"} onClick={() => {handleFilterClick("diabetic")}}>
                                     Diabetic
                                 </div>
-                                <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"}>
+                                <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"} onClick={() => {handleFilterClick("non-diabetic")}}>
                                     Non-diabetic
                                 </div>
                             </div>
                             <div className="top-rules-viz">
                                 {display_rules.map((item, index) => {
                                     return (
-                                        <div className="top-rules-viz-item">
+                                        <div className="top-rules-viz-item" key={index}>
                                             {item}
                                         </div>
                                     );
