@@ -129,6 +129,7 @@
     margin-left: 10px;
     margin-bottom: 10px;
     font-weight: 500;
+    align-items: center;
 }
 
 .top-rules-filter-left {
@@ -196,6 +197,8 @@
     flex: 1;
     margin: 5px 20px 5px 20px;
     padding: 5px;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     width: 80%;
 }

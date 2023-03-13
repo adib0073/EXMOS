@@ -38,8 +38,10 @@ export const MCE = ({ user }) => {
     }
 
     const accuracyChartRef = useRef();
+    // Set UseStates
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [activeFilter, setActiveFilter] = useState("diabetic");
+    const [ruleView, setRuleView] = useState(["No rules found", "No rules found"]);
 
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
@@ -49,9 +51,13 @@ export const MCE = ({ user }) => {
     const redFont = "#D64242";
 
     // Top Rules
-    let display_rules = ["Rule #1", "Rule #2", "Rule #3", "Rule #4"]
+    let display_rules = {
+        "diabetic" : ["Rule #1", "Rule #2", "Rule #3", "Rule #4"],
+        "non-diabetic" : ["Rule #5", "Rule #6", "Rule #7"]
+    }
     const handleFilterClick = (category) => {
         setActiveFilter(category);
+        setRuleView(display_rules[category]);
     };
 
     return (
@@ -106,7 +112,7 @@ export const MCE = ({ user }) => {
                                 </div>
                             </div>
                             <div className="top-rules-viz">
-                                {display_rules.map((item, index) => {
+                                {ruleView.map((item, index) => {
                                     return (
                                         <div className="top-rules-viz-item" key={index}>
                                             {item}
