@@ -142,10 +142,10 @@ export const MCE = ({ user }) => {
                         </div>
                         <div className="chart-container-text">
                             <div className="cc-text-left">
-                                <b>Actionable Features</b>
+                                <b>Actionable Factors</b>
                             </div>
                             <div className="cc-text-right">
-                                <b>Non-actionable Features</b>
+                                <b>Non-actionable Factors</b>
                             </div>
                         </div>
                     </div>
