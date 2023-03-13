@@ -12,7 +12,7 @@
 .mce-container-r1 {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    flex: 0.5;
 }
 .mce-container-r1c1 {
     display: flex;
@@ -51,6 +51,19 @@
     display: flex;
     flex: 12;
     flex-direction: column;
+}
+.chart-box-mce {
+    display: flex;
+    flex-direction: row;    
+    align-items: center;
+    justify-content: center;
+}
+.cc-mce-left{
+    flex: 1;
+    padding: 10px;
+}
+.cc-mce-right{
+    flex: 1;
     padding: 10px;
 }
 
@@ -66,7 +79,28 @@
 .chart-container-info-mce {
     flex: 1;
     padding: 2px;
-    font-size: 1.8vh;
+    font-size: 1.6vh;
     margin-left: 25%;
     color: black;
+}
+.chart-container-text{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.cc-text-left{
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;    
+    font-size: 1.8vh;
+}
+.cc-text-right{
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;    
+    font-size: 1.8vh;
 }

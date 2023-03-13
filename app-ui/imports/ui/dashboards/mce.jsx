@@ -11,6 +11,7 @@ import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { RectBlock } from '../components/Icons/RectBlock.jsx';
 import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from '../Constants.jsx';
 import axios from 'axios';
+import { HorizontalBarCharts } from '../components/FeatureImportance/HorizontalBarCharts.jsx';
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
@@ -103,7 +104,22 @@ export const MCE = ({ user }) => {
                         </div>
                     </div>
                     <div className="chart-container-mce">
-                        Chart here
+                        <div className="chart-box-mce">
+                            <div className="cc-mce-left">
+                                <HorizontalBarCharts />
+                            </div>
+                            <div className="cc-mce-right">
+                                <HorizontalBarCharts />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="chart-container-text">
+                        <div className="cc-text-left">
+                            <b>Actionable Features</b>
+                        </div>
+                        <div className="cc-text-right">
+                            <b>Non-actionable Features</b>
+                        </div>
                     </div>
                 </div>
             </div>
