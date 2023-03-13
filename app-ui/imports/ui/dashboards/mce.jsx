@@ -39,6 +39,7 @@ export const MCE = ({ user }) => {
 
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
+    const [activeFilter, setActiveFilter] = useState("diabetic");
 
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
@@ -90,7 +91,25 @@ export const MCE = ({ user }) => {
                             </div>
                         </div>
                         <div className="chart-container-mce">
-                            Chart here
+                            <div className="top-rules-filter">
+                                <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"}>
+                                    Diabetic
+                                </div>
+                                <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"}>
+                                    Non-diabetic
+                                </div>
+                            </div>
+                            <div className="top-rules-viz">
+                                <div className="top-rules-viz-item">
+                                    Rule 1
+                                </div>
+                                <div className="top-rules-viz-item">
+                                    Rule 2
+                                </div>
+                                <div className="top-rules-viz-item">
+                                    Rule 3
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
