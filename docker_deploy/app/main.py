@@ -275,20 +275,9 @@ async def check_correlation(user: str):
 
 @app.get("/getfeatureimportance")
 async def get_feature_importance(user: str):
-    code = True
-    message = "Success."
-    output_json = {
-        "actionable": {
-            "features": ["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"],
-            "importance": [40, 20, 15, 10, 5]
-        },
-        "non-actionable": {
-            "features": ["Degree Pedigree Function", "Pregnancies", "Age"],
-            "importance": [50, 15, 2]
-        },
-    }
+    
     # Call method to compute feature importance for data configured by the user
-    # code, message, output_json = compute_feature_importance(user)
+    code, message, output_json = compute_feature_importance(user)
 
     response = {
         "StatusCode": code,
@@ -305,8 +294,8 @@ async def get_decision_rules(user: str):
         "diabetic": ["If Glucose > 100 and Insulin < 20 and Age > 40", "If BMI > 30 and Skin Thickness > 15", "If Diabetes Pedigree Function > 1.8", "If Glucose > 90 and Blood Pressure > 90"],
         "non-diabetic": ["If Glucose < 60", "If BMI < 26", "If Age < 30 or Diabetes Pedigree Function < 1"]
     }
-    # Call method to compute feature importance for data configured by the user
-    # code, message, output_json = compute_feature_importance(user)
+    # Call method to compute top rule based decision rules for data configured by the user
+    # code, message, output_json = compute_decision_rules(user)
 
     response = {
         "StatusCode": code,

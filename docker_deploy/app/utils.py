@@ -243,7 +243,7 @@ def login_service(user_name, cohort):
         new_user = USER_DETAIL_JSON
         new_user["UserName"] = user_name
         new_user["Cohort"] = cohort
-        new_user.update({"_id" : user_name+cohort})
+        new_user.update({"_id": user_name+cohort})
         collection_name.insert_one(new_user)
         user_details = collection_name.find_one({"UserName": user_name})
         client.close()
@@ -694,7 +694,8 @@ def data_quality_gen(user):
     data_issues = user_details["DataIssues"]
     data_issue_df = pd.DataFrame(data_issues).transpose()
 
-    data_issue_df['delta_pct'] = np.round(data_issue_df['curr'] - data_issue_df['prev'], 2)
+    data_issue_df['delta_pct'] = np.round(
+        data_issue_df['curr'] - data_issue_df['prev'], 2)
     quality_score = (100 - (data_issue_df['curr'].sum()/5))/100
     quality_class = "Poor"
 
@@ -712,4 +713,30 @@ def data_quality_gen(user):
         "issue_val": data_issue_df["delta_pct"].tolist()
     }
 
+    return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
+
+
+def compute_feature_importance(user):
+    """
+    Method to estimate feature importance using SHAP
+    """
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(
+        user_details)
+    # TO-DO Add SHAP based execution
+    output_json = {
+        "actionable": {
+            "features": ["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"],
+            "importance": [40, 20, 15, 10, 5]
+        },
+        "non-actionable": {
+            "features": ["Degree Pedigree Function", "Pregnancies", "Age"],
+            "importance": [50, 15, 2]
+        },
+    }
     return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
