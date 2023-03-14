@@ -296,3 +296,21 @@ async def get_feature_importance(user: str):
         "OutputJson": output_json
     }
     return response
+
+@app.get("/getdecisionrules")
+async def get_decision_rules(user: str):
+    code = True
+    message = "Success."
+    output_json = {
+        "diabetic": ["If Glucose > 100 and Insulin < 20 and Age > 40", "If BMI > 30 and Skin Thickness > 15", "If Diabetes Pedigree Function > 1.8", "If Glucose > 90 and Blood Pressure > 90"],
+        "non-diabetic": ["If Glucose < 60", "If BMI < 26", "If Age < 30 or Diabetes Pedigree Function < 1"]
+    }
+    # Call method to compute feature importance for data configured by the user
+    # code, message, output_json = compute_feature_importance(user)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json
+    }
+    return response
