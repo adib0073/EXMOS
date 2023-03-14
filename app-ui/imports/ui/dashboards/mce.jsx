@@ -41,6 +41,18 @@ const GetFeatureImportance = ({ userid, setFeatureImportance }) => {
         });
 };
 
+const GetTopDecisionRules = ({ userid, setTopRules, setRuleView }) => {
+    //console.log(userid);
+    axios.get(BASE_API + '/getdecisionrules/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setTopRules(response.data["OutputJson"]);
+            setRuleView(response.data["OutputJson"]["diabetic"])
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
 export const MCE = ({ user }) => {
     var userid = user.id;
     var cohort = user.cohort;
@@ -52,7 +64,11 @@ export const MCE = ({ user }) => {
     // Set UseStates
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [activeFilter, setActiveFilter] = useState("diabetic");
-    const [ruleView, setRuleView] = useState(["No rules found", "No rules found"]);
+    const [topRules, setTopRules] = useState({
+        "diabetic": ["No rules found", "No rules found"],
+        "non-diabetic": ["No rules found", "No rules found"]
+    });
+    const [ruleView, setRuleView] = useState(topRules["diabetic"]);
     const [featureImportance, setFeatureImportance] = useState(
         {
             "actionable": {
@@ -68,19 +84,16 @@ export const MCE = ({ user }) => {
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
         GetFeatureImportance({ userid, setFeatureImportance });
+        GetTopDecisionRules({ userid, setTopRules, setRuleView });
     }, []);
 
     const greenFont = "#449231";
     const redFont = "#D64242";
 
     // Top Rules
-    let display_rules = {
-        "diabetic": ["Rule #1", "Rule #2", "Rule #3", "Rule #4"],
-        "non-diabetic": ["Rule #5", "Rule #6", "Rule #7"]
-    }
     const handleFilterClick = (category) => {
         setActiveFilter(category);
-        setRuleView(display_rules[category]);
+        setRuleView(topRules[category]);
     };
 
     return (
