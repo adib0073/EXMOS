@@ -30,6 +30,17 @@ const GetPredChartValue = ({ userid, setAccChartVals }) => {
         });
 }
 
+const GetFeatureImportance = ({ userid, setFeatureImportance }) => {
+    //console.log(userid);
+    axios.get(BASE_API + '/getfeatureimportance/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setFeatureImportance(response.data["OutputJson"]);
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
 export const MCE = ({ user }) => {
     var userid = user.id;
     var cohort = user.cohort;
@@ -42,9 +53,21 @@ export const MCE = ({ user }) => {
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
     const [activeFilter, setActiveFilter] = useState("diabetic");
     const [ruleView, setRuleView] = useState(["No rules found", "No rules found"]);
+    const [featureImportance, setFeatureImportance] = useState(
+        {
+            "actionable": {
+                "features": ["None"],
+                "importance": [0]
+            },
+            "non-actionable": {
+                "features": ["None"],
+                "importance": [0]
+            },
+        });
 
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
+        GetFeatureImportance({ userid, setFeatureImportance });
     }, []);
 
     const greenFont = "#449231";
@@ -52,8 +75,8 @@ export const MCE = ({ user }) => {
 
     // Top Rules
     let display_rules = {
-        "diabetic" : ["Rule #1", "Rule #2", "Rule #3", "Rule #4"],
-        "non-diabetic" : ["Rule #5", "Rule #6", "Rule #7"]
+        "diabetic": ["Rule #1", "Rule #2", "Rule #3", "Rule #4"],
+        "non-diabetic": ["Rule #5", "Rule #6", "Rule #7"]
     }
     const handleFilterClick = (category) => {
         setActiveFilter(category);
@@ -104,10 +127,10 @@ export const MCE = ({ user }) => {
                         </div>
                         <div className="chart-container-mce">
                             <div className="top-rules-filter">
-                                <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"} onClick={() => {handleFilterClick("diabetic")}}>
+                                <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"} onClick={() => { handleFilterClick("diabetic") }}>
                                     Diabetic
                                 </div>
-                                <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"} onClick={() => {handleFilterClick("non-diabetic")}}>
+                                <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"} onClick={() => { handleFilterClick("non-diabetic") }}>
                                     Non-diabetic
                                 </div>
                             </div>
@@ -136,15 +159,15 @@ export const MCE = ({ user }) => {
                         <div className="chart-box-mce">
                             <div className="cc-mce-left">
                                 <HorizontalBarCharts
-                                    x_values={[40, 20, 15, 10, 5]}
-                                    y_labels={["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"]}
+                                    x_values={featureImportance.actionable.importance}
+                                    y_labels={featureImportance.actionable.features}
                                     isActionable={true}
                                 />
                             </div>
                             <div className="cc-mce-right">
                                 <HorizontalBarCharts
-                                    x_values={[40, 15, 2]}
-                                    y_labels={["Degree Pedigree Function", "Pregnancies", "Age"]}
+                                    x_values={featureImportance['non-actionable'].importance}
+                                    y_labels={featureImportance['non-actionable'].features}
                                     isActionable={false}
                                 />
                             </div>

@@ -284,7 +284,7 @@ async def get_feature_importance(user: str):
         },
         "non-actionable": {
             "features": ["Degree Pedigree Function", "Pregnancies", "Age"],
-            "importance": [40, 15, 2]
+            "importance": [50, 15, 2]
         },
     }
     # Call method to compute feature importance for data configured by the user
