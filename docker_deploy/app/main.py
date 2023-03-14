@@ -271,3 +271,28 @@ async def check_correlation(user: str):
         "isCorrelated": isCorreelated
     }
     return response
+
+
+@app.get("/getfeatureimportance")
+async def get_feature_importance(user: str):
+    code = True
+    message = "Success."
+    output_json = {
+        "actionable": {
+            "features": ["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"],
+            "importance": [40, 20, 15, 10, 5]
+        },
+        "non-actionable": {
+            "features": ["Degree Pedigree Function", "Pregnancies", "Age"],
+            "importance": [40, 15, 2]
+        },
+    }
+    # Call method to compute feature importance for data configured by the user
+    # code, message, output_json = compute_feature_importance(user)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json
+    }
+    return response
