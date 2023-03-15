@@ -13,6 +13,8 @@ from dbconnectors import get_database, fetch_user_details, update_user_details
 from evidently.metrics import DataDriftTable
 from evidently.report import Report
 import json
+import xgboost
+import shap
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -729,14 +731,41 @@ def compute_feature_importance(user):
     filters, selected_features, train_data, train_labels = load_filtered_user_data(
         user_details)
     # TO-DO Add SHAP based execution
+
+    model = xgboost.XGBClassifier().fit(
+        train_data, train_labels[TARGET_VARIABLE].values)
+    # compute SHAP values
+    explainer = shap.Explainer(model, train_data)
+    shap_values = explainer(train_data)
+    vals = np.abs(shap_values.values).mean(0)
+    feature_names = train_data.columns
+
+    feature_importance = pd.DataFrame(list(zip(feature_names, vals)),
+                                      columns=['feature', 'importance'])
+
+    # Actionable Features
+    actionable_features = feature_importance.query(
+        "feature in ['Glucose', 'BMI', 'BloodPressure', 'Insulin', 'SkinThickness']")
+    actionable_features['importance'] = (
+        actionable_features['importance']/actionable_features['importance'].sum()) * 100
+    actionable_features.sort_values(by=['importance'],
+                                    ascending=False, inplace=True)
+    # Non-actionable Features
+    non_actionable_features = feature_importance.query(
+        "feature in ['Age', 'Pregnancies', 'DiabetesPedigreeFunction']")
+    non_actionable_features['importance'] = (
+        non_actionable_features['importance']/non_actionable_features['importance'].sum()) * 100
+    non_actionable_features.sort_values(by=['importance'],
+                                        ascending=False, inplace=True)
+
     output_json = {
         "actionable": {
-            "features": ["Glucose", "Blood Pressure", "Insulin", "Skin Thickness", "BMI"],
-            "importance": [40, 20, 15, 10, 5]
+            "features": actionable_features['feature'].tolist(),
+            "importance": list(np.around(actionable_features['importance'].values, 0))
         },
         "non-actionable": {
-            "features": ["Degree Pedigree Function", "Pregnancies", "Age"],
-            "importance": [50, 15, 2]
+            "features": non_actionable_features['feature'].tolist(),
+            "importance": list(np.around(non_actionable_features['importance'].values, 0))
         },
     }
     return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
