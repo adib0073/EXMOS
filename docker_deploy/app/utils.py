@@ -760,11 +760,11 @@ def compute_feature_importance(user):
 
     output_json = {
         "actionable": {
-            "features": actionable_features['feature'].tolist(),
+            "features": [FRIENDLY_NAMES[feat] for feat in actionable_features['feature'].tolist()],
             "importance": list(np.around(actionable_features['importance'].values, 0))
         },
         "non-actionable": {
-            "features": non_actionable_features['feature'].tolist(),
+            "features": [FRIENDLY_NAMES[feat] for feat in non_actionable_features['feature'].tolist()],
             "importance": list(np.around(non_actionable_features['importance'].values, 0))
         },
     }
