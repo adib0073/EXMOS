@@ -1,6 +1,7 @@
 '''
 All utility functions for training and inference
 '''
+import re
 import logging
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
@@ -15,6 +16,10 @@ from evidently.report import Report
 import json
 import xgboost
 import shap
+import six
+import sys
+sys.modules['sklearn.externals.six'] = six
+from skrules import SkopeRules
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -769,3 +774,53 @@ def compute_feature_importance(user):
         },
     }
     return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
+
+
+def compute_decision_rules(user):
+    """
+    Method to compute decision rules using Skope-rules
+    """
+    # Load user data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+
+    filters, selected_features, train_data, train_labels = load_filtered_user_data(
+        user_details)
+    
+    output_json = {}
+    ########################################
+    # Code to generate decision rules      #
+    ########################################
+    clf = SkopeRules(max_depth_duplication=2,
+                     n_estimators=30,
+                     precision_min=0.3,
+                     recall_min=0.3,
+                     random_state=123,
+                     feature_names=train_data.columns)
+    for idx, outcome in enumerate(['non-diabetic','diabetic']):
+        X, y = train_data, train_labels[TARGET_VARIABLE]
+        clf.fit(X, y == idx)
+        rules = clf.rules_[0:4]
+        rule_list = []
+        for rule in rules:
+            new_rule = []
+            conditions = rule[0].split(' and ')
+            for cond in conditions:
+                if ("<=" in cond):
+                    feature, op, threshold = cond.partition(" <= ")
+                elif (">=" in cond):
+                    feature, op, threshold = cond.partition(" >= ")
+                elif ("<" in cond):
+                    feature, op, threshold = cond.partition(" < ")
+                elif (">" in cond):
+                    feature, op, threshold = cond.partition(" > ")
+                
+                new_rule.append(f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)}")
+            rule_list.append(" and ".join(new_rule))
+        if len(rule_list) < 1:
+                rule_list.append("No rules found.")
+        output_json[outcome] = rule_list
+    #########################################
+    return (True, f"Successful. Decision rules obtained for user: {user}", output_json)

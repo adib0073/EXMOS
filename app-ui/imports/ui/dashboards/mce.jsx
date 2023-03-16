@@ -151,7 +151,7 @@ export const MCE = ({ user }) => {
                                 {ruleView.map((item, index) => {
                                     return (
                                         <div className="top-rules-viz-item" key={index}>
-                                            {item}
+                                            <b>{item}</b>
                                         </div>
                                     );
                                 })}
