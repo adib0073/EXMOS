@@ -74,10 +74,16 @@
     border-style: dashed;
     border-color: 'black';    
     padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cc-mce-right {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chart-container-viz-mce {

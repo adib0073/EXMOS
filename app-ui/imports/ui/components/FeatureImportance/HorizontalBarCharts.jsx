@@ -12,7 +12,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
     let maxXval = Math.max.apply(Math, x_values);
 
     for (let i = 0; i < x_values.length; i++) {
-        if (x_values[i] <= maxXval/3) {
+        if (x_values[i] < maxXval/2) {
             if (isActionable){
                 bdColor.push("#67A3FF");
             }
@@ -20,7 +20,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
                 bdColor.push("#C5C4C4");
             }
         }
-        else if (x_values[i] <= maxXval/2) {
+        else if (x_values[i] < maxXval) {
             if (isActionable){
                 bdColor.push("#1363DF");
             }
@@ -94,7 +94,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
                         return label;
                     },
                     title: function (context) {
-                        let label = "Feature " || '';
+                        let label = "Risk Factor " || '';
 
                         if (label) {
                             label += ': ';
