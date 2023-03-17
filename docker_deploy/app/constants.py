@@ -18,7 +18,7 @@ USER_DETAIL_JSON = {
         "lowerLimit": 0,
         "defaultUpperLimit": 15,
         "defaultLowerLimit": 0,
-        "unit": None,
+        "unit": "",
         "description": "Number of times pregnant"
     },
     "Glucose": {
@@ -72,7 +72,7 @@ USER_DETAIL_JSON = {
         "lowerLimit": 0.07,
         "defaultUpperLimit": 2.39,
         "defaultLowerLimit": 0.07,
-        "unit": None,
+        "unit": "",
         "description": "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history"
     },
     "Age": {

@@ -817,7 +817,7 @@ def compute_decision_rules(user):
                 elif (">" in cond):
                     feature, op, threshold = cond.partition(" > ")
                 
-                new_rule.append(f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)}")
+                new_rule.append(f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
             rule_list.append(" and ".join(new_rule))
         if len(rule_list) < 1:
                 rule_list.append("No rules found.")
