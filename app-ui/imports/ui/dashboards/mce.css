@@ -72,7 +72,8 @@
     border: 0px;
     border-right: 1px;
     border-style: dashed;
-    border-color: 'black';
+    border-color: 'black';    
+    padding-right: 10px;
 }
 
 .cc-mce-right {
@@ -203,4 +204,5 @@
     justify-content: center;
     text-align: center;
     width: 80%;
+    font-size: 1.7vh;
 }
