@@ -28,7 +28,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 199,
         "defaultLowerLimit": 0,
         "unit": "mg/dl",
-        "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test"
+        "description": "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test"
     },
     "BloodPressure": {
         "isSelected": True,
@@ -115,11 +115,11 @@ USER_DETAIL_JSON = {
 }
 # FRIENDLY NAMES
 FRIENDLY_NAMES = {
-    "Pregnancies": "Pregnancies",
-    "Glucose": "Glucose",
-    "BloodPressure": "Blood Pressure",
-    "SkinThickness": "Skin Thickness",
-    "Insulin": "Insulin",
+    "Pregnancies": "Number of Pregnancies",
+    "Glucose": "Plasma Glucose Concentration",
+    "BloodPressure": "Diastolic Blood Pressure",
+    "SkinThickness": "Triceps skinfold thickness",
+    "Insulin": "Two-hour Serum Insulin",
     "BMI": "Body Mass Index",
     "DiabetesPedigreeFunction": "Diabetes Pedigree Function",
     "Age": "Age"
