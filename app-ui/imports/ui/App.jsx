@@ -13,6 +13,9 @@ export const App = () => {
 
     return (
         <>
+        <style>
+            {'body {background-color:#E5E5E5;}'}
+        </style>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />

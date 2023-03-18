@@ -121,7 +121,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
                     color: "black",
                     font: function (context) {
                         var width = context.chart.width;
-                        var size = Math.round(width / 32);
+                        var size = Math.round(width / 36);
                         return {
                             size: size
                         };

@@ -1,5 +1,8 @@
+.body{
+    background-color: #E5E5E5;
+}
 .mce-container {
-    margin: 30px 240px 20px 240px;
+    margin: 20px 15% 20px 15%;
     border: 0px;
     border-style: solid;
     border-color: transparent;
@@ -47,7 +50,7 @@
     border-radius: 20px;
     padding: 10px;
     margin: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 /* chart-container */
@@ -99,7 +102,7 @@
     flex: 1;
     padding: 2px;
     font-size: 1.6vh;
-    margin-left: 25%;
+    margin-left: 27%;
     color: black;
 }
 
@@ -211,4 +214,5 @@
     text-align: center;
     width: 90%;
     font-size: 1.7vh;
+    max-height: 10vh;
 }
