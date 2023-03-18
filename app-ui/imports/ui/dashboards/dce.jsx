@@ -288,7 +288,7 @@ export const DCE = ({ user }) => {
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Glucose"}:
+                                        {dsChartVals["Glucose"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -304,7 +304,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Blood Pressure"}:
+                                        {dsChartVals["BloodPressure"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -320,7 +320,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Insulin"}:
+                                        {dsChartVals["Insulin"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -336,7 +336,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Pregnancies"}:
+                                        {dsChartVals["Pregnancies"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -354,7 +354,7 @@ export const DCE = ({ user }) => {
                             <div className="chart-box-2">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Skin Thickness"}:
+                                        {dsChartVals["SkinThickness"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -369,7 +369,7 @@ export const DCE = ({ user }) => {
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Age"}:
+                                        {dsChartVals["Age"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -384,7 +384,7 @@ export const DCE = ({ user }) => {
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Diabetes Pedigree Function"}:
+                                        {dsChartVals["DiabetesPedigreeFunction"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -399,7 +399,7 @@ export const DCE = ({ user }) => {
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {"Body Mass Index"}:
+                                        {dsChartVals["BMI"].name}:
                                     </span>
                                     <br />
                                     <ContinuousDistribution
