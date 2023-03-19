@@ -70,35 +70,41 @@ const PostConfigData = ({ userid, featureConfig }) => {
     });
 };
 
-const RestoreConfigData = ({ userid, setFeatureConfig}) => {
-    axios.get(BASE_API + '/restoreand retrain/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setFeatureConfig({
-                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
-                "Glucose": response.data["OutputJson"]["Glucose"],
-                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
-                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
-                "Insulin": response.data["OutputJson"]["Insulin"],
-                "BMI": response.data["OutputJson"]["BMI"],
-                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
-                "Age": response.data["OutputJson"]["Age"],
-                "target": response.data["OutputJson"]["target"]
-            });
-
-        }).catch(function (error) {
-            console.log(error);
-        });
+const RestoreConfigData = ({ userid, featureConfig, setFeatureConfig }) => {
+    axios.post(BASE_API + '/restoreandretrain', {
+        UserId: userid,
+        JsonData: featureConfig
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Call Get Config Data
+            GetConfigData({ userid, setFeatureConfig });
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
 };
 
-const handleResetButton = (userid, setFeatureConfig, setReloadFlag) => {
+const handleResetButton = (userid, featureConfig, setFeatureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to reset to default values?')) {
         setReloadFlag(true);
-        RestoreConfigData({ userid, setFeatureConfig });
+        RestoreConfigData({ userid, featureConfig, setFeatureConfig });
         setTimeout(function () {
-            message.success("Default model is restored.", 3);
+            message.success("Default model is restored.", 5);
             setReloadFlag(false);
-        }, 3000);
+        }, 6000);
     }
 };
 
@@ -109,7 +115,7 @@ const handleCancelButton = (userid, setFeatureConfig) => {
     }
 };
 
-const handleTrainButton = (userid, featureConfig, setFeatureConfig, setReloadFlag) => {
+const handleTrainButton = (userid, featureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to save and re-train the machine learning model?')) {
         //window.location.reload();
         setReloadFlag(true);
@@ -454,7 +460,7 @@ export const FeatureConfig = ({ userid }) => {
                         <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, setFeatureConfig, setReloadFlag) }}
+                            onClick={() => { handleResetButton(userid, featureConfig, setFeatureConfig, setReloadFlag) }}
                         >
                             {"Reset to defaults"}
                         </button>
@@ -469,7 +475,7 @@ export const FeatureConfig = ({ userid }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton(userid, featureConfig, setFeatureConfig, setReloadFlag) }}
+                            onClick={() => { handleTrainButton(userid, featureConfig, setReloadFlag) }}
                         >
                             {"Save and Re-train"}
                         </button>

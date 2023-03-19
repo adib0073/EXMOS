@@ -551,6 +551,42 @@ def retrain_config_data(config_data):
 
     return (True, f"Success. New score is :{test_score}", user_details)
 
+def restore_and_retrain(config_data):
+    """
+    Method to restore default values
+    """
+    user = config_data.UserId
+    # Update records
+    for feature in ALL_FEATURES:
+        updated_feature = config_data.JsonData[feature]
+        updated_feature['isSelected'] = True
+        updated_feature['upperLimit'] = updated_feature['defaultUpperLimit']
+        updated_feature['lowerLimit'] = updated_feature['defaultLowerLimit']
+        for unwanted_val in ["xdata", "ydata", "average"]:
+            del updated_feature[unwanted_val]
+        update_user_details(user, {feature: updated_feature})
+    # re-train model with updated data
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    filters, selected_features, data, labels = load_filtered_user_data(
+        user_details)
+    # train model
+    train_score, test_score = training_model(data, labels, selected_features)
+    # Update old score
+    prev_score = user_details["CurrentScore"]
+    if prev_score != test_score:
+        update_user_details(user, {"CurrentScore": test_score})
+        update_user_details(user, {"PrevScore": prev_score})
+    # Update data issue scores
+    new_data_issues = UpdateDataIssues(
+        data, labels, user_details["DataIssues"], selected_features)
+    update_user_details(user, {"DataIssues": new_data_issues})
+    # Adding target in output json
+    user_details['target'] = config_data.JsonData['target']
+
+    return (True, f"Success. Default score is :{test_score}", user_details)
 
 def detect_drift(user):
     '''
