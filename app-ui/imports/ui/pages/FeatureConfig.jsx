@@ -33,7 +33,7 @@ const GetConfigData = ({ userid, setFeatureConfig }) => {
             console.log(error);
         });
 };
-const PostConfigData = ({ userid, featureConfig, setFeatureConfig, setReloadFlag }) => {
+const PostConfigData = ({ userid, featureConfig }) => {
     axios.post(BASE_API + '/configandretrain', {
         UserId: userid,
         JsonData: featureConfig
@@ -70,6 +70,38 @@ const PostConfigData = ({ userid, featureConfig, setFeatureConfig, setReloadFlag
     });
 };
 
+const RestoreConfigData = ({ userid, setFeatureConfig}) => {
+    axios.get(BASE_API + '/restoreand retrain/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setFeatureConfig({
+                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
+                "Glucose": response.data["OutputJson"]["Glucose"],
+                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
+                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
+                "Insulin": response.data["OutputJson"]["Insulin"],
+                "BMI": response.data["OutputJson"]["BMI"],
+                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
+                "Age": response.data["OutputJson"]["Age"],
+                "target": response.data["OutputJson"]["target"]
+            });
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
+const handleResetButton = (userid, setFeatureConfig, setReloadFlag) => {
+    if (window.confirm('Do you want to reset to default values?')) {
+        setReloadFlag(true);
+        RestoreConfigData({ userid, setFeatureConfig });
+        setTimeout(function () {
+            message.success("Default model is restored.", 3);
+            setReloadFlag(false);
+        }, 3000);
+    }
+};
+
 const handleCancelButton = (userid, setFeatureConfig) => {
     if (window.confirm('Do you want to revert all your changes?')) {
         GetConfigData({ userid, setFeatureConfig });
@@ -77,11 +109,11 @@ const handleCancelButton = (userid, setFeatureConfig) => {
     }
 };
 
-const handleTrainButton = (userid, featureConfig, setFeatureConfig, reloadFlag, setReloadFlag) => {
+const handleTrainButton = (userid, featureConfig, setFeatureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to save and re-train the machine learning model?')) {
         //window.location.reload();
         setReloadFlag(true);
-        PostConfigData({ userid, featureConfig, setFeatureConfig, setReloadFlag });
+        PostConfigData({ userid, featureConfig });
         setTimeout(function () {
             message.success("Model is successfully re-trained with latest changes.", 3);
             setReloadFlag(false);
@@ -135,7 +167,7 @@ export const FeatureConfig = ({ userid }) => {
                     <div className='config-display-fc-r2c1'>
                         <div className='cd-chart-container'>
                             <div className='cd-chart-tick-box'>
-                                <AimOutlined style={{ fontSize: '24px', color:'#999999'}}/>
+                                <AimOutlined style={{ fontSize: '24px', color: '#999999' }} />
                             </div>
                             <div className='cd-chart-box'>
                                 <div className='cd-chart-left'>
@@ -419,10 +451,10 @@ export const FeatureConfig = ({ userid }) => {
                         * You can select/deselect features or filter feature values to tune the trained model
                     </div>
                     <div className='config-display-fc-r3-item'>
-                    <button
+                        <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, setFeatureConfig) }}
+                            onClick={() => { handleResetButton(userid, setFeatureConfig, setReloadFlag) }}
                         >
                             {"Reset to defaults"}
                         </button>
@@ -437,7 +469,7 @@ export const FeatureConfig = ({ userid }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton(userid, featureConfig, setFeatureConfig, reloadFlag, setReloadFlag) }}
+                            onClick={() => { handleTrainButton(userid, featureConfig, setFeatureConfig, setReloadFlag) }}
                         >
                             {"Save and Re-train"}
                         </button>
