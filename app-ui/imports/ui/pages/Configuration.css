@@ -234,6 +234,21 @@ ul.tab li.active {
     background-color: #f1eded;
 }
 
+.reset-button {
+    padding: 10px;
+    border: None;
+    font-weight: 600;
+    color: #fff;
+    background-color: #6C6C6C;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.reset-button:hover {
+    color: #fff;
+    background-color: #8d8d8d;
+}
+
 .train-button {
     margin-left: 10px;
     padding: 10px;

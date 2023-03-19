@@ -419,12 +419,20 @@ export const FeatureConfig = ({ userid }) => {
                         * You can select/deselect features or filter feature values to tune the trained model
                     </div>
                     <div className='config-display-fc-r3-item'>
+                    <button
+                            className="reset-button"
+                            type="submit"
+                            onClick={() => { handleResetButton(userid, setFeatureConfig) }}
+                        >
+                            {"Reset to defaults"}
+                        </button>
+
                         <button
                             className="cancel-button"
                             type="submit"
                             onClick={() => { handleCancelButton(userid, setFeatureConfig) }}
                         >
-                            Cancel changes
+                            {"Cancel changes"}
                         </button>
                         <button
                             className="train-button"
