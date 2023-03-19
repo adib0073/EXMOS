@@ -187,6 +187,17 @@ async def config_and_retrain(config_data: ConfigDataModel):
     }
     return response
 
+@app.get("/restoreandretrain")
+async def restore_default(user: str):
+    # Call method to get outlier information for data configured by the user
+    code, message, output_json = restore_and_retrain(user)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json,
+    }
+    return response
 
 @app.get("/checkoutliers")
 async def check_outliers(user: str):
