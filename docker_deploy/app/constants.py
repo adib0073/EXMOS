@@ -133,7 +133,7 @@ TARGET_VARIABLE = "Outcome"
 NON_EXTREME_VALUES = {
     "Pregnancies": [-1, -1],
     "Glucose": [30, 200],
-    "BloodPressure": [30, 100],
+    "BloodPressure": [30, 110],
     "SkinThickness": [2, 50],
     "Insulin": [5, -1],
     "BMI": [10, -1],
