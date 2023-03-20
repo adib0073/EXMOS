@@ -199,6 +199,18 @@ async def restore_default(config_data: ConfigDataModel):
     }
     return response
 
+@app.post("/trackinteractions", response_model=OutputwithPayloadDataModel)
+async def track_interaction(config_data: ConfigDataModel):
+    # Call method to restore default configurations
+    code, message, output_json = save_interaction_data(config_data)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json,
+    }
+    return response
+
 @app.get("/checkoutliers")
 async def check_outliers(user: str):
     # Call method to get outlier information for data configured by the user

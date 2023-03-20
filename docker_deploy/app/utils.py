@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 from constants import *
-from dbconnectors import get_database, fetch_user_details, update_user_details, insert_accuracy_detail
+from dbconnectors import get_database, fetch_user_details, update_user_details, insert_accuracy_detail, insert_interaction_data
 from evidently.metrics import DataDriftTable
 from evidently.report import Report
 import json
@@ -879,3 +879,19 @@ def compute_decision_rules(user):
         output_json[outcome] = rule_list
     #########################################
     return (True, f"Successful. Decision rules obtained for user: {user}", output_json)
+
+def save_interaction_data(config_data):
+    """
+    Method to store interaction data
+    """
+    interaction_detail = {
+        "user" : config_data.UserId,
+        "cohort" : config_data.Cohort,
+        "viz" : config_data.JsonData["viz"],
+        "eventType" : config_data.JsonData["eventType"],
+        "description" : config_data.JsonData["description"],
+        "timestamp": config_data.JsonData["timestamp"],
+        "duration" : config_data.JsonData["duration"]
+    }
+    insert_interaction_data(interaction_detail)
+    return (True, f"Successful. Interaction data inserted for user: {config_data.UserId}", interaction_detail)

@@ -10,6 +10,8 @@ DBNAME = "exmos_db"
 USER_COLLECTION = "exmos_collection"
 # MONGO COLLECTION FOR ACCURACY
 ACCURACY_COLLECTION = "exmos_accuracy"
+# MONGO COLLECTION FOR IINTERACTIONS DATA
+INTERACTIONS_COLLECTION = "exmos_interactions"
 # User Detail Template
 USER_DETAIL_JSON = {
     "UserName": None,

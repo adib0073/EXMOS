@@ -99,6 +99,33 @@ const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) 
     });
 };
 
+const PostInteractions = ({ userid, cohort, interactioData }) => {
+    axios.post(BASE_API + '/trackinteractions', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: interactioData
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Fire and Forget
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
 const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to reset to default values?')) {
         setReloadFlag(true);
@@ -142,6 +169,39 @@ export const FeatureConfig = ({ userid, cohort }) => {
             ...featureConfig,
             [feature]: updatedFeature
         });
+
+        let interactioData = {
+            "viz" : "featureSelection",
+            "eventType" : "click",
+            "description" : feature,
+            "timestamp" : Date().toString(),
+            "duration" : 0
+        }
+
+        PostInteractions({userid, cohort, interactioData});
+    };
+    // Hover time for interaction data
+    var startTime, endTime;
+    const handleMouseIn = () => { 
+        startTime = new Date();
+    };
+    const handleMouseOut = (viz, feature) => {
+        endTime = new Date();
+        var timeDiff = endTime - startTime; //in ms
+        // strip the ms
+        timeDiff /= 1000;
+        // get seconds
+        var duration = Math.round(timeDiff % 60);
+
+        let interactioData = {
+            "viz" : viz,
+            "eventType" : "hover",
+            "description" : feature,
+            "timestamp" : Date().toString(),
+            "duration" : duration
+        }
+
+        PostInteractions({userid, cohort, interactioData});
     };
 
     const inputOnChange = (e) => {
@@ -191,7 +251,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                             </div>
                         </div>
                         <div className='cd-chart-container'>
-                            <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Glucose") }}>
+                            <div className='cd-chart-tick-box' onClick={() => { handleTickClick("Glucose") }} >
                                 {featureConfig["Glucose"].isSelected ? <SelectedIcon /> : <UnselectedIcon />}
                             </div>
                             <div className='cd-chart-box'>
@@ -212,7 +272,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Glucose") }} >
                                     <ConfigArea
                                         x_values={featureConfig["Glucose"].xdata}
                                         y_values={featureConfig["Glucose"].ydata}
@@ -244,7 +304,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","BMI") }}>
                                     <ConfigArea
                                         x_values={featureConfig["BMI"].xdata}
                                         y_values={featureConfig["BMI"].ydata}
@@ -278,7 +338,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Insulin") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Insulin"].xdata}
                                         y_values={featureConfig["Insulin"].ydata}
@@ -310,7 +370,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Age") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Age"].xdata}
                                         y_values={featureConfig["Age"].ydata}
@@ -342,7 +402,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Pregnancies") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Pregnancies"].xdata}
                                         y_values={featureConfig["Pregnancies"].ydata}
@@ -376,7 +436,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","BloodPressure") }}>
                                     <ConfigArea
                                         x_values={featureConfig["BloodPressure"].xdata}
                                         y_values={featureConfig["BloodPressure"].ydata}
@@ -408,7 +468,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","SkinThickness") }}>
                                     <ConfigArea
                                         x_values={featureConfig["SkinThickness"].xdata}
                                         y_values={featureConfig["SkinThickness"].ydata}
@@ -440,7 +500,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right'>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","DiabetesPedigreeFunction") }}>
                                     <ConfigArea
                                         x_values={featureConfig["DiabetesPedigreeFunction"].xdata}
                                         y_values={featureConfig["DiabetesPedigreeFunction"].ydata}
