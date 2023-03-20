@@ -150,6 +150,18 @@ export const MCE = ({ user }) => {
 
         PostInteractions({ userid, cohort, interactioData });
     };
+    const handleVizClick = (viz, feature) => {
+
+        let interactioData = {
+            "viz": viz,
+            "eventType": "click",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": 0
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
+    };
 
     // Loading Indicator
     const loadingIndicator = (
@@ -172,7 +184,7 @@ export const MCE = ({ user }) => {
                                 <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                             </div>
                         </div>
-                        <div className="chart-container-mce" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
+                        <div className="chart-container-mce" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                             <div className='chart-container-viz-mce'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
@@ -212,7 +224,7 @@ export const MCE = ({ user }) => {
                                             Non-diabetic
                                         </div>
                                     </div>
-                                    <div className="top-rules-viz" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
+                                    <div className="top-rules-viz" onClick={() => { handleVizClick("DecisionRules", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
                                         {ruleView.map((item, index) => {
                                             return (
                                                 <div className="top-rules-viz-item" key={index}>
@@ -239,7 +251,7 @@ export const MCE = ({ user }) => {
                         {featureImportance.actionable.features == null || featureImportance['non-actionable'].features == null ?
                             loadingIndicator :
                             <>
-                                <div className="chart-box-mce" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
+                                <div className="chart-box-mce" onClick={() => { handleVizClick("FeatureImportance", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
                                     <div className="cc-mce-left">
                                         <HorizontalBarCharts
                                             x_values={featureImportance.actionable.importance}
