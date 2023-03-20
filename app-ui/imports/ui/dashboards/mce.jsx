@@ -80,7 +80,6 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-
 export const MCE = ({ user }) => {
     var userid = user.id;
     if (userid == null || userid == "") {

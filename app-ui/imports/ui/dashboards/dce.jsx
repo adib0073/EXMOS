@@ -84,13 +84,43 @@ const GetKIChartValue = ({ userid, setKiChartVals }) => {
         }).catch(function (error) {
             console.log(error);
         });
-}
+};
+
+const PostInteractions = ({ userid, cohort, interactioData }) => {
+    axios.post(BASE_API + '/trackinteractions', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: interactioData
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Fire and Forget
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
 
 export const DCE = ({ user }) => {
-    var userid = user.id;
-    var cohort = user.cohort;
+    var userid = user.id;;
     if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
+    }
+    var cohort = user.cohort;
+    if (cohort == null || cohort == "") {
+        cohort = window.localStorage.getItem('cohort');
     }
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
@@ -116,6 +146,42 @@ export const DCE = ({ user }) => {
     const greenFont = "#449231";
     const redFont = "#D64242";
 
+    // Hover time for interaction data
+    var startTime, endTime;
+    const handleMouseIn = () => {
+        startTime = new Date();
+    };
+    const handleMouseOut = (viz, feature) => {
+        endTime = new Date();
+        var timeDiff = endTime - startTime; //in ms
+        // strip the ms
+        timeDiff /= 1000;
+        // get seconds
+        var duration = Math.round(timeDiff % 60);
+
+        let interactioData = {
+            "viz": viz,
+            "eventType": "hover",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": duration
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
+    };
+    const handleVizClick = (viz, feature) => {
+
+        let interactioData = {
+            "viz": viz,
+            "eventType": "click",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": 0
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
+    };
+
     return (
         <>
             <NavBar user={user} />
@@ -131,7 +197,7 @@ export const DCE = ({ user }) => {
                                     <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                                 </div>
                             </div>
-                            <div className="chart-container">
+                            <div className="chart-container" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                                 <div className='chart-container-viz'>
                                     <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
@@ -160,7 +226,7 @@ export const DCE = ({ user }) => {
                                 </div>
                             </div>
                             <div className="chart-container">
-                                <div className="capsule-container">
+                                <div className="capsule-container" onClick={() => { handleVizClick("KeyInsights", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("KeyInsights", "Viz") }}>
                                     <div className="capsule-div">
                                         <div className="capsule-div-left">
                                             {kiChartVals["pct_list"][0]}%
@@ -207,7 +273,7 @@ export const DCE = ({ user }) => {
                             </div>
                         </div>
                         <div className="chart-container">
-                            <div className="dq-div">
+                            <div className="dq-div" onClick={() => { handleVizClick("DataQuality", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataQuality", "Viz") }}>
                                 <div className='dq-div-left'>
                                     <GaugeChart
                                         nrOfLevels={2}
@@ -284,7 +350,7 @@ export const DCE = ({ user }) => {
                         </div>
                     </div>
                     <div className="chart-container">
-                        <div className="chart-box">
+                        <div className="chart-box" onClick={() => { handleVizClick("DataDensityCharts", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataDensityCharts", "Viz") }}>
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
