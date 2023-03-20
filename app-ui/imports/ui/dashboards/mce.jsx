@@ -53,11 +53,42 @@ const GetTopDecisionRules = ({ userid, setTopRules, setRuleView }) => {
         });
 };
 
+const PostInteractions = ({ userid, cohort, interactioData }) => {
+    axios.post(BASE_API + '/trackinteractions', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: interactioData
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Fire and Forget
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
+
 export const MCE = ({ user }) => {
     var userid = user.id;
-    var cohort = user.cohort;
     if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
+    }
+    var cohort = user.cohort;
+    if (cohort == null || cohort == "") {
+        cohort = window.localStorage.getItem('cohort');
     }
 
     const accuracyChartRef = useRef();
@@ -96,6 +127,30 @@ export const MCE = ({ user }) => {
         setRuleView(topRules[category]);
     };
 
+    // Hover time for interaction data
+    var startTime, endTime;
+    const handleMouseIn = () => {
+        startTime = new Date();
+    };
+    const handleMouseOut = (viz, feature) => {
+        endTime = new Date();
+        var timeDiff = endTime - startTime; //in ms
+        // strip the ms
+        timeDiff /= 1000;
+        // get seconds
+        var duration = Math.round(timeDiff % 60);
+
+        let interactioData = {
+            "viz": viz,
+            "eventType": "hover",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": duration
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
+    };
+
     // Loading Indicator
     const loadingIndicator = (
         <>
@@ -117,7 +172,7 @@ export const MCE = ({ user }) => {
                                 <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
                             </div>
                         </div>
-                        <div className="chart-container-mce">
+                        <div className="chart-container-mce" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                             <div className='chart-container-viz-mce'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
@@ -157,7 +212,7 @@ export const MCE = ({ user }) => {
                                             Non-diabetic
                                         </div>
                                     </div>
-                                    <div className="top-rules-viz">
+                                    <div className="top-rules-viz" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
                                         {ruleView.map((item, index) => {
                                             return (
                                                 <div className="top-rules-viz-item" key={index}>
@@ -184,7 +239,7 @@ export const MCE = ({ user }) => {
                         {featureImportance.actionable.features == null || featureImportance['non-actionable'].features == null ?
                             loadingIndicator :
                             <>
-                                <div className="chart-box-mce">
+                                <div className="chart-box-mce" onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
                                     <div className="cc-mce-left">
                                         <HorizontalBarCharts
                                             x_values={featureImportance.actionable.importance}
