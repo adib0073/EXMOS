@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from constants import *
+import uuid
 
 def get_database(): 
    # Create a connection using MongoClient.
@@ -19,3 +20,10 @@ def update_user_details(user, newValues):
     collection_name = db[USER_COLLECTION]
     collection_name.update_one({"UserName" : user}, { "$set": newValues })
     client.close()   
+
+def insert_accuracy_detail(accuracy_detail):
+    client, db = get_database()
+    collection_name = db[ACCURACY_COLLECTION]
+    accuracy_detail.update({"_id": uuid.uuid4().hex})
+    collection_name.insert_one(accuracy_detail)
+    client.close()

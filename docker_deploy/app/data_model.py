@@ -13,6 +13,7 @@ class OutputwithPayloadDataModel(BaseModel):
 
 class ConfigDataModel(BaseModel):
     UserId: str
+    Cohort: str
     JsonData: dict = None
 
 class ValidateUserModel(BaseModel):

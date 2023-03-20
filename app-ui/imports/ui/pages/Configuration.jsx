@@ -8,9 +8,14 @@ import { FeatureConfig } from './FeatureConfig.jsx';
 export const Configuration = ({ user, setUser }) => {
     const [activeTab, setActiveTab] = useState("tab1");
     var userid = user.id;
-    if (userid == null || userid==""){
+    if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
     }
+    var cohort = user.cohort;
+    if (cohort == null || cohort == "") {
+        cohort = window.localStorage.getItem('cohort');
+    }
+    
     const handleTab1View = () => {
         setActiveTab("tab1");
     };
@@ -30,7 +35,7 @@ export const Configuration = ({ user, setUser }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig userid={userid} /> : <DataIssueConfig userid={userid}/>}
+                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} />}
                 </div>
             </div>
         </>);

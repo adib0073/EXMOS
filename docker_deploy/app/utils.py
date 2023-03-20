@@ -3,6 +3,7 @@ All utility functions for training and inference
 '''
 import re
 import logging
+from datetime import datetime
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
@@ -10,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 from constants import *
-from dbconnectors import get_database, fetch_user_details, update_user_details
+from dbconnectors import get_database, fetch_user_details, update_user_details, insert_accuracy_detail
 from evidently.metrics import DataDriftTable
 from evidently.report import Report
 import json
@@ -537,6 +538,15 @@ def retrain_config_data(config_data):
         user_details)
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
+    # Insert in  accuracy information MongoDB
+    accuracy_detail = {
+        "user" : user,
+        "cohort" : config_data.Cohort,
+        "score" : test_score,
+        "type" : "train",
+        "timestamp" : datetime.now(),
+    }
+    insert_accuracy_detail(accuracy_detail)
     # Update old score
     prev_score = user_details["CurrentScore"]
     if prev_score != test_score:
@@ -574,6 +584,15 @@ def restore_and_retrain(config_data):
         user_details)
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
+    # Insert in  accuracy information MongoDB
+    accuracy_detail = {
+        "user" : user,
+        "cohort" : config_data.Cohort,
+        "score" : test_score,
+        "type" : "restore",
+        "timestamp" : datetime.now(),
+    }
+    insert_accuracy_detail(accuracy_detail)
     # Update old score
     prev_score = user_details["CurrentScore"]
     if prev_score != test_score:

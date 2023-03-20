@@ -33,9 +33,10 @@ const GetConfigData = ({ userid, setFeatureConfig }) => {
             console.log(error);
         });
 };
-const PostConfigData = ({ userid, featureConfig }) => {
+const PostConfigData = ({ userid, cohort, featureConfig }) => {
     axios.post(BASE_API + '/configandretrain', {
         UserId: userid,
+        Cohort: cohort,
         JsonData: featureConfig
     }, {
         headers: {
@@ -70,9 +71,10 @@ const PostConfigData = ({ userid, featureConfig }) => {
     });
 };
 
-const RestoreConfigData = ({ userid, featureConfig, setFeatureConfig }) => {
+const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) => {
     axios.post(BASE_API + '/restoreandretrain', {
         UserId: userid,
+        Cohort: cohort,
         JsonData: featureConfig
     }, {
         headers: {
@@ -97,10 +99,10 @@ const RestoreConfigData = ({ userid, featureConfig, setFeatureConfig }) => {
     });
 };
 
-const handleResetButton = (userid, featureConfig, setFeatureConfig, setReloadFlag) => {
+const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to reset to default values?')) {
         setReloadFlag(true);
-        RestoreConfigData({ userid, featureConfig, setFeatureConfig });
+        RestoreConfigData({ userid, cohort, featureConfig, setFeatureConfig });
         setTimeout(function () {
             message.success("Default model is restored.", 5);
             setReloadFlag(false);
@@ -115,11 +117,11 @@ const handleCancelButton = (userid, setFeatureConfig) => {
     }
 };
 
-const handleTrainButton = (userid, featureConfig, setReloadFlag) => {
+const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag) => {
     if (window.confirm('Do you want to save and re-train the machine learning model?')) {
         //window.location.reload();
         setReloadFlag(true);
-        PostConfigData({ userid, featureConfig });
+        PostConfigData({ userid, cohort, featureConfig });
         setTimeout(function () {
             message.success("Model is successfully re-trained with latest changes.", 3);
             setReloadFlag(false);
@@ -129,7 +131,7 @@ const handleTrainButton = (userid, featureConfig, setReloadFlag) => {
 };
 
 
-export const FeatureConfig = ({ userid }) => {
+export const FeatureConfig = ({ userid, cohort }) => {
     const [featureConfig, setFeatureConfig] = useState(DATA_SUMMARY_DEFAULT_MODEL);
     const [reloadFlag, setReloadFlag] = useState(false);
 
@@ -158,12 +160,10 @@ export const FeatureConfig = ({ userid }) => {
 
     return (
         reloadFlag ? loadingIndicator :
-
             <>
                 <div className='config-display-fc-r1'>
                     <div className='config-display-fc-r1-text'>
                         {"The current model is trained on the selected features with selected data configurations:"}
-
                     </div>
                     <div className='config-display-fc-r1-icon'>
                         <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
@@ -460,7 +460,7 @@ export const FeatureConfig = ({ userid }) => {
                         <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, featureConfig, setFeatureConfig, setReloadFlag) }}
+                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag) }}
                         >
                             {"Reset to defaults"}
                         </button>
@@ -475,7 +475,7 @@ export const FeatureConfig = ({ userid }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton(userid, featureConfig, setReloadFlag) }}
+                            onClick={() => { handleTrainButton(userid, cohort, featureConfig, setReloadFlag) }}
                         >
                             {"Save and Re-train"}
                         </button>

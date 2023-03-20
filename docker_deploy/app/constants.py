@@ -6,8 +6,10 @@ DEFAULT_VALUES = [(0, 15), (0, 199), (0, 122), (0, 99),
 CONNECTION_STRING = "mongodb+srv://exmos:Exmos1005@exmoscluster1.rt8qvof.mongodb.net/?retryWrites=true&w=majority"
 # MONGO DATABASE NAME
 DBNAME = "exmos_db"
-# MONGO COLLECTION NAME
+# MONGO COLLECTION NAME FOR USER DETAILS
 USER_COLLECTION = "exmos_collection"
+# MONGO COLLECTION FOR ACCURACY
+ACCURACY_COLLECTION = "exmos_accuracy"
 # User Detail Template
 USER_DETAIL_JSON = {
     "UserName": None,
@@ -133,7 +135,7 @@ TARGET_VARIABLE = "Outcome"
 NON_EXTREME_VALUES = {
     "Pregnancies": [-1, -1],
     "Glucose": [30, 200],
-    "BloodPressure": [30, 110],
+    "BloodPressure": [30, 115],
     "SkinThickness": [2, 50],
     "Insulin": [5, -1],
     "BMI": [10, -1],
