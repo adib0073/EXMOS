@@ -181,7 +181,6 @@ export const ContinuousDistribution = (
     const cardColor = isActive ? "#1363DF" : "#E5E5E5";
 
     const highlightRegion = (ctx) => {
-        console.log(q1);
         /*
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
             return chartColor;
@@ -297,7 +296,7 @@ export const ContinuousDistribution = (
                         }
                     }
                 },
-                text: "Blood Sugar Measures",
+                text: "Measures",
             }
         },
     };
@@ -312,8 +311,9 @@ export const ContinuousDistribution = (
         ctx.setLineDash([0, 0]);
         ctx.lineDashOffset = 0;
 
-        const markerLength = 0.3 * height;
-        const startingPoint = top + (height - markerLength);
+        const markerLength = height - y.getPixelForValue(y_values[value_marker]);
+        //const startingPoint = top + (height - markerLength);
+        const startingPoint = y.getPixelForValue(y_values[value_marker]);
 
         let markerPosition = x.getPixelForValue(value_marker);
         //let markerPosition = x.getPixelForValue(average);

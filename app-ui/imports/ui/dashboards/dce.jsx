@@ -101,7 +101,7 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
     }).then(function (response) {
-        console.log(response.data["OutputJson"]);
+        //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             // Fire and Forget
         }
