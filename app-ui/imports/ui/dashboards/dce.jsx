@@ -13,6 +13,7 @@ import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from 
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
+import { Tooltip } from 'antd';
 // TO-DO - Delete following if not required
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
@@ -353,9 +354,15 @@ export const DCE = ({ user }) => {
                         <div className="chart-box" onClick={() => { handleVizClick("DataDensityCharts", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataDensityCharts", "Viz") }}>
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["Glucose"].name}: {"("+dsChartVals["Glucose"].unit+")"}
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["Glucose"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["Glucose"].name}: {"(" + dsChartVals["Glucose"].unit + ")"}
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["Glucose"].average]}
@@ -369,9 +376,15 @@ export const DCE = ({ user }) => {
                                     />
                                 </div>
                                 <div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["BloodPressure"].name}: {"("+dsChartVals["BloodPressure"].unit+")"}
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["BloodPressure"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["BloodPressure"].name}: {"(" + dsChartVals["BloodPressure"].unit + ")"}
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["BloodPressure"].average]}
@@ -385,9 +398,15 @@ export const DCE = ({ user }) => {
                                     />
                                 </div>
                                 <div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["Insulin"].name}: {"("+dsChartVals["Insulin"].unit+")"}
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["Insulin"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["Insulin"].name}: {"(" + dsChartVals["Insulin"].unit + ")"}
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["Insulin"].average]}
@@ -396,14 +415,20 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Insulin"].upperLimit}
                                         lLimit={dsChartVals["Insulin"].lowerLimit}
                                         isActive={dsChartVals["Insulin"].isSelected}
-                                        q1 = {dsChartVals["Insulin"].q1}
-                                        q3 = {dsChartVals["Insulin"].q3}
+                                        q1={dsChartVals["Insulin"].q1}
+                                        q3={dsChartVals["Insulin"].q3}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["Pregnancies"].name}:
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["Pregnancies"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["Pregnancies"].name}:
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["Pregnancies"].average]}
@@ -412,16 +437,22 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Pregnancies"].upperLimit}
                                         lLimit={dsChartVals["Pregnancies"].lowerLimit}
                                         isActive={dsChartVals["Pregnancies"].isSelected}
-                                        q1 = {dsChartVals["Pregnancies"].q1}
-                                        q3 = {dsChartVals["Pregnancies"].q3}
+                                        q1={dsChartVals["Pregnancies"].q1}
+                                        q3={dsChartVals["Pregnancies"].q3}
                                     />
                                 </div>
                             </div>
                             <div className="chart-box-2">
                                 <div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["SkinThickness"].name}: {"("+dsChartVals["SkinThickness"].unit+")"}
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["SkinThickness"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["SkinThickness"].name}: {"(" + dsChartVals["SkinThickness"].unit + ")"}
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["SkinThickness"].average]}
@@ -430,13 +461,19 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["SkinThickness"].upperLimit}
                                         lLimit={dsChartVals["SkinThickness"].lowerLimit}
                                         isActive={dsChartVals["SkinThickness"].isSelected}
-                                        q1 = {dsChartVals["SkinThickness"].q1}
-                                        q3 = {dsChartVals["SkinThickness"].q3}
+                                        q1={dsChartVals["SkinThickness"].q1}
+                                        q3={dsChartVals["SkinThickness"].q3}
                                     />
                                 </div><div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["Age"].name}:
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["Age"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["Age"].name}:
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["Age"].average]}
@@ -445,13 +482,19 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["Age"].upperLimit}
                                         lLimit={dsChartVals["Age"].lowerLimit}
                                         isActive={dsChartVals["Age"].isSelected}
-                                        q1 = {dsChartVals["Age"].q1}
-                                        q3 = {dsChartVals["Age"].q3}
+                                        q1={dsChartVals["Age"].q1}
+                                        q3={dsChartVals["Age"].q3}
                                     />
                                 </div><div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["DiabetesPedigreeFunction"].name}:
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["DiabetesPedigreeFunction"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["DiabetesPedigreeFunction"].name}:
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["DiabetesPedigreeFunction"].average]}
@@ -460,13 +503,19 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["DiabetesPedigreeFunction"].upperLimit}
                                         lLimit={dsChartVals["DiabetesPedigreeFunction"].lowerLimit}
                                         isActive={dsChartVals["DiabetesPedigreeFunction"].isSelected}
-                                        q1 = {dsChartVals["DiabetesPedigreeFunction"].q1}
-                                        q3 = {dsChartVals["DiabetesPedigreeFunction"].q3}
+                                        q1={dsChartVals["DiabetesPedigreeFunction"].q1}
+                                        q3={dsChartVals["DiabetesPedigreeFunction"].q3}
                                     />
                                 </div><div className="summary-chart-box">
-                                    <span className="ValueLabel">
-                                        {dsChartVals["BMI"].name}: {"("+dsChartVals["BMI"].unit+")"}
-                                    </span>
+                                    <Tooltip
+                                        placement="top"
+                                        title={dsChartVals["BMI"].description}
+                                        overlayStyle={{ maxWidth: '500px' }}
+                                    >
+                                        <span className="ValueLabel">
+                                            {dsChartVals["BMI"].name}: {"(" + dsChartVals["BMI"].unit + ")"}
+                                        </span>
+                                    </Tooltip>
                                     <br />
                                     <ContinuousDistribution
                                         average={[dsChartVals["BMI"].average]}
@@ -475,15 +524,15 @@ export const DCE = ({ user }) => {
                                         uLimit={dsChartVals["BMI"].upperLimit}
                                         lLimit={dsChartVals["BMI"].lowerLimit}
                                         isActive={dsChartVals["BMI"].isSelected}
-                                        q1 = {dsChartVals["BMI"].q1}
-                                        q3 = {dsChartVals["BMI"].q3}
+                                        q1={dsChartVals["BMI"].q1}
+                                        q3={dsChartVals["BMI"].q3}
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="bottom-legend">
-                        <RectBlock color="#FFB1C1"/> Extreme Values &nbsp; <RectBlock color="#67A3FF"/> Non-extreme Values
+                        <RectBlock color="#FFB1C1" /> Extreme Values &nbsp; <RectBlock color="#67A3FF" /> Non-extreme Values
                     </div>
                 </div >
             </div >
