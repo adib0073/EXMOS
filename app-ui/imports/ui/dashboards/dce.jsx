@@ -373,6 +373,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["Glucose"].isSelected}
                                         q1={dsChartVals["Glucose"].q1}
                                         q3={dsChartVals["Glucose"].q3}
+                                        name={"Glucose"}
+                                        unit={dsChartVals["Glucose"].unit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -395,6 +397,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["BloodPressure"].isSelected}
                                         q1={dsChartVals["BloodPressure"].q1}
                                         q3={dsChartVals["BloodPressure"].q3}
+                                        name={"Blood Pressure"}
+                                        unit={dsChartVals["BloodPressure"].unit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -417,6 +421,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["Insulin"].isSelected}
                                         q1={dsChartVals["Insulin"].q1}
                                         q3={dsChartVals["Insulin"].q3}
+                                        name={"Insulin"}
+                                        unit={dsChartVals["Insulin"].unit}
                                     />
                                 </div>
                                 <div className="summary-chart-box">
@@ -439,6 +445,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["Pregnancies"].isSelected}
                                         q1={dsChartVals["Pregnancies"].q1}
                                         q3={dsChartVals["Pregnancies"].q3}
+                                        name={"Pregnancies"}
+                                        unit={""}
                                     />
                                 </div>
                             </div>
@@ -463,6 +471,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["SkinThickness"].isSelected}
                                         q1={dsChartVals["SkinThickness"].q1}
                                         q3={dsChartVals["SkinThickness"].q3}
+                                        name={"Skin Thickness"}
+                                        unit={dsChartVals["SkinThickness"].unit}
                                     />
                                 </div><div className="summary-chart-box">
                                     <Tooltip
@@ -484,6 +494,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["Age"].isSelected}
                                         q1={dsChartVals["Age"].q1}
                                         q3={dsChartVals["Age"].q3}
+                                        name={"Age"}
+                                        unit={""}
                                     />
                                 </div><div className="summary-chart-box">
                                     <Tooltip
@@ -505,6 +517,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["DiabetesPedigreeFunction"].isSelected}
                                         q1={dsChartVals["DiabetesPedigreeFunction"].q1}
                                         q3={dsChartVals["DiabetesPedigreeFunction"].q3}
+                                        name={"Pedigree Function"}
+                                        unit={""}
                                     />
                                 </div><div className="summary-chart-box">
                                     <Tooltip
@@ -526,6 +540,8 @@ export const DCE = ({ user }) => {
                                         isActive={dsChartVals["BMI"].isSelected}
                                         q1={dsChartVals["BMI"].q1}
                                         q3={dsChartVals["BMI"].q3}
+                                        name={"BMI"}
+                                        unit={dsChartVals["BMI"].unit}
                                     />
                                 </div>
                             </div>

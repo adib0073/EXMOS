@@ -58,12 +58,10 @@
 }
 
 .ContDistPlot:hover {
-  cursor: grab;
   transition: 0.2s;
 }
 
 .ContDistPlot:active {
-  cursor: grabbing;
   transition: 0.2s;
 }
 

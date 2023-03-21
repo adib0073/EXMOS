@@ -143,6 +143,8 @@ export const ContinuousDistribution = (
         isActive,
         q1,
         q3,
+        name,
+        unit,
     }) => {
 
     let x_values = [0];
@@ -208,13 +210,16 @@ export const ContinuousDistribution = (
                 label: 'Count',
                 data: y_values,
                 pointRadius: 0,
-                pointHitRadius: 0,
-                pointHoverRadius: 0,
+                hoverBackgroundColor: 'white',
+                pointHoverRadius: 5,
+                pointHoverBorderWidth: 3,
+                pointBorderColor:chartColor,
                 fill: true,
                 tension: 0.4,
                 segment: {
                     backgroundColor: bgColor,
                     borderColor: bgColor,
+                    pointBorderColor: bgColor,
                 },
             },
         ],
@@ -228,29 +233,27 @@ export const ContinuousDistribution = (
             legend: { display: false },
             tooltip: {
                 enabled: true,
-                displayColors: true,
+                displayColors: false,
                 callbacks: {
                     label: function (context) {
                         let label = "Patient Counts " || '';
-
                         if (label) {
-                            label += '- ';
+                            label += ': ';
                         }
                         if (context.parsed.y !== null) {
-                            label += context.parsed.y;
+                            label += Math.round((context.parsed.y + Number.EPSILON) * 100) / 100;
                         }
                         return label;
                     },
                     title: function (context) {
-                        let label = "BPM " || '';
-
+                        let label = name+ " " || '';
                         if (label) {
                             label += ': ';
                         }
                         if (context.label !== null) {
-                            label += context[0].label;
+                            label += parseFloat(context[0].label).toFixed(2);
                         }
-                        return label;
+                        return label+" "+unit;
                     }
                 }
             },
