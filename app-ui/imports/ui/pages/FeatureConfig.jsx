@@ -7,7 +7,7 @@ import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
 import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
 import 'antd/dist/antd.css';
-import { Input, message, Spin } from 'antd';
+import { Input, message, Spin, Tooltip } from 'antd';
 import { AimOutlined } from '@ant-design/icons';
 import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
 import axios from 'axios';
@@ -171,18 +171,18 @@ export const FeatureConfig = ({ userid, cohort }) => {
         });
 
         let interactioData = {
-            "viz" : "featureSelection",
-            "eventType" : "click",
-            "description" : feature,
-            "timestamp" : Date().toString(),
-            "duration" : 0
+            "viz": "featureSelection",
+            "eventType": "click",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": 0
         }
 
-        PostInteractions({userid, cohort, interactioData});
+        PostInteractions({ userid, cohort, interactioData });
     };
     // Hover time for interaction data
     var startTime, endTime;
-    const handleMouseIn = () => { 
+    const handleMouseIn = () => {
         startTime = new Date();
     };
     const handleMouseOut = (viz, feature) => {
@@ -194,14 +194,14 @@ export const FeatureConfig = ({ userid, cohort }) => {
         var duration = Math.round(timeDiff % 60);
 
         let interactioData = {
-            "viz" : viz,
-            "eventType" : "hover",
-            "description" : feature,
-            "timestamp" : Date().toString(),
-            "duration" : duration
+            "viz": viz,
+            "eventType": "hover",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": duration
         }
 
-        PostInteractions({userid, cohort, interactioData});
+        PostInteractions({ userid, cohort, interactioData });
     };
 
     const inputOnChange = (e) => {
@@ -258,7 +258,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["Glucose"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["Glucose"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["Glucose"].description}
+                                            >
+                                                <b>{featureConfig["Glucose"].name}</b> {"(" + featureConfig["Glucose"].unit + ")"}
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -272,7 +277,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Glucose") }} >
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "Glucose") }} >
                                     <ConfigArea
                                         x_values={featureConfig["Glucose"].xdata}
                                         y_values={featureConfig["Glucose"].ydata}
@@ -290,7 +295,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["BMI"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["BMI"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["BMI"].description}
+                                            >
+                                                <b>{featureConfig["BMI"].name}</b> {"(" + featureConfig["BMI"].unit + ")"}
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control' >
@@ -304,7 +314,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","BMI") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "BMI") }}>
                                     <ConfigArea
                                         x_values={featureConfig["BMI"].xdata}
                                         y_values={featureConfig["BMI"].ydata}
@@ -324,7 +334,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["Insulin"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["Insulin"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["Insulin"].description}
+                                            >
+                                                <b>{featureConfig["Insulin"].name}</b> {"(" + featureConfig["Insulin"].unit + ")"}
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -338,7 +353,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Insulin") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "Insulin") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Insulin"].xdata}
                                         y_values={featureConfig["Insulin"].ydata}
@@ -356,7 +371,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["Age"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["Age"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["Age"].description}
+                                            >
+                                                <b>{featureConfig["Age"].name}</b>
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -370,7 +390,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Age") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "Age") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Age"].xdata}
                                         y_values={featureConfig["Age"].ydata}
@@ -388,7 +408,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["Pregnancies"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["Pregnancies"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["Pregnancies"].description}
+                                            >
+                                                <b>{featureConfig["Pregnancies"].name}</b>
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -402,7 +427,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","Pregnancies") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "Pregnancies") }}>
                                     <ConfigArea
                                         x_values={featureConfig["Pregnancies"].xdata}
                                         y_values={featureConfig["Pregnancies"].ydata}
@@ -422,7 +447,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["BloodPressure"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["BloodPressure"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["BloodPressure"].description}
+                                            >
+                                                <b>{featureConfig["BloodPressure"].name}</b> {"(" + featureConfig["BloodPressure"].unit + ")"}
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -436,7 +466,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","BloodPressure") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "BloodPressure") }}>
                                     <ConfigArea
                                         x_values={featureConfig["BloodPressure"].xdata}
                                         y_values={featureConfig["BloodPressure"].ydata}
@@ -454,7 +484,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["SkinThickness"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["SkinThickness"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["SkinThickness"].description}
+                                            >
+                                                <b>{featureConfig["SkinThickness"].name}</b> {"(" + featureConfig["SkinThickness"].unit + ")"}
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -468,7 +503,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","SkinThickness") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "SkinThickness") }}>
                                     <ConfigArea
                                         x_values={featureConfig["SkinThickness"].xdata}
                                         y_values={featureConfig["SkinThickness"].ydata}
@@ -486,7 +521,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
                                         <span style={{ color: (featureConfig["DiabetesPedigreeFunction"].isSelected) ? "#000000" : "#6C6C6C" }}>
-                                            <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
+                                            <Tooltip
+                                                placement="rightTop"
+                                                title={featureConfig["DiabetesPedigreeFunction"].description}
+                                            >
+                                                <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
+                                            </Tooltip>
                                         </span>
                                     </div>
                                     <div className='cd-chart-left-control'>
@@ -500,7 +540,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig","DiabetesPedigreeFunction") }}>
+                                <div className='cd-chart-right' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("featureConfig", "DiabetesPedigreeFunction") }}>
                                     <ConfigArea
                                         x_values={featureConfig["DiabetesPedigreeFunction"].xdata}
                                         y_values={featureConfig["DiabetesPedigreeFunction"].ydata}

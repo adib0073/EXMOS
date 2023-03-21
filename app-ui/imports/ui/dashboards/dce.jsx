@@ -354,7 +354,7 @@ export const DCE = ({ user }) => {
                             <div className="chart-box-1">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["Glucose"].name}:
+                                        {dsChartVals["Glucose"].name}: {"("+dsChartVals["Glucose"].unit+")"}
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -370,7 +370,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["BloodPressure"].name}:
+                                        {dsChartVals["BloodPressure"].name}: {"("+dsChartVals["BloodPressure"].unit+")"}
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -386,7 +386,7 @@ export const DCE = ({ user }) => {
                                 </div>
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["Insulin"].name}:
+                                        {dsChartVals["Insulin"].name}: {"("+dsChartVals["Insulin"].unit+")"}
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -420,7 +420,7 @@ export const DCE = ({ user }) => {
                             <div className="chart-box-2">
                                 <div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["SkinThickness"].name}:
+                                        {dsChartVals["SkinThickness"].name}: {"("+dsChartVals["SkinThickness"].unit+")"}
                                     </span>
                                     <br />
                                     <ContinuousDistribution
@@ -465,7 +465,7 @@ export const DCE = ({ user }) => {
                                     />
                                 </div><div className="summary-chart-box">
                                     <span className="ValueLabel">
-                                        {dsChartVals["BMI"].name}:
+                                        {dsChartVals["BMI"].name}: {"("+dsChartVals["BMI"].unit+")"}
                                     </span>
                                     <br />
                                     <ContinuousDistribution

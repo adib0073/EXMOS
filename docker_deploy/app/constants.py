@@ -59,7 +59,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 850,
         "defaultLowerLimit": 0,
         "unit": "mu U/ml",
-        "description": "2-Hour serum insulin"
+        "description": "Two-hour serum insulin"
     },
     "BMI": {
         "isSelected": True,
