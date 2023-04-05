@@ -16,7 +16,7 @@ export const App = () => {
         <style>
             {'body {background-color:#E5E5E5;}'}
         </style>
-            <BrowserRouter>
+            <BrowserRouter basename="/exmos">
                 <Routes>
                     <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
                     <Route path="/dashboard/dce" element={<DCE user = {user}/>} />

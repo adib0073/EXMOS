@@ -25,7 +25,7 @@ services:
 
   py-app:
     build:
-      context: ./app-apik
+      context: ./app-api
       dockerfile: Dockerfile
     ports:
       - "4550:8000"
