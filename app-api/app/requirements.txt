@@ -6,5 +6,10 @@ pydantic
 scikit-learn
 scipy
 seaborn
+evidently
+shap
+xgboost
+skope-rules
+pymongo
 pymongo[srv]
 uvicorn[standard]
