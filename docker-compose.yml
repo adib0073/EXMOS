@@ -15,7 +15,7 @@ services:
       PORT: 3000
       restart: restart
 
-   mongo:
+  mongo:
     image: mongo:latest
     restart: unless-stopped
     command:
