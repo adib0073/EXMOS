@@ -183,15 +183,6 @@ export const ContinuousDistribution = (
     const cardColor = isActive ? "#1363DF" : "#E5E5E5";
 
     const highlightRegion = (ctx) => {
-        /*
-        if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex <= boundary_ind2) {
-            return chartColor;
-        }
-        else {
-
-            return "#C5C4C4";
-        }
-        */
         if (x_values[ctx.p0DataIndex] >= q1 && x_values[ctx.p0DataIndex] <= q3) {
             alpha = 1.0;
             return chartColor;

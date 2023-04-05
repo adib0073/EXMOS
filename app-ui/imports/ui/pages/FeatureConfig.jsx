@@ -47,7 +47,7 @@ const PostConfigData = ({ userid, cohort, featureConfig }) => {
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
     }).then(function (response) {
-        console.log(response.data["OutputJson"]);
+        //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             /*
             setFeatureConfig({
@@ -85,7 +85,7 @@ const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) 
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
     }).then(function (response) {
-        console.log(response.data["OutputJson"]);
+        //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             // Call Get Config Data
             GetConfigData({ userid, setFeatureConfig });
@@ -113,7 +113,7 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
     }).then(function (response) {
-        console.log(response.data["OutputJson"]);
+        //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             // Fire and Forget
         }
