@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  py-app:
+    build:
+      context: ./api-app
+      dockerfile: Dockerfile
+    ports:
+      - "4550:8000"
+    restart: always
+
+volumes:
+  exmos_data:
