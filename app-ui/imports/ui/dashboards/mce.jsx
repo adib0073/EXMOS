@@ -2,7 +2,7 @@ import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './mce.css'
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { UpGreenArrow } from '../components/Icons/UpGreenArrow.jsx';
 import { UpRedArrow } from '../components/Icons/UpRedArrow.jsx';
@@ -12,6 +12,8 @@ import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from '../Constants.jsx';
 import axios from 'axios';
 import { HorizontalBarCharts } from '../components/FeatureImportance/HorizontalBarCharts.jsx';
+import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
+import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
 
@@ -62,7 +64,6 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            /*"Access-Control-Allow-Origin": "*",*/
             "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
@@ -169,6 +170,10 @@ export const MCE = ({ user }) => {
         </>
     );
 
+    // Language variable
+    // TO-DO: Take language preferred as input
+    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+
     return (
         <>
             <NavBar user={user} />
@@ -179,26 +184,50 @@ export const MCE = ({ user }) => {
                             <div className="chart-title">
                                 Prediction Accuracy
                             </div>
-                            <div className="chart-icons">
-                                <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                            </div>
+                            <Tooltip
+                                placement="bottom"
+                                title={lang.mce.accuracyChart.title}
+                                overlayStyle={{ maxWidth: '500px' }}
+                            >
+                                <div className="chart-icons">
+                                    <InfoLogo />
+                                </div>
+                            </Tooltip>
                         </div>
                         <div className="chart-container-mce" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                             <div className='chart-container-viz-mce'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
                             <div className='chart-container-info-mce'>
-                                <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                <Tooltip
+                                    placement="right"
+                                    title={lang.mce.accuracyChart.trainingSamples}
+                                    overlayStyle={{ maxWidth: '400px' }}
+                                >
+                                    <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                </Tooltip>
                             </div>
                             <div className='chart-container-info-mce'>
-                                <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                <Tooltip
+                                    placement="right"
+                                    title={lang.mce.accuracyChart.featuresConsidered}
+                                    overlayStyle={{ maxWidth: '400px' }}
+                                >
+                                    <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                </Tooltip>
                             </div>
                             <div className='chart-container-info-mce'>
-                                <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
-                                    {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
-                                    <b> &nbsp;{accChartVals.pct}% </b>
-                                </span>
-                                from previous score
+                                <Tooltip
+                                    placement="right"
+                                    title={(accChartVals.pct > 0) ? lang.mce.accuracyChart.upScore : lang.mce.accuracyChart.downScore }
+                                    overlayStyle={{ maxWidth: '400px' }}
+                                >
+                                    <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
+                                        {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
+                                        <b> &nbsp;{accChartVals.pct}% </b>
+                                    </span>
+                                    from previous score
+                                </Tooltip>
                             </div>
                         </div>
                     </div >
@@ -207,9 +236,15 @@ export const MCE = ({ user }) => {
                             <div className="chart-title">
                                 Top Decision Rules
                             </div>
-                            <div className="chart-icons">
-                                <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                            </div>
+                            <Tooltip
+                                placement="bottom"
+                                title={lang.mce.decisionRule.title}
+                                overlayStyle={{ maxWidth: '500px' }}
+                            >
+                                <div className="chart-icons">
+                                    <InfoLogo />
+                                </div>
+                            </Tooltip>
                         </div>
                         <div className="chart-container-mce">
                             {topRules.diabetic == null || topRules['non-diabetic'] == null ?
@@ -242,9 +277,15 @@ export const MCE = ({ user }) => {
                         <div className="chart-title">
                             Important Risk Factors
                         </div>
-                        <div className="chart-icons">
-                            <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                        </div>
+                        <Tooltip
+                            placement="bottom"
+                            title={lang.mce.featureImportance.title}
+                            overlayStyle={{ maxWidth: '500px' }}
+                        >
+                            <div className="chart-icons">
+                                <InfoLogo />
+                            </div>
+                        </Tooltip>
                     </div>
                     <div className="chart-container-mce">
                         {featureImportance.actionable.features == null || featureImportance['non-actionable'].features == null ?

@@ -87,7 +87,7 @@ export const DoughnutChart = ({ accuracy, chartRef }) => {
 
     return (
         <div className='AccuracyChart'>
-            <Tooltip placement="bottom" title={tooltipMessage}>
+            <Tooltip placement="top" title={tooltipMessage}>
                 <Doughnut ref={chartRef}
                     data={data}
                     options={options}
