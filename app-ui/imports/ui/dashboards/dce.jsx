@@ -14,6 +14,8 @@ import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
 import { Tooltip, Spin } from 'antd';
+import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
+import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
 // TO-DO - Delete following if not required
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
@@ -190,6 +192,10 @@ export const DCE = ({ user }) => {
         </>
     );
 
+    // Language variable
+    // TO-DO: Take language preferred as input
+    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+
     return (
         <>
             <NavBar user={user} />
@@ -201,9 +207,15 @@ export const DCE = ({ user }) => {
                                 <div className="chart-title">
                                     Prediction Accuracy
                                 </div>
-                                <div className="chart-icons">
-                                    <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                                </div>
+                                <Tooltip
+                                    placement="bottom"
+                                    title={lang.dce.accuracyChart.title}
+                                    overlayStyle={{ maxWidth: '500px' }}
+                                >
+                                    <div className="chart-icons">
+                                        <InfoLogo />
+                                    </div>
+                                </Tooltip>
                             </div>
                             <div className="chart-container" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                                 <div className='chart-container-viz'>
@@ -229,9 +241,15 @@ export const DCE = ({ user }) => {
                                 <div className="chart-title">
                                     Key Insights
                                 </div>
-                                <div className="chart-icons">
-                                    <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                                </div>
+                                <Tooltip
+                                    placement="bottom"
+                                    title={lang.dce.keyInsights.title}
+                                    overlayStyle={{ maxWidth: '500px' }}
+                                >
+                                    <div className="chart-icons">
+                                        <InfoLogo />
+                                    </div>
+                                </Tooltip>
                             </div>
                             <div className="chart-container">
                                 <div className="capsule-container" onClick={() => { handleVizClick("KeyInsights", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("KeyInsights", "Viz") }}>
@@ -276,9 +294,15 @@ export const DCE = ({ user }) => {
                             <div className="chart-title">
                                 Data Quality Score
                             </div>
-                            <div className="chart-icons">
-                                <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                            </div>
+                            <Tooltip
+                                placement="bottom"
+                                title={lang.dce.dataQuality.title}
+                                overlayStyle={{ maxWidth: '500px' }}
+                            >
+                                <div className="chart-icons">
+                                    <InfoLogo />
+                                </div>
+                            </Tooltip>
                         </div>
                         <div className="chart-container">
                             <div className="dq-div" onClick={() => { handleVizClick("DataQuality", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataQuality", "Viz") }}>
@@ -353,9 +377,15 @@ export const DCE = ({ user }) => {
                         <div className="chart-title">
                             Data Density Distribution
                         </div>
-                        <div className="chart-icons">
-                            <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                        </div>
+                        <Tooltip
+                            placement="left"
+                            title={lang.dce.dataDensity.title}
+                            overlayStyle={{ maxWidth: '500px' }}
+                        >
+                            <div className="chart-icons">
+                                <InfoLogo />
+                            </div>
+                        </Tooltip>
                     </div>
                     <div className="chart-container">
                         {dsChartVals.Glucose.ydata.length <= 1 || dsChartVals == null ?
