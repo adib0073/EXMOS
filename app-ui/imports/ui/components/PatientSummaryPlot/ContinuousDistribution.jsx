@@ -3,6 +3,7 @@ import React from 'react';
 import { Line as LineJS } from 'chart.js/auto';
 import { Line, getElementsAtEvent } from 'react-chartjs-2';
 import './PatientSummaryPlot.css';
+import { Tooltip } from 'antd';
 
 // ** All Mouse Event Functions ** //
 // only active function for mouse move
@@ -202,7 +203,7 @@ export const ContinuousDistribution = (
                 data: y_values,
                 pointRadius: 1,
                 backgroundColor: cardColor,
-                borderColor:cardColor,
+                borderColor: cardColor,
                 pointBorderWidth: 1,
                 hoverBackgroundColor: 'white',
                 pointHoverRadius: 5,
@@ -238,14 +239,14 @@ export const ContinuousDistribution = (
                         return label;
                     },
                     title: function (context) {
-                        let label = name+ " " || '';
+                        let label = name + " " || '';
                         if (label) {
                             label += ': ';
                         }
                         if (context.label !== null) {
                             label += parseFloat(context[0].label).toFixed(2);
                         }
-                        return label+" "+unit;
+                        return label + " " + unit;
                     }
                 }
             },
@@ -406,10 +407,16 @@ export const ContinuousDistribution = (
     return (
         <div className="SummaryCard" style={{ background: cardColor }}>
             <div className="SummaryValue">
-                {average}
-                <div className="SummaryAvg">
-                    AVERAGE
-                </div>
+                <Tooltip
+                    placement="bottom"
+                    title={"As indicated by the black marker the average value of this factor is " + average}
+                    overlayStyle={{ maxWidth: '200px'}}
+                >
+                    {average}
+                    <div className="SummaryAvg">
+                        AVERAGE
+                    </div>
+                </Tooltip>
             </div>
             <div className="ContDistPlot">
                 <Line data={data}

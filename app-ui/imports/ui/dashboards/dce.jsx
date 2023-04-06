@@ -222,17 +222,35 @@ export const DCE = ({ user }) => {
                                     <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                    <Tooltip
+                                        placement="right"
+                                        title={lang.dce.accuracyChart.trainingSamples}
+                                        overlayStyle={{ maxWidth: '400px' }}
+                                    >
+                                        <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                    </Tooltip>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                    <Tooltip
+                                        placement="right"
+                                        title={lang.dce.accuracyChart.featuresConsidered}
+                                        overlayStyle={{ maxWidth: '400px' }}
+                                    >
+                                        <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                    </Tooltip>
                                 </div>
                                 <div className='chart-container-info'>
-                                    <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
-                                        {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
-                                        <b> &nbsp;{accChartVals.pct}% </b>
-                                    </span>
-                                    from previous score
+                                    <Tooltip
+                                        placement="right"
+                                        title={(accChartVals.pct > 0) ? lang.dce.accuracyChart.upScore : lang.dce.accuracyChart.downScore}
+                                        overlayStyle={{ maxWidth: '400px' }}
+                                    >
+                                        <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
+                                            {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
+                                            <b> &nbsp;{accChartVals.pct}% </b>
+                                        </span>
+                                        from previous score
+                                    </Tooltip>
                                 </div>
                             </div>
                         </div >
@@ -590,7 +608,20 @@ export const DCE = ({ user }) => {
                         }
                     </div>
                     <div className="bottom-legend">
-                        <RectBlock color="#FFB1C1" /> Extreme Values &nbsp; <RectBlock color="#67A3FF" /> Non-extreme Values
+                        <Tooltip
+                            placement="bottom"
+                            title={lang.dce.dataDensity.extreme}
+                            overlayStyle={{ maxWidth: '400px' }}
+                        >
+                            <RectBlock color="#FFB1C1" /> Extreme Values &nbsp;
+                        </Tooltip>
+                        <Tooltip
+                            placement="bottom"
+                            title={lang.dce.dataDensity.nonExtreme}
+                            overlayStyle={{ maxWidth: '400px' }}
+                        >
+                            <RectBlock color="#67A3FF" /> Non-extreme Values
+                        </Tooltip>
                     </div>
                 </div >
             </div >
