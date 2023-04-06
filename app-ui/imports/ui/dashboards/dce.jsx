@@ -335,7 +335,13 @@ export const DCE = ({ user }) => {
                                         style={{ width: "15vw" }}
                                     />
                                     <div className='dq-div-left-info'>
-                                        {dqChartVals["quality_class"]} - {Math.round((dqChartVals["score"] * 100 + Number.EPSILON) * 10) / 10} %
+                                        <Tooltip
+                                            placement="bottom"
+                                            title={"The data quality is " + dqChartVals["quality_class"] + ". The data quality changes based on how it is configured."}
+                                            overlayStyle={{ maxWidth: '400px' }}
+                                        >
+                                            {dqChartVals["quality_class"]} - {Math.round((dqChartVals["score"] * 100 + Number.EPSILON) * 10) / 10} %
+                                        </Tooltip>
                                     </div>
                                 </div>
                                 <div className='dq-div-right'>
@@ -345,21 +351,39 @@ export const DCE = ({ user }) => {
                                             <span style={{ color: (dqChartVals.issue_val[0] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][0]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][0]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][0]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][0]]}
+                                            </Tooltip>
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[1] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[1] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][1]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][1]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][1]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][1]]}
+                                            </Tooltip>
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[2] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[2] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][2]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][2]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][2]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][2]]}
+                                            </Tooltip>
                                         </div>
                                     </div>
                                     <div className='dq-div-rc2'>
@@ -368,21 +392,39 @@ export const DCE = ({ user }) => {
                                             <span style={{ color: (dqChartVals.issue_val[3] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][3]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][3]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][3]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][3]]}
+                                            </Tooltip>
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[4] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[4] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][4]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][4]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][4]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][4]]}
+                                            </Tooltip>
                                         </div>
                                         <div className='dq-div-rc-text'>
                                             {dqChartVals.issue_val[5] > 0 ? <UpRedArrow /> : <UpGreenArrow />} &nbsp;
                                             <span style={{ color: (dqChartVals.issue_val[5] > 0) ? redFont : greenFont }}>
                                                 <b>&nbsp;{dqChartVals["issue_val"][5]}%&nbsp;</b>
                                             </span>
-                                            {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][5]]}
+                                            <Tooltip
+                                                placement="top"
+                                                title={lang.dce.dataQuality[dqChartVals["issues"][5]]}
+                                                overlayStyle={{ maxWidth: '400px' }}
+                                            >
+                                                {DATA_ISSUE_FRIENDLY_NAMEs[dqChartVals["issues"][5]]}
+                                            </Tooltip>
                                         </div>
                                     </div>
                                 </div>

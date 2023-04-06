@@ -16,7 +16,13 @@ export const tooltipEnglishContent = {
             "nonExtreme" : "The region in the graph displayed in blue denotes non-abnormal value in the data"
         },
         "dataQuality": {
-            "title": "This visual shows the overall quality of the dataset. You can also see if the dataset is affected by any data issues."
+            "title": "This visual shows the overall quality of the dataset. You can also see if the dataset is affected by any data issues.",
+            "skew" : "Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions.",
+            "outlier" : "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy.",
+            "drift" : "Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions.",
+            "duplicate" : "Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy.",
+            "imbalance" : "Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy.",
+            "correlation" : "Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy.",
         }
     },
     "mce": {
