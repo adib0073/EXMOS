@@ -200,17 +200,18 @@ export const ContinuousDistribution = (
             {
                 label: 'Count',
                 data: y_values,
-                pointRadius: 0,
+                pointRadius: 1,
+                backgroundColor: cardColor,
+                borderColor:cardColor,
+                pointBorderWidth: 1,
                 hoverBackgroundColor: 'white',
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 3,
-                pointBorderColor:chartColor,
                 fill: true,
                 tension: 0.4,
                 segment: {
                     backgroundColor: bgColor,
                     borderColor: bgColor,
-                    pointBorderColor: bgColor,
                 },
             },
         ],
@@ -305,7 +306,7 @@ export const ContinuousDistribution = (
         ctx.setLineDash([0, 0]);
         ctx.lineDashOffset = 0;
 
-        const markerLength = height - y.getPixelForValue(y_values[value_marker]);
+        const markerLength = height - y.getPixelForValue(y_values[value_marker]) + 5;
         //const startingPoint = top + (height - markerLength);
         const startingPoint = y.getPixelForValue(y_values[value_marker]);
 
