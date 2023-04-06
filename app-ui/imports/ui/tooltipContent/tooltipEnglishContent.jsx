@@ -17,6 +17,8 @@ export const tooltipEnglishContent = {
         },
         "featureImportance": {
             "title": "This visual shows the important risk factors and their importance as considered by the prediction model. The actionable features are the risk factors which can be effectively controlled by the patients. Whereas the non-actionable features are the risk factors which are not feasible to change by the patients, but yet can be important for the decision process.",
+            "actionable" : "The actionable features are the risk factors which can be effectively controlled by the patients.",
+            "nonActionable" : "Non-actionable features are the risk factors which are not feasible to change by the patients, but yet, can be important for the decision process."
         },
     }
 };

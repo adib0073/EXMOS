@@ -219,7 +219,7 @@ export const MCE = ({ user }) => {
                             <div className='chart-container-info-mce'>
                                 <Tooltip
                                     placement="right"
-                                    title={(accChartVals.pct > 0) ? lang.mce.accuracyChart.upScore : lang.mce.accuracyChart.downScore }
+                                    title={(accChartVals.pct > 0) ? lang.mce.accuracyChart.upScore : lang.mce.accuracyChart.downScore}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
                                     <span style={{ color: (accChartVals.pct > 0) ? greenFont : redFont }}>
@@ -309,10 +309,22 @@ export const MCE = ({ user }) => {
                                 </div>
                                 <div className="chart-container-text">
                                     <div className="cc-text-left">
-                                        <b>Actionable Factors</b>
+                                        <Tooltip
+                                            placement="bottom"
+                                            title={lang.mce.featureImportance.actionable}
+                                            overlayStyle={{ maxWidth: '400px' }}
+                                        >
+                                            <b>Actionable Factors</b>
+                                        </Tooltip>
                                     </div>
                                     <div className="cc-text-right">
-                                        <b>Non-actionable Factors</b>
+                                        <Tooltip
+                                            placement="bottom"
+                                            title={lang.mce.featureImportance.nonActionable}
+                                            overlayStyle={{ maxWidth: '400px' }}
+                                        >
+                                            <b>Non-actionable Factors</b>
+                                        </Tooltip>
                                     </div>
                                 </div>
                             </>

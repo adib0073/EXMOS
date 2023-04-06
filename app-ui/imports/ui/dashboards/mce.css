@@ -164,6 +164,7 @@
 
 .top-rules-filter-left:hover {
     background: rgba(50, 224, 196, 0.15);
+    cursor: pointer;
 }
 
 .top-rules-filter-right {
@@ -188,6 +189,7 @@
 
 .top-rules-filter-right:hover {
     background: rgba(50, 224, 196, 0.15);
+    cursor: pointer;
 }
 
 .top-rules-viz {
