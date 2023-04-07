@@ -13,6 +13,7 @@ import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from 
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
+import { HorizontalBarCharts } from '../components/FeatureImportance/HorizontalBarCharts.jsx';
 import { Tooltip, Spin } from 'antd';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
@@ -57,6 +58,17 @@ const GetKIChartValue = ({ userid, setKiChartVals }) => {
                 "insight_list": response.data["OutputJson"]["insight_list"]
             });
 
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
+const GetFeatureImportance = ({ userid, setFeatureImportance }) => {
+    //console.log(userid);
+    axios.get(BASE_API + '/getfeatureimportance/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setFeatureImportance(response.data["OutputJson"]);
         }).catch(function (error) {
             console.log(error);
         });
@@ -112,13 +124,24 @@ export const HYB = ({ user }) => {
         "input_list": ["Not available. ", "Not available. ", "Not available. ", "Not available. "],
         "insight_list": ["Try later", "Try later", "Try later", "Try later"],
     });
+    const [featureImportance, setFeatureImportance] = useState(
+        {
+            "actionable": {
+                "features": null,
+                "importance": null
+            },
+            "non-actionable": {
+                "features": null,
+                "importance": null
+            },
+        });
 
     const greenFont = "#449231";
     const redFont = "#D64242";
 
     useEffect(() => {
         GetPredChartValue({ userid, setAccChartVals });
-        //GetFeatureImportance({ userid, setFeatureImportance });
+        GetFeatureImportance({ userid, setFeatureImportance });
         GetTopDecisionRules({ userid, setTopRules, setRuleView });
         GetKIChartValue({ userid, setKiChartVals });
     }, []);
@@ -329,7 +352,63 @@ export const HYB = ({ user }) => {
                 <div className="hyb-container-r2">
                     <div className="hyb-container-r2c1">
                         <div className="hyb-container-r2c1-r1">
-                            row 2.1 column 1
+                            <div className="chart-title-box">
+                                <div className="chart-title">
+                                    Important Risk Factors
+                                </div>
+                                <Tooltip
+                                    placement="bottom"
+                                    title={lang.mce.featureImportance.title}
+                                    overlayStyle={{ maxWidth: '500px' }}
+                                >
+                                    <div className="chart-icons">
+                                        <InfoLogo />
+                                    </div>
+                                </Tooltip>
+                            </div>
+                            <div className="chart-container-mce">
+                                {featureImportance.actionable.features == null || featureImportance['non-actionable'].features == null ?
+                                    loadingIndicator :
+                                    <>
+                                        <div className="chart-box-mce" onClick={() => { handleVizClick("FeatureImportance", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
+                                            <div className="cc-mce-left">
+                                                <HorizontalBarCharts
+                                                    x_values={featureImportance.actionable.importance}
+                                                    y_labels={featureImportance.actionable.features}
+                                                    isActionable={true}
+                                                />
+                                            </div>
+                                            <div className="cc-mce-right">
+                                                <HorizontalBarCharts
+                                                    x_values={featureImportance['non-actionable'].importance}
+                                                    y_labels={featureImportance['non-actionable'].features}
+                                                    isActionable={false}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="chart-container-text">
+                                            <div className="cc-text-left">
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    title={lang.mce.featureImportance.actionable}
+                                                    overlayStyle={{ maxWidth: '400px' }}
+                                                >
+                                                    <b>Actionable Factors</b>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="cc-text-right">
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    title={lang.mce.featureImportance.nonActionable}
+                                                    overlayStyle={{ maxWidth: '400px' }}
+                                                >
+                                                    <b>Non-actionable Factors</b>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                    </>
+                                }
+                            </div>
                         </div><div className="hyb-container-r2c1-r2">
                             row 2.2 column 1
                         </div>
