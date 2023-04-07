@@ -27,7 +27,10 @@
 
 .AreaPlotContainer {
     background: #FFFFFF;
-    padding: 2px 5px 2px 5px;
-    height: 10vh;
+    height: 12vh;
     width: 10vw;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }

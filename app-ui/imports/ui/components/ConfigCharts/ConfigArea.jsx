@@ -10,7 +10,9 @@ export const ConfigArea = ({
     x_values,
     defaultLimit,
     selectedLimit,
-    isActive
+    isActive,
+    name,
+    unit,
 }) => {
 
     let filtered_x = x_values.filter((function (value) {
@@ -50,9 +52,13 @@ export const ConfigArea = ({
             {
                 label: 'Count',
                 data: y_values,
-                pointRadius: 0,
-                pointHitRadius: 0,
-                pointHoverRadius: 0,
+                pointRadius: 1,
+                pointBorderWidth: 1,
+                hoverBackgroundColor: 'white',
+                pointHoverRadius: 5,
+                pointHoverBorderWidth: 3,
+                backgroundColor: "#1363DF",
+                borderColor: "#1363DF",
                 fill: true,
                 tension: 0.4,
                 segment: {
@@ -70,30 +76,28 @@ export const ConfigArea = ({
         plugins: {
             legend: { display: false },
             tooltip: {
-                enabled: false,
+                enabled: true,
                 displayColors: false,
                 callbacks: {
                     label: function (context) {
                         let label = "Patient Counts " || '';
-
                         if (label) {
-                            label += '- ';
+                            label += ': ';
                         }
                         if (context.parsed.y !== null) {
-                            label += context.parsed.y;
+                            label += Math.round((context.parsed.y + Number.EPSILON) * 100) / 100;
                         }
                         return label;
                     },
                     title: function (context) {
-                        let label = "BPM " || '';
-
+                        let label = name + " " || '';
                         if (label) {
                             label += ': ';
                         }
                         if (context.label !== null) {
-                            label += context[0].label;
+                            label += parseFloat(context[0].label).toFixed(2);
                         }
-                        return label;
+                        return label + " " + unit;
                     }
                 }
             },
@@ -183,13 +187,13 @@ export const ConfigArea = ({
     const chartRef = useRef();
 
     return (
-    <div className="AreaPlotContainer" style={{cursor:!isActive?"not-allowed":"default"}}>
-        <Line
-            data={data}
-            options={options}
-            plugins={[boundaryLines]}
-            ref={chartRef}
-            redraw={true}
-        />
-    </div>);
+        <div className="AreaPlotContainer" style={{ cursor: !isActive ? "not-allowed" : "default" }}>
+            <Line
+                data={data}
+                options={options}
+                plugins={[boundaryLines]}
+                ref={chartRef}
+                redraw={true}
+            />
+        </div>);
 };
