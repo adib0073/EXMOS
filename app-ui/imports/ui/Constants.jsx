@@ -20,7 +20,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "Glucose": {
           "name": "Glucose",
-          "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test. It is measured in mg/dl",
+          "description": "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test. It is measured in mg/dl",
           "unit": "mg/dl",
           "ydata": [0],
           "xdata": [0],

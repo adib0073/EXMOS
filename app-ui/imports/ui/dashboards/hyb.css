@@ -1,0 +1,89 @@
+.body{
+    background-color: #E5E5E5;
+}
+.hyb-container {
+    margin: 20px 15% 20px 15%;
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E5E5E5;
+    height: 87vh;
+}
+
+.hyb-container-r1 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+}
+
+.hyb-container-r1c1 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+}
+.hyb-container-r1c2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+}
+.hyb-container-r1c3 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+}
+
+.hyb-container-r2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: blue;
+}
+.hyb-container-r2c1 {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+}
+.hyb-container-r2c1-r1 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: violet;
+}
+.hyb-container-r2c1-r2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: violet;
+}
+.hyb-container-r2c2 {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    border: 1px;
+    border-style: solid;
+    border-color: red;
+}

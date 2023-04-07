@@ -23,7 +23,31 @@ export const HYB = ({ user }) => {
     return (
         <>
             <NavBar user={user} />
-            Hello HYB
+            <div className="hyb-container">
+                <div className="hyb-container-r1">
+                    <div className="hyb-container-r1c1">
+                        row 1 column 1
+                    </div>
+                    <div className="hyb-container-r1c2">
+                        row 1 column 2
+                    </div>
+                    <div className="hyb-container-r1c3">
+                        row 1 column 3
+                    </div>
+                </div>
+                <div className="hyb-container-r2">
+                    <div className="hyb-container-r2c1">
+                        <div className="hyb-container-r2c1-r1">
+                            row 2.1 column 1
+                        </div><div className="hyb-container-r2c1-r2">
+                            row 2.2 column 1
+                        </div>
+                    </div>
+                    <div className="hyb-container-r2c2">
+                        row 2 column 2
+                    </div>
+                </div>
+            </div>
         </>
     );
 
