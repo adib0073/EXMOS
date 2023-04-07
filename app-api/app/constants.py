@@ -23,7 +23,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 15,
         "defaultLowerLimit": 0,
         "unit": "",
-        "description": "Number of times pregnant"
+        "description": "Number of times pregnant in the past"
     },
     "Glucose": {
         "isSelected": True,
@@ -32,7 +32,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 199,
         "defaultLowerLimit": 0,
         "unit": "mg/dl",
-        "description": "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test"
+        "description": "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test.  It is measured in mg/dl"
     },
     "BloodPressure": {
         "isSelected": True,
@@ -41,7 +41,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 122,
         "defaultLowerLimit": 0,
         "unit": "mm Hg",
-        "description": "Diastolic blood pressure"
+        "description": "Diastolic blood pressure of patients measured in mm Hg"
     },
     "SkinThickness": {
         "isSelected": True,
@@ -50,7 +50,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 99,
         "defaultLowerLimit": 0,
         "unit": "mm",
-        "description": "Triceps skin fold thickness"
+        "description": "Triceps skin fold thickness of patients"
     },
     "Insulin": {
         "isSelected": True,
@@ -59,7 +59,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 850,
         "defaultLowerLimit": 0,
         "unit": "mu U/ml",
-        "description": "Two-hour serum insulin"
+        "description": "Two-hour serum insulin that is measured in mu U/ml"
     },
     "BMI": {
         "isSelected": True,
@@ -68,7 +68,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 67.1,
         "defaultLowerLimit": 0,
         "unit": "kg/m^2",
-        "description": "Body mass index"
+        "description": "Body mass index of patients"
     },
     "DiabetesPedigreeFunction": {
         "isSelected": True,
@@ -86,7 +86,7 @@ USER_DETAIL_JSON = {
         "defaultUpperLimit": 85,
         "defaultLowerLimit": 20,
         "unit": "years",
-        "description": "Age in years"
+        "description": "Age of patients in years"
     },
     "CurrentScore": 80,
     "PrevScore": 0,

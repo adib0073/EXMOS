@@ -41,5 +41,16 @@ export const tooltipEnglishContent = {
             "actionable": "The actionable features are the risk factors which can be effectively controlled by the patients.",
             "nonActionable": "Non-actionable features are the risk factors which are not feasible to change by the patients, but yet, can be important for the decision process."
         },
+    },
+    "featureConfig" : {
+        "diabetesStatus": "This visual shows the proportion of diabetic and non-diabetic patients in the training data. For a higher prediction accuracy it is recommended that the proportions of diabetic and non-diabetic patients should be almost equal.",
+        "glucose" : "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test.  It is measured in mg/dl",
+        "pregnancies" : "Number of times pregnant in the past",
+        "pressure": "Diastolic blood pressure of patients measured in mm Hg",
+        "skinfold" : "Triceps skin fold thickness of patients",
+        "insulin" : "Two-hour serum insulin that is measured in mu U/ml",
+        "bmi" : "Body mass index of patients",
+        "dpf" : "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history",
+        "age" : "Age of patients in years"
     }
 };

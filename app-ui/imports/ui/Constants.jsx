@@ -5,7 +5,7 @@ export const BASE_API = "http://127.0.0.1:8000";
 export const DATA_SUMMARY_DEFAULT_MODEL = {
     "Pregnancies": {
           "name": "Pregnancies",
-          "description": "Number of times pregnant",
+          "description": "Number of times pregnant in the past",
           "unit": null,
           "ydata": [0],
           "xdata": [0],
@@ -20,7 +20,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "Glucose": {
           "name": "Glucose",
-          "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test",
+          "description": "Plasma glucose concentration after 2 hours of eating in an oral glucose tolerance test. It is measured in mg/dl",
           "unit": "mg/dl",
           "ydata": [0],
           "xdata": [0],
@@ -35,7 +35,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "BloodPressure": {
           "name": "Blood Pressure",
-          "description": "Diastolic blood pressure",
+          "description": "Diastolic blood pressure of patients measured in mm Hg",
           "unit": "mm Hg",
           "ydata": [0],
           "xdata": [0],
@@ -50,7 +50,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "SkinThickness": {
           "name": "Skin Thickness",
-          "description": "Triceps skin fold thickness",
+          "description": "Triceps skin fold thickness of patients",
           "unit": "mm",
           "ydata": [0],
           "xdata": [0],
@@ -65,7 +65,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "Insulin": {
           "name": "Insulin",
-          "description": "2-Hour serum insulin",
+          "description": "Two-hour serum insulin that is measured in mu U/ml",
           "unit": "mu U/ml",
           "ydata": [0],
           "xdata": [0],
@@ -80,7 +80,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "BMI": {
           "name": "Body mass index",
-          "description": "Body mass index",
+          "description": "Body mass index of patients",
           "unit": "kg/m^2",
           "ydata": [0],
           "xdata": [0],
@@ -110,7 +110,7 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         },
         "Age": {
           "name": "Age",
-          "description": "Age in years",
+          "description": "Age of patients in years",
           "unit": "years",
           "ydata": [0],
           "xdata": [0],

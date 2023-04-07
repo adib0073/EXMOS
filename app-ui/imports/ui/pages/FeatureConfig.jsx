@@ -11,6 +11,8 @@ import { Input, message, Spin, Tooltip } from 'antd';
 import { AimOutlined } from '@ant-design/icons';
 import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
 import axios from 'axios';
+import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
+import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
 
 
 const GetConfigData = ({ userid, setFeatureConfig }) => {
@@ -80,7 +82,6 @@ const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) 
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            /*"Access-Control-Allow-Origin": "*",*/
             "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
@@ -108,7 +109,6 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            /*"Access-Control-Allow-Origin": "*",*/
             "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
@@ -218,6 +218,10 @@ export const FeatureConfig = ({ userid, cohort }) => {
         </>
     );
 
+    // Language variable
+    // TO-DO: Take language preferred as input
+    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+
     return (
         reloadFlag ? loadingIndicator :
             <>
@@ -238,7 +242,13 @@ export const FeatureConfig = ({ userid, cohort }) => {
                             <div className='cd-chart-box'>
                                 <div className='cd-chart-left'>
                                     <div className='cd-chart-left-text'>
-                                        <b>{featureConfig["target"].name}</b>
+                                        <Tooltip
+                                            placement="right"
+                                            title={lang.featureConfig.diabetesStatus}
+                                            overlayStyle={{ maxWidth: '400px' }}
+                                        >
+                                            <b>{featureConfig["target"].name}</b>
+                                        </Tooltip>
                                     </div>
                                     <div className='cd-chart-left-control'>
                                         <Input addonBefore={featureConfig["target"]["categories"][0]} key={featureConfig["target"]["categories"][0] + featureConfig["target"]["category_ratio"][0]} defaultValue={featureConfig["target"]["category_ratio"][0]} size="small" />
@@ -260,7 +270,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["Glucose"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["Glucose"].description}
+                                                title={lang.featureConfig.glucose}
                                             >
                                                 <b>{featureConfig["Glucose"].name}</b> {"(" + featureConfig["Glucose"].unit + ")"}
                                             </Tooltip>
@@ -297,7 +307,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["BMI"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["BMI"].description}
+                                                title={lang.featureConfig.bmi}
                                             >
                                                 <b>{featureConfig["BMI"].name}</b> {"(" + featureConfig["BMI"].unit + ")"}
                                             </Tooltip>
@@ -336,7 +346,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["Insulin"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["Insulin"].description}
+                                                title={lang.featureConfig.insulin}
                                             >
                                                 <b>{featureConfig["Insulin"].name}</b> {"(" + featureConfig["Insulin"].unit + ")"}
                                             </Tooltip>
@@ -373,7 +383,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["Age"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["Age"].description}
+                                                title={lang.featureConfig.age}
                                             >
                                                 <b>{featureConfig["Age"].name}</b>
                                             </Tooltip>
@@ -410,7 +420,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["Pregnancies"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["Pregnancies"].description}
+                                                title={lang.featureConfig.pregnancies}
                                             >
                                                 <b>{featureConfig["Pregnancies"].name}</b>
                                             </Tooltip>
@@ -449,7 +459,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["BloodPressure"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["BloodPressure"].description}
+                                                title={lang.featureConfig.pressure}
                                             >
                                                 <b>{featureConfig["BloodPressure"].name}</b> {"(" + featureConfig["BloodPressure"].unit + ")"}
                                             </Tooltip>
@@ -486,7 +496,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["SkinThickness"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["SkinThickness"].description}
+                                                title={lang.featureConfig.skinfold}
                                             >
                                                 <b>{featureConfig["SkinThickness"].name}</b> {"(" + featureConfig["SkinThickness"].unit + ")"}
                                             </Tooltip>
@@ -523,7 +533,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         <span style={{ color: (featureConfig["DiabetesPedigreeFunction"].isSelected) ? "#000000" : "#6C6C6C" }}>
                                             <Tooltip
                                                 placement="rightTop"
-                                                title={featureConfig["DiabetesPedigreeFunction"].description}
+                                                title={lang.featureConfig.dpf}
                                             >
                                                 <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
                                             </Tooltip>
