@@ -219,7 +219,7 @@ export const ContinuousDistribution = (
     };
 
     const options = {
-        animation: false,
+        animation: true,
         maintainAspectRatio: false,
         responsive: true,
         plugins: {

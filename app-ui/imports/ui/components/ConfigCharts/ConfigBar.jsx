@@ -40,7 +40,7 @@ export const ConfigBar = ({ y_values, x_values}) => {
     };
 
     const options = {
-        animation: false,
+        animation: true,
         maintainAspectRatio: false,
         responsive: true,
         plugins: {
@@ -60,26 +60,22 @@ export const ConfigBar = ({ y_values, x_values}) => {
                 }
             },
             tooltip: {
-                enabled: false,
+                enabled: true,
                 displayColors: false,
                 callbacks: {
                     label: function (context) {
-                        let label = "Patient Counts " || '';
-
-                        if (label) {
-                            label += '- ';
-                        }
-                        if (context.parsed.y !== null) {
-                            label += context.parsed.y;
-                        }
-                        return label;
-                    },
-                    title: function (context) {
-                        let label = "Feature " || '';
+                        let label = "Proportion " || '';
 
                         if (label) {
                             label += ': ';
                         }
+                        if (context.parsed.y !== null) {
+                            label += context.parsed.y;
+                        }
+                        return label + "%";
+                    },
+                    title: function (context) {
+                        let label = "";
                         if (context.label !== null) {
                             label += context[0].label;
                         }

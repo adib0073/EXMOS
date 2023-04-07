@@ -70,7 +70,7 @@ export const ConfigArea = ({
     };
 
     let options = {
-        animation: false,
+        animation: true,
         maintainAspectRatio: false,
         responsive: true,
         plugins: {
