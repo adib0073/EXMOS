@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo';
-import { Collapse, Checkbox, Select, Spin } from 'antd';
+import { Collapse, Checkbox, Select, Spin, Tooltip } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
 import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
@@ -95,7 +95,7 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
         });
 };
 
-export const DataIssueConfig = ({ userid }) => {
+export const DataIssueConfig = ({ userid, setActiveTab }) => {
 
     /* Methods */
     const handleTickClick = (feature) => {
@@ -117,8 +117,16 @@ export const DataIssueConfig = ({ userid }) => {
         });
     };
 
-    const selectGen = (issueName) => (
-        <Checkbox onChange={() => { handleTickClick(issueName) }} />
+    const selectGen = (issueName, isDisabled = false) => (
+        <>
+            <Tooltip
+                placement="top"
+                title={isDisabled?"Cannot be auto-corrected":"Select to auto-correct"}
+                overlayStyle={{ maxWidth: '400px' }}
+            >
+                <Checkbox disabled={isDisabled} onChange={() => { handleTickClick(issueName) }} />
+            </Tooltip>
+        </>
     );
 
     /* Use State Initializations */
@@ -140,11 +148,11 @@ export const DataIssueConfig = ({ userid }) => {
         "minority_pct": 0
     });
     const [driftData, setDriftData] = useState({
-            "overall": {
-                "drift_score": 0
-            },
-            "feature": "No feature",
-        }
+        "overall": {
+            "drift_score": 0
+        },
+        "feature": "No feature",
+    }
     );
     const [skewData, setSkewData] = useState(
         {
@@ -200,175 +208,184 @@ export const DataIssueConfig = ({ userid }) => {
         </>
     );
 
+    // Handle cancel button
+    const handleCancelButton = () => {
+        if (window.confirm('Do you want to revert all your changes?')) {
+            setActiveTab("tab2");
+            window.location.reload();
+        }
+    };
+
     return (
         waitFlag ? loadingIndicator :
-        <>
-            <div className='config-display-fc-r1'>
-                <div className='config-display-fc-r1-text'>
-                    {"The following data quality issues have been observed in the training data:"}
+            <>
+                <div className='config-display-fc-r1'>
+                    <div className='config-display-fc-r1-text'>
+                        {"The following data quality issues have been observed in the training data:"}
 
+                    </div>
+                    <div className='config-display-fc-r1-icon'>
+                        <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
+                    </div>
                 </div>
-                <div className='config-display-fc-r1-icon'>
-                    <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                </div>
-            </div>
-            <div className='data-issue-list'>
-                <Collapse accordion>
-                    {displayIssue.outlier ?
-                        (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")} is>
-                            <div className='data-issue-r1'>
-                                <span>{"Potential outliers have been found in the training dataset."}</span>
-                                <Select
-                                    defaultValue={"Please select:"}
-                                    style={{
-                                        margin: '0 8px',
-                                    }}
-                                    onChange={onOutlierFilter}>
+                <div className='data-issue-list'>
+                    <Collapse accordion>
+                        {displayIssue.outlier ?
+                            (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")}>
+                                <div className='data-issue-r1'>
+                                    <span>{"Potential outliers have been found in the training dataset."}</span>
+                                    <Select
+                                        defaultValue={"Please select:"}
+                                        style={{
+                                            margin: '0 8px',
+                                        }}
+                                        onChange={onOutlierFilter}>
 
-                                    {outlierData.map((item, index) => {
-                                        if (item.status) {
-                                            return (
-                                                <Option key={index} value={item.feature}>{item.feature}</Option>
-                                            );
-                                        }
-                                    })}
-                                </Select>
-                            </div>
-                            <div className='data-issue-r2'>
-                                <div className='di-graph-left'>
-                                    Before Correction
-                                    <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                        {outlierData.map((item, index) => {
+                                            if (item.status) {
+                                                return (
+                                                    <Option key={index} value={item.feature}>{item.feature}</Option>
+                                                );
+                                            }
+                                        })}
+                                    </Select>
                                 </div>
-                                <div className='di-graph-middle'>
-                                    {"---->"}
+                                <div className='data-issue-r2'>
+                                    <div className='di-graph-left'>
+                                        Before Correction
+                                        <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                    </div>
+                                    <div className='di-graph-middle'>
+                                        {"---->"}
+                                    </div>
+                                    <div className='di-graph-right'>
+                                        After Correction
+                                        <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                    </div>
                                 </div>
-                                <div className='di-graph-right'>
-                                    After Correction
-                                    <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
+                                <div className='data-issue-r3'>
+                                    <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
                                 </div>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
-                            </div>
-                        </Panel>) : null}
-                    {displayIssue.correlation ?
-                        (<Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
-                            <div className='data-issue-r1'>
-                                <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>.</span>
-                            </div>
-                            <div className='data-issue-r2'>
-                                <div className='di-graph-left'>
-                                    Before Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                            </Panel>) : null}
+                        {displayIssue.correlation ?
+                            (<Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
+                                <div className='data-issue-r1'>
+                                    <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>.</span>
                                 </div>
-                                <div className='di-graph-middle'>
-                                    {"---->"}
+                                <div className='data-issue-r2'>
+                                    <div className='di-graph-left'>
+                                        Before Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                    </div>
+                                    <div className='di-graph-middle'>
+                                        {"---->"}
+                                    </div>
+                                    <div className='di-graph-right'>
+                                        After Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                    </div>
                                 </div>
-                                <div className='di-graph-right'>
-                                    After Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                <div className='data-issue-r3'>
+                                    <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
                                 </div>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
-                            </div>
-                        </Panel>) : null}
-                    {displayIssue.skew ?
-                        (<Panel header="Skewed Data" key="3" extra={selectGen("skew")}>
-                            <div className='data-issue-r1'>
-                                <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>.</span>
-                            </div>
-                            <div className='data-issue-r2'>
-                                <div className='di-graph-left'>
-                                    Before Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                            </Panel>) : null}
+                        {displayIssue.skew ?
+                            (<Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
+                                <div className='data-issue-r1'>
+                                    <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>.</span>
                                 </div>
-                                <div className='di-graph-middle'>
-                                    {"---->"}
+                                <div className='data-issue-r2'>
+                                    <div className='di-graph-left'>
+                                        Before Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                    </div>
+                                    <div className='di-graph-middle'>
+                                        {"---->"}
+                                    </div>
+                                    <div className='di-graph-right'>
+                                        After Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                    </div>
                                 </div>
-                                <div className='di-graph-right'>
-                                    After Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                <div className='data-issue-r3'>
+                                    <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions."}</p>
                                 </div>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions."}</p>
-                            </div>
-                        </Panel>) : null}
-                    {displayIssue.imbalance ?
-                        (<Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
-                            <div className='data-issue-r1'>
-                                <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
-                            </div>
-                            <div className='data-issue-r2'>
-                                <div className='di-graph-left'>
-                                    Before Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                            </Panel>) : null}
+                        {displayIssue.imbalance ?
+                            (<Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
+                                <div className='data-issue-r1'>
+                                    <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
                                 </div>
-                                <div className='di-graph-middle'>
-                                    {"---->"}
+                                <div className='data-issue-r2'>
+                                    <div className='di-graph-left'>
+                                        Before Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                    </div>
+                                    <div className='di-graph-middle'>
+                                        {"---->"}
+                                    </div>
+                                    <div className='di-graph-right'>
+                                        After Correction
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                    </div>
                                 </div>
-                                <div className='di-graph-right'>
-                                    After Correction
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                <div className='data-issue-r3'>
+                                    <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
                                 </div>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
-                            </div>
-                        </Panel>) : null}
-                    {displayIssue.drift ?
-                        (<Panel header="Data Drift" key="5" extra={selectGen("drift")}>
-                            <div className='data-issue-r1'>
-                                <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>.</span>
-                            </div>
-                            <div className='data-issue-r2'>
-                                <div className='di-graph-left'>
-                                    With Data Drift
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                            </Panel>) : null}
+                        {displayIssue.drift ?
+                            (<Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
+                                <div className='data-issue-r1'>
+                                    <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>.</span>
                                 </div>
-                                <div className='di-graph-middle'>
-                                    {"---->"}
+                                <div className='data-issue-r2'>
+                                    <div className='di-graph-left'>
+                                        With Data Drift
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                    </div>
+                                    <div className='di-graph-middle'>
+                                        {"---->"}
+                                    </div>
+                                    <div className='di-graph-right'>
+                                        Without Data Drift
+                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                    </div>
                                 </div>
-                                <div className='di-graph-right'>
-                                    Without Data Drift
-                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                <div className='data-issue-r3'>
+                                    <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
                                 </div>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
-                            </div>
-                        </Panel>) : null}
-                    {displayIssue.duplicate ?
-                        (<Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
-                            <div className='data-issue-r1'>
-                                <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
-                            </div>
-                            <div className='data-issue-r3'>
-                                <p>{"Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
-                            </div>
-                        </Panel>) : null}
-                </Collapse>
-            </div>
-            <div className='config-display-fc-r3'>
-                <div className='config-display-fc-r3-text'>
-                    * You can auto correct the selected issues and re-train the model Please note that resolving these issues may or may not improve prediction accuracy.
+                            </Panel>) : null}
+                        {displayIssue.duplicate ?
+                            (<Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
+                                <div className='data-issue-r1'>
+                                    <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
+                                </div>
+                                <div className='data-issue-r3'>
+                                    <p>{"Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                                </div>
+                            </Panel>) : null}
+                    </Collapse>
                 </div>
-                <div className='config-display-fc-r3-item'>
-                    <button
-                        className="cancel-button"
-                        type="submit"
-                    >
-                        Cancel changes
-                    </button>
-                    <button
-                        className="train-button"
-                        type="submit"
-                    >
-                        {"Autocorrect and Re-train"}
-                    </button>
+                <div className='config-display-fc-r3'>
+                    <div className='config-display-fc-r3-text'>
+                        * You can auto correct the selected issues and re-train the model Please note that resolving these issues may or may not improve prediction accuracy.
+                    </div>
+                    <div className='config-display-fc-r3-item'>
+                        <button
+                            className="cancel-button"
+                            type="submit"
+                            onClick={() => { handleCancelButton() }}
+                        >
+                            Cancel changes
+                        </button>
+                        <button
+                            className="train-button"
+                            type="submit"
+                        >
+                            {"Autocorrect and Re-train"}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </>
+            </>
     );
 };

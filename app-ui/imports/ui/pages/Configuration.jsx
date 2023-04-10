@@ -5,8 +5,7 @@ import './Configuration.css'
 import { DataIssueConfig } from './DataIssueConfig.jsx';
 import { FeatureConfig } from './FeatureConfig.jsx';
 
-export const Configuration = ({ user, setUser }) => {
-    const [activeTab, setActiveTab] = useState("tab1");
+export const Configuration = ({ user, activeTab, setActiveTab }) => {
     var userid = user.id;
     if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
@@ -35,7 +34,7 @@ export const Configuration = ({ user, setUser }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} />}
+                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} setActiveTab={setActiveTab}/>}
                 </div>
             </div>
         </>);

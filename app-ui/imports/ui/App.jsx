@@ -10,6 +10,7 @@ import { Configuration } from './pages/Configuration.jsx';
 
 export const App = () => {
     const [user, setUser] = useState({ id: "", cohort: "" });
+    const [activeTab, setActiveTab] = useState("tab1");
 
     return (
         <>
@@ -22,7 +23,7 @@ export const App = () => {
                     <Route path="/dashboard/dce" element={<DCE user = {user}/>} />
                     <Route path="/dashboard/mce" element={<MCE user = {user} />} />
                     <Route path="/dashboard/hyb" element={<HYB user = {user} />} />
-                    <Route path="/configuration" element={<Configuration user={user} setUser={setUser} />} />
+                    <Route path="/configuration" element={<Configuration user={user} activeTab={activeTab} setActiveTab={setActiveTab} />} />
                 </Routes>
             </BrowserRouter>
         </>
