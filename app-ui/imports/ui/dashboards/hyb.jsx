@@ -270,7 +270,7 @@ export const HYB = ({ user }) => {
                             <div className='chart-container-viz'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
                                 <Tooltip
                                     placement="right"
                                     title={lang.dce.accuracyChart.trainingSamples}
@@ -279,7 +279,7 @@ export const HYB = ({ user }) => {
                                     <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
                                 </Tooltip>
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
                                 <Tooltip
                                     placement="right"
                                     title={lang.dce.accuracyChart.featuresConsidered}
@@ -288,7 +288,7 @@ export const HYB = ({ user }) => {
                                     <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
                                 </Tooltip>
                             </div>
-                            <div className='chart-container-info'>
+                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
                                 <Tooltip
                                     placement="right"
                                     title={(accChartVals.pct > 0) ? lang.dce.accuracyChart.upScore : lang.dce.accuracyChart.downScore}
@@ -333,7 +333,7 @@ export const HYB = ({ user }) => {
                                     <div className="top-rules-viz" onClick={() => { handleVizClick("DecisionRules", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
                                         {ruleView.map((item, index) => {
                                             return (
-                                                <div className="top-rules-viz-item" key={index}>
+                                                <div className="top-rules-viz-item-hyb" key={index}>
                                                     <b>{item}</b>
                                                 </div>
                                             );
@@ -413,27 +413,18 @@ export const HYB = ({ user }) => {
                                     </div>
                                 </Tooltip>
                             </div>
-                            <div className="chart-container-mce">
+                            <div className="chart-container-fi">
                                 {featureImportance.actionable.features == null || featureImportance['non-actionable'].features == null ?
                                     loadingIndicator :
                                     <>
-                                        <div className="chart-box-mce" onClick={() => { handleVizClick("FeatureImportance", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
-                                            <div className="cc-mce-left">
+                                        <div className="chart-box-fi" onClick={() => { handleVizClick("FeatureImportance", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("FeatureImportance", "Viz") }}>
+                                            <div className="cc-fi-left">
                                                 <HorizontalBarCharts
                                                     x_values={featureImportance.actionable.importance}
                                                     y_labels={featureImportance.actionable.features}
                                                     isActionable={true}
                                                 />
                                             </div>
-                                            <div className="cc-mce-right">
-                                                <HorizontalBarCharts
-                                                    x_values={featureImportance['non-actionable'].importance}
-                                                    y_labels={featureImportance['non-actionable'].features}
-                                                    isActionable={false}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="chart-container-text">
                                             <div className="cc-text-left">
                                                 <Tooltip
                                                     placement="bottom"
@@ -442,6 +433,13 @@ export const HYB = ({ user }) => {
                                                 >
                                                     <b>Actionable Factors</b>
                                                 </Tooltip>
+                                            </div>
+                                            <div className="cc-fi-right">
+                                                <HorizontalBarCharts
+                                                    x_values={featureImportance['non-actionable'].importance}
+                                                    y_labels={featureImportance['non-actionable'].features}
+                                                    isActionable={false}
+                                                />
                                             </div>
                                             <div className="cc-text-right">
                                                 <Tooltip
@@ -596,7 +594,7 @@ export const HYB = ({ user }) => {
                                 </div>
                             </Tooltip>
                         </div>
-                        <div className="chart-container">
+                        <div className="chart-container-density">
                             {dsChartVals.Glucose.ydata.length <= 1 || dsChartVals == null ?
                                 loadingIndicator :
                                 <>
