@@ -270,7 +270,7 @@ export const HYB = ({ user }) => {
                             <div className='chart-container-viz'>
                                 <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
                             </div>
-                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
+                            <div className='chart-container-info' style={{ marginLeft: "20%" }}>
                                 <Tooltip
                                     placement="right"
                                     title={lang.dce.accuracyChart.trainingSamples}
@@ -279,7 +279,7 @@ export const HYB = ({ user }) => {
                                     <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
                                 </Tooltip>
                             </div>
-                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
+                            <div className='chart-container-info' style={{ marginLeft: "20%" }}>
                                 <Tooltip
                                     placement="right"
                                     title={lang.dce.accuracyChart.featuresConsidered}
@@ -288,7 +288,7 @@ export const HYB = ({ user }) => {
                                     <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
                                 </Tooltip>
                             </div>
-                            <div className='chart-container-info' style={{marginLeft: "20%"}}>
+                            <div className='chart-container-info' style={{ marginLeft: "20%" }}>
                                 <Tooltip
                                     placement="right"
                                     title={(accChartVals.pct > 0) ? lang.dce.accuracyChart.upScore : lang.dce.accuracyChart.downScore}
@@ -472,15 +472,27 @@ export const HYB = ({ user }) => {
                             <div className="chart-container">
                                 <div className="dq-div" onClick={() => { handleVizClick("DataQuality", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataQuality", "Viz") }}>
                                     <div className='dq-div-left'>
-                                        <GaugeChart
-                                            nrOfLevels={2}
-                                            arcsLength={[dqChartVals["score"], 1 - dqChartVals["score"]]}
-                                            percent={dqChartVals["score"]}
-                                            textColor={"black"}
-                                            hideText={true}
-                                            colors={['#1363DF', '#E5E5E5']}
-                                            style={{ width: "15vw" }}
-                                        />
+                                        <Tooltip
+                                            placement="top"
+                                            title={"The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."}
+                                            overlayStyle={{ maxWidth: '400px' }}
+                                        >
+                                            <div>
+                                                <GaugeChart
+                                                    nrOfLevels={3}
+                                                    arcsLength={[0.5, 0.3, 0.2]}
+                                                    percent={dqChartVals["score"]}
+                                                    textColor={"black"}
+                                                    hideText={true}
+                                                    colors={[
+                                                        (dqChartVals["score"] > 0.0 ? '#1363DF' : '#E5E5E5'),
+                                                        (dqChartVals["score"] > 0.5 ? '#1363DF' : '#E5E5E5'),
+                                                        (dqChartVals["score"] > 0.8 ? '#1363DF' : '#E5E5E5')
+                                                    ]}
+                                                    style={{ width: "15vw" }}
+                                                />
+                                            </div>
+                                        </Tooltip>
                                         <div className='dq-div-left-info'>
                                             <Tooltip
                                                 placement="bottom"

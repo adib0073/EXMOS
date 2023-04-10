@@ -16,6 +16,7 @@ import { ContinuousDistribution } from '../components/PatientSummaryPlot/Continu
 import { Tooltip, Spin } from 'antd';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
+import { AntDGauge } from '../components/AntDGauge.jsx';
 // TO-DO - Delete following if not required
 
 const GetPredChartValue = ({ userid, setAccChartVals }) => {
@@ -325,15 +326,27 @@ export const DCE = ({ user }) => {
                         <div className="chart-container">
                             <div className="dq-div" onClick={() => { handleVizClick("DataQuality", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DataQuality", "Viz") }}>
                                 <div className='dq-div-left'>
-                                    <GaugeChart
-                                        nrOfLevels={2}
-                                        arcsLength={[dqChartVals["score"], 1 - dqChartVals["score"]]}
-                                        percent={dqChartVals["score"]}
-                                        textColor={"black"}
-                                        hideText={true}
-                                        colors={['#1363DF', '#E5E5E5']}
-                                        style={{ width: "15vw" }}
-                                    />
+                                    <Tooltip
+                                        placement="top"
+                                        title={"The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."}
+                                        overlayStyle={{ maxWidth: '400px' }}
+                                    >
+                                        <div>
+                                            <GaugeChart
+                                                nrOfLevels={3}
+                                                arcsLength={[0.5, 0.3, 0.2]}
+                                                percent={dqChartVals["score"]}
+                                                textColor={"black"}
+                                                hideText={true}
+                                                colors={[
+                                                    (dqChartVals["score"] > 0.0 ? '#1363DF' : '#E5E5E5'),
+                                                    (dqChartVals["score"] > 0.5 ? '#1363DF' : '#E5E5E5'),
+                                                    (dqChartVals["score"] > 0.8 ? '#1363DF' : '#E5E5E5')
+                                                ]}
+                                                style={{ width: "15vw" }}
+                                            />
+                                        </div>
+                                    </Tooltip>
                                     <div className='dq-div-left-info'>
                                         <Tooltip
                                             placement="bottom"
