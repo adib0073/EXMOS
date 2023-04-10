@@ -204,6 +204,11 @@ export const FeatureConfig = ({ userid, cohort }) => {
         PostInteractions({ userid, cohort, interactioData });
     };
 
+    const sliderClick = (viz, feature) => {
+        console.log("slider clicked");
+
+    };
+
     const inputOnChange = (e) => {
         console.log(e.target.value);
     };
@@ -284,6 +289,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Glucose"}
                                             isActive={featureConfig["Glucose"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -323,6 +330,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"BMI"}
                                             isActive={featureConfig["BMI"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -331,7 +340,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         x_values={featureConfig["BMI"].xdata}
                                         y_values={featureConfig["BMI"].ydata}
                                         selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
-                                        isActive={featureConfig["BMI"].isSelected}                                        
+                                        isActive={featureConfig["BMI"].isSelected}
                                         name={"BMI"}
                                         unit={featureConfig["BMI"].unit}
                                     />
@@ -364,6 +373,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Insulin"}
                                             isActive={featureConfig["Insulin"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -372,7 +383,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         x_values={featureConfig["Insulin"].xdata}
                                         y_values={featureConfig["Insulin"].ydata}
                                         selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
-                                        isActive={featureConfig["Insulin"].isSelected}                                        
+                                        isActive={featureConfig["Insulin"].isSelected}
                                         name={"Insulin"}
                                         unit={featureConfig["Insulin"].unit}
                                     />
@@ -403,6 +414,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Age"}
                                             isActive={featureConfig["Age"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -411,7 +424,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                         x_values={featureConfig["Age"].xdata}
                                         y_values={featureConfig["Age"].ydata}
                                         selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
-                                        isActive={featureConfig["Age"].isSelected}                                        
+                                        isActive={featureConfig["Age"].isSelected}
                                         name={"Age"}
                                         unit={featureConfig["Age"].unit}
                                     />
@@ -442,6 +455,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"Pregnancies"}
                                             isActive={featureConfig["Pregnancies"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -481,8 +496,10 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
-                                            featureName={"Blood Pressure"}
+                                            featureName={"BloodPressure"}
                                             isActive={featureConfig["BloodPressure"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -520,8 +537,10 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
-                                            featureName={"Skin Thickness"}
+                                            featureName={"SkinThickness"}
                                             isActive={featureConfig["SkinThickness"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>
@@ -561,6 +580,8 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             setFeatureConfig={setFeatureConfig}
                                             featureName={"DiabetesPedigreeFunction"}
                                             isActive={featureConfig["DiabetesPedigreeFunction"].isSelected}
+                                            userid={userid}
+                                            cohort={cohort}
                                         />
                                     </div>
                                 </div>

@@ -1,14 +1,58 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Input, Slider } from 'antd';
+import axios from 'axios';
+import { BASE_API } from '../../Constants';
 
-const handleSliderChange = (value, featureName, featureConfig, setFeatureConfig) => {
-    
-    const updatedFeature = { ...featureConfig[featureName], lowerLimit: value[0], upperLimit: value[1]}
+
+const PostInteractions = ({ userid, cohort, interactioData }) => {
+    axios.post(BASE_API + '/trackinteractions', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: interactioData
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        //console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Fire and Forget
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
+const handleSliderChange = (value,
+    featureName,
+    featureConfig,
+    setFeatureConfig,
+    userid,
+    cohort) => {
+
+    const updatedFeature = { ...featureConfig[featureName], lowerLimit: value[0], upperLimit: value[1] }
     setFeatureConfig({
         ...featureConfig,
         [featureName]: updatedFeature
     });
+
+    let interactioData = {
+        "viz": "featureSliderClick",
+        "eventType": "click",
+        "description": featureName,
+        "timestamp": Date().toString(),
+        "duration": 0
+    }
+
+    PostInteractions({ userid, cohort, interactioData });
 };
 
 export const ConfigSlider = ({ defaultLimit,
@@ -16,7 +60,9 @@ export const ConfigSlider = ({ defaultLimit,
     featureConfig,
     setFeatureConfig,
     featureName,
-    isActive
+    isActive,
+    userid,
+    cohort
 }) => {
     const chartColor = isActive ? "#67A3FF" : "#6C6C6C";
 
@@ -44,16 +90,25 @@ export const ConfigSlider = ({ defaultLimit,
                 label: defaultLimit[1],
             },
         }}
-        key={featureName+selectedLimit[0]+selectedLimit[1]}
+        key={featureName + selectedLimit[0] + selectedLimit[1]}
         defaultValue={selectedLimit}
         min={defaultLimit[0]}
         max={defaultLimit[1]}
-        onChange={(value) => {handleSliderChange(value, featureName, featureConfig, setFeatureConfig)}}
+        onChange={(value) => {
+            handleSliderChange(
+                value,
+                featureName,
+                featureConfig,
+                setFeatureConfig,
+                userid,
+                cohort
+            )
+        }}
         //dotStyle={{ borderColor: "#67A3FF" }}
         trackStyle={{ background: chartColor }}
         handleStyle={{ borderColor: chartColor }}
         railStyle={{ background: "#E5E5E5" }}
-        disabled ={!isActive}
+        disabled={!isActive}
     />);
 
 };
