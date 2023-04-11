@@ -11,8 +11,8 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
 
     let bgColor = [];
 
-    for (let i = 0; i < x_values.length; i++) {
-        if (x_values[i] > outlierLimit[1] || x_values[i] < outlierLimit[0]) {
+    for (let i = 0; i < y_values.length; i++) {
+        if (y_values[i] > outlierLimit[1] || y_values[i] < outlierLimit[0]) {
             bgColor.push("#D64242");
         }
         else {
@@ -39,8 +39,20 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
         plugins: {
             legend: { display: false },
             tooltip: {
-                enabled: false,
+                enabled: true,
                 displayColors: false,
+                callbacks: {
+                    label: function (context) {
+                        let label = "Value " || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            label += Math.round((context.parsed.y + Number.EPSILON) * 100) / 100;
+                        }
+                        return label;
+                    },
+                }
             },
         },
         scales: {
