@@ -352,7 +352,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                     </div>
                                 </div>
                                 <div className='data-issue-r3'>
-                                    <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
+                                    <p>{"Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.duplicate ?
@@ -361,7 +361,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                     <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
                                 </div>
                                 <div className='data-issue-r3'>
-                                    <p>{"Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                                    <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
                                 </div>
                             </Panel>) : null}
                     </Collapse>
