@@ -24,8 +24,9 @@ export const DataIssueArea = ({
             {
                 label: 'Count',
                 data: y_values,
-                pointRadius: 3,
-                pointBorderWidth: 1,
+                pointRadius: 2,
+                pointBorderWidth: 0.5,
+                borderWidth: 1,
                 hoverBackgroundColor: 'white',
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 3,
@@ -79,7 +80,10 @@ export const DataIssueArea = ({
                 display: false,
                 beginAtZero: false,
                 grid: {
-                    display: false
+                    display: true,
+                    borderColor: 'black',
+                    drawTicks: false,
+                    drawOnChartArea: true
                 },
                 min: 0,
                 max: Math.max.apply(Math, y_values) * 1.2,
@@ -96,15 +100,16 @@ export const DataIssueArea = ({
             x: {
                 offset: true,
                 grid: {
-                    display: false,
+                    display: true,
                     borderColor: 'black',
                     drawTicks: false,
+                    drawOnChartArea: true
                 },
                 ticks: {
                     padding: 1,
                     color: "#000000",
                     font: {
-                        size: 11
+                        size: 0
                     },
                     callback: (value, index, values) => {
                         if (index == 0 || index == x_values.length - 1) {

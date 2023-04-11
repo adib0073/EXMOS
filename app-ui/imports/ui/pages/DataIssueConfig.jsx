@@ -309,23 +309,23 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
-                                        Asymmetrical Distribution: Left Skewed
-                                        <DataIssueArea x_values={[1, 2, 3, 4, 5]} y_values={[5, 10, 4, 3, 1]} color1={"#244CB1"} color2={"#67A3FF50"} />
+                                        Example: Left Skewed
+                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                     </div>
                                     <div className='di-graph-left'>
-                                        Asymmetrical Distribution: Right Skewed
-                                        <DataIssueArea x_values={[1, 2, 3, 4, 5]} y_values={[1, 2, 4, 15, 1]} color1={"#244CB1"} color2={"#67A3FF50"} />
+                                        Example: Right Skewed
+                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 15, 5, 4, 3, 3, 2, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                     </div>
                                     <div className='di-graph-middle'>
                                         {"---->"}
                                     </div>
                                     <div className='di-graph-right'>
-                                        After Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                        Symmetrical Distribution
+                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
                                     </div>
                                 </div>
                                 <div className='data-issue-r3'>
-                                    <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions."}</p>
+                                    <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.imbalance ?
