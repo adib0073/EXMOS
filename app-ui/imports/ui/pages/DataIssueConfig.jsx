@@ -7,7 +7,7 @@ import { ConfigScatter, ConfigScatterCorr } from '../components/ConfigCharts/Con
 import { BASE_API } from '../Constants';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
-import { DataIssueArea } from '../components/ConfigCharts/DataIssueArea';
+import { DataIssueArea, DataDriftArea } from '../components/ConfigCharts/DataIssueArea';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
@@ -362,18 +362,34 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
                                         With Data Drift
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                        <DataDriftArea
+                                            x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
+                                            y1_values={[1, 8, 15, 6, 1, 1, 2, 1]}
+                                            primColor1={"#244CB1"}
+                                            secColor1={"#244CB130"}
+                                            y2_values={[1, 2, 2, 1, 2, 5, 9, 3]}
+                                            primColor2={"#D64242"}
+                                            secColor2={"#D6424230"}
+                                        />
                                     </div>
                                     <div className='di-graph-middle'>
                                         {"---->"}
                                     </div>
                                     <div className='di-graph-right'>
                                         Without Data Drift
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                        <DataDriftArea
+                                            x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
+                                            y1_values={[1, 2, 3, 6, 8, 6, 4, 2]}
+                                            primColor1={"#244CB1"}
+                                            secColor1={"#244CB130"}
+                                            y2_values={[1, 1, 3, 4, 6, 5, 3, 1]}
+                                            primColor2={"#D64242"}
+                                            secColor2={"#D6424230"}
+                                        />
                                     </div>
                                 </div>
                                 <div className='data-issue-r3'>
-                                    <p>{"Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                                    <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.duplicate ?
