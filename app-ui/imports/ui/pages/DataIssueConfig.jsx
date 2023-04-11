@@ -3,7 +3,7 @@ import { InfoLogo } from '../components/Icons/InfoLogo';
 import { Collapse, Checkbox, Select, Spin, Tooltip } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
-import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
+import { ConfigScatter, ConfigScatterCorr } from '../components/ConfigCharts/ConfigScatter';
 import { BASE_API } from '../Constants';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
@@ -287,15 +287,19 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
-                                        Before Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                        Positive Correlation
+                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 3, 4, 5, 8, 6, 10, 12]} outlierLimit={[0, 0]} />
+                                    </div>
+                                    <div className='di-graph-left'>
+                                        Negative Correlation
+                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[14, 11, 10, 6, 5, 3, 2, 1]} outlierLimit={[0, 0]} />
                                     </div>
                                     <div className='di-graph-middle'>
                                         {"---->"}
                                     </div>
                                     <div className='di-graph-right'>
-                                        After Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
+                                        No Correlation
+                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 12, 6, 8, 4, 14, 5, 8]} outlierLimit={[0, 20]} />
                                     </div>
                                 </div>
                                 <div className='data-issue-r3'>

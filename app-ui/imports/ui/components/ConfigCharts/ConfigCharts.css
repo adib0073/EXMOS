@@ -14,6 +14,15 @@
     border-color: black;    
     padding: 2px 5px 5px 5px;
 }
+.ScatterPlotContainerCorr {
+    background: #FFFFFF;
+    height: 10vh;
+    width: 10vw;
+    border: 2px;
+    border-style: solid;
+    border-color: black;    
+    padding: 2px;
+}
 
 .DataIssueBarContainer {
     background: #FFFFFF;
