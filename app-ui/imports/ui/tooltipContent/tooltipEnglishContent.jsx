@@ -43,6 +43,7 @@ export const tooltipEnglishContent = {
         },
     },
     "featureConfig" : {
+        "title" : "You can configure the training data from this page. Please select the risk factors which you think is important for the predictive model. If you observe any abnormal or extreme data value for any of the risk factors, you can use the slider control to filter the data and re-train the model.",
         "diabetesStatus": "This visual shows the proportion of diabetic and non-diabetic patients in the training data. For a higher prediction accuracy it is recommended that the proportions of diabetic and non-diabetic patients should be almost equal.",
         "glucose" : "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test.  It is measured in mg/dl",
         "pregnancies" : "Number of times pregnant in the past",
@@ -52,5 +53,8 @@ export const tooltipEnglishContent = {
         "bmi" : "Body mass index of patients",
         "dpf" : "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history",
         "age" : "Age of patients in years"
+    },
+    "dataConfig" : {
+        "title": "You can expand to learn more about these data issues. You can also select the data issues which you want to auto-correct and re-train. Please note that auto-correcting data issues may improve the data quality but it may or may not improve the prediction accuracy. Also, auto-correcting one data issue, may introduce other issues."
     }
 };

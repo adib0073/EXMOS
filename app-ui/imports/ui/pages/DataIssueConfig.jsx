@@ -7,6 +7,8 @@ import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
 import { BASE_API } from '../Constants';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
+import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
+import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
 const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
     //console.log(userid);
@@ -121,7 +123,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
         <>
             <Tooltip
                 placement="top"
-                title={isDisabled?"Cannot be auto-corrected":"Select to auto-correct"}
+                title={isDisabled ? "Unfortunately, this issue cannot be auto-corrected" : "Select to auto-correct"}
                 overlayStyle={{ maxWidth: '400px' }}
             >
                 <Checkbox disabled={isDisabled} onChange={() => { handleTickClick(issueName) }} />
@@ -216,6 +218,10 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
         }
     };
 
+    // Language variable
+    // TO-DO: Take language preferred as input
+    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+
     return (
         waitFlag ? loadingIndicator :
             <>
@@ -224,9 +230,15 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                         {"The following data quality issues have been observed in the training data:"}
 
                     </div>
-                    <div className='config-display-fc-r1-icon'>
-                        <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                    </div>
+                    <Tooltip
+                        placement="top"
+                        title={lang.dataConfig.title}                                                
+                        overlayStyle={{ maxWidth: '500px' }}
+                    >
+                        <div className='config-display-fc-r1-icon'>
+                            <InfoLogo />
+                        </div>
+                    </Tooltip>
                 </div>
                 <div className='data-issue-list'>
                     <Collapse accordion>

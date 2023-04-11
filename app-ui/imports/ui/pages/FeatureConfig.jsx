@@ -234,9 +234,15 @@ export const FeatureConfig = ({ userid, cohort }) => {
                     <div className='config-display-fc-r1-text'>
                         {"The current model is trained on the selected features with selected data configurations:"}
                     </div>
-                    <div className='config-display-fc-r1-icon'>
-                        <InfoLogo setButtonPopup={false} setChartIndex={0} index={3} />
-                    </div>
+                    <Tooltip
+                        placement="top"
+                        title={lang.featureConfig.title}                        
+                        overlayStyle={{ maxWidth: '500px' }}
+                    >
+                        <div className='config-display-fc-r1-icon'>
+                            <InfoLogo />
+                        </div>
+                    </Tooltip>
                 </div>
                 <div className='config-display-fc-r2'>
                     <div className='config-display-fc-r2c1'>
