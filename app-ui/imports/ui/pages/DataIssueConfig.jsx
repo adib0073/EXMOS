@@ -7,6 +7,7 @@ import { ConfigScatter } from '../components/ConfigCharts/ConfigScatter';
 import { BASE_API } from '../Constants';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
+import { DataIssueArea } from '../components/ConfigCharts/DataIssueArea';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
@@ -232,7 +233,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                     </div>
                     <Tooltip
                         placement="top"
-                        title={lang.dataConfig.title}                                                
+                        title={lang.dataConfig.title}
                         overlayStyle={{ maxWidth: '500px' }}
                     >
                         <div className='config-display-fc-r1-icon'>
@@ -308,8 +309,12 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
-                                        Before Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
+                                        Asymmetrical Distribution: Left Skewed
+                                        <DataIssueArea x_values={[1, 2, 3, 4, 5]} y_values={[5, 10, 4, 3, 1]} color1={"#244CB1"} color2={"#67A3FF50"} />
+                                    </div>
+                                    <div className='di-graph-left'>
+                                        Asymmetrical Distribution: Right Skewed
+                                        <DataIssueArea x_values={[1, 2, 3, 4, 5]} y_values={[1, 2, 4, 15, 1]} color1={"#244CB1"} color2={"#67A3FF50"} />
                                     </div>
                                     <div className='di-graph-middle'>
                                         {"---->"}
