@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
 from constants import *
-from dbconnectors import get_database, fetch_user_details, update_user_details, insert_accuracy_detail, insert_interaction_data
+from dbconnectors import *
 from evidently.metrics import DataDriftTable
 from evidently.report import Report
 import json
@@ -21,6 +21,7 @@ import six
 import sys
 sys.modules['sklearn.externals.six'] = six
 from skrules import SkopeRules
+from imblearn.over_sampling import SMOTE
 
 
 def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
@@ -42,7 +43,7 @@ def feature_wise_outlier(dataframe, col_name):
         return (True, low_limit, up_limit)
     else:
         return (False, low_limit, up_limit)
-
+    
 
 def detect_outliers(user):
     '''
@@ -139,22 +140,6 @@ def remove_outliers():
 
 def detect_missing_values(data):
     return data.isnull().sum().any()
-
-
-def remove_missing_values():
-    pass
-
-
-def remove_duplicates():
-    pass
-
-
-def detect_correlation():
-    pass
-
-
-def normalize_data():
-    pass
 
 
 def load_training_data(filters=None, selected_features=None):
@@ -255,6 +240,19 @@ def login_service(user_name, cohort):
         collection_name.insert_one(new_user)
         user_details = collection_name.find_one({"UserName": user_name})
         client.close()
+        autocorrect_configs = {
+            "UserName": user_name,
+            "Cohort": cohort,
+            "AutoCorrectConfig":   {
+                "outlier": False,
+                "correlation": False,
+                "skew": False,
+                "imbalance": False,
+                "drift": False,
+                "duplicate": False,
+            }
+        }
+        insert_autocorrect_configs(autocorrect_configs)
         return (True, f"New record created for user: {user_name}", user_details)
     else:
         print("Record found")
@@ -332,7 +330,20 @@ def load_filtered_user_data(user_details):
 
     # fetch data
     data, labels = load_training_data(filters, selected_features)
-    return filters, selected_features, data, labels
+    #############################################################
+    # TO-DO : Apply Auto-Corrections if already set
+    #############################################################
+    # fetch auto-corrections config
+    selectedIssues = fetch_autocorrect_configs(user_details["UserName"])
+    corrected_data, corrected_labels, new_selected_features = apply_data_corrections(data, labels, selected_features, selectedIssues)
+    # Update Selected features in DB
+    for feature in selected_features:
+        updated_feature = user_details[feature]
+        if feature not in new_selected_features:
+            updated_feature['isSelected'] = False
+        update_user_details(user_details["UserName"], {feature: updated_feature})
+    #############################################################
+    return filters, new_selected_features, corrected_data, corrected_labels
 
 
 def generate_pred_chart_data(user):
@@ -523,7 +534,7 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
 
 def retrain_config_data(config_data):
     user = config_data.UserId
-    # Update records
+    # Update records lower and upper limited and isSelected
     for feature in ALL_FEATURES:
         updated_feature = config_data.JsonData[feature]
         for unwanted_val in ["xdata", "ydata", "average"]:
@@ -540,11 +551,11 @@ def retrain_config_data(config_data):
     train_score, test_score = training_model(data, labels, selected_features)
     # Insert in  accuracy information MongoDB
     accuracy_detail = {
-        "user" : user,
-        "cohort" : config_data.Cohort,
-        "score" : test_score,
-        "type" : "train",
-        "timestamp" : datetime.now(),
+        "user": user,
+        "cohort": config_data.Cohort,
+        "score": test_score,
+        "type": "train",
+        "timestamp": datetime.now(),
     }
     insert_accuracy_detail(accuracy_detail)
     # Update old score
@@ -561,12 +572,13 @@ def retrain_config_data(config_data):
 
     return (True, f"Success. New score is :{test_score}", user_details)
 
+
 def restore_and_retrain(config_data):
     """
     Method to restore default values
     """
     user = config_data.UserId
-    # Update records
+    # Update upper and lower limits
     for feature in ALL_FEATURES:
         updated_feature = config_data.JsonData[feature]
         updated_feature['isSelected'] = True
@@ -586,11 +598,11 @@ def restore_and_retrain(config_data):
     train_score, test_score = training_model(data, labels, selected_features)
     # Insert in  accuracy information MongoDB
     accuracy_detail = {
-        "user" : user,
-        "cohort" : config_data.Cohort,
-        "score" : test_score,
-        "type" : "restore",
-        "timestamp" : datetime.now(),
+        "user": user,
+        "cohort": config_data.Cohort,
+        "score": test_score,
+        "type": "restore",
+        "timestamp": datetime.now(),
     }
     insert_accuracy_detail(accuracy_detail)
     # Update old score
@@ -604,13 +616,109 @@ def restore_and_retrain(config_data):
     update_user_details(user, {"DataIssues": new_data_issues})
     # Adding target in output json
     user_details['target'] = config_data.JsonData['target']
-
+    # Update AutoCorrect Configs
+    autocorrect_configs = {
+            "UserName": user,
+            "Cohort": config_data.Cohort,
+            "AutoCorrectConfig":   {
+                "outlier": False,
+                "correlation": False,
+                "skew": False,
+                "imbalance": False,
+                "drift": False,
+                "duplicate": False,
+            }
+        }
+    update_autocorrect_details(autocorrect_configs)
     return (True, f"Success. Default score is :{test_score}", user_details)
 
-def retrain_autocorrect_data(config_data):
-    user = config_data.UserId
-    return (True, f"Success. New score is :{0}", None)
 
+def apply_data_corrections(data, labels, selected_features, selectedIssues=None):
+    if selectedIssues == None:
+        return data, labels, selected_features
+
+    if selectedIssues["duplicate"]:
+        # Drop Duplicates
+        complete_data = data.copy()
+        complete_data['target'] = labels
+        complete_data.drop_duplicates(subset=None, inplace=True)
+        data = complete_data.drop(["target"],axis='columns')
+        labels = complete_data.filter(["target"],axis='columns')
+
+    # Apply Corrections to the data
+    if selectedIssues["outlier"]:
+        # Detect Outliers
+        for f in selected_features:
+            outlier_status, low_limit, up_limit = feature_wise_outlier(data, f)
+            if outlier_status:
+                  # Replace outliers with up_limit and low_limit
+                  data.loc[(data[f] < low_limit), f] = low_limit
+                  data.loc[(data[f] > up_limit), f] = up_limit
+
+    if selectedIssues["correlation"]:
+        # Correct Correlation
+        corr_df = data.corr()
+        corr_df = corr_df.where(
+            np.triu(np.ones(corr_df.shape), k=1).astype(np.bool))
+        
+        correlated_features = []
+        for ind in range(len(corr_df)):
+            for col in corr_df.columns:
+                feature_to_remove = None
+                if (corr_df.iloc[ind][col]) > 0.5 or (corr_df.iloc[ind][col]) < -0.5:
+                    # Remove second feature from selected features
+                    correlated_features.append(col)
+        correlated_features = list(set(correlated_features))
+        selected_features = [feat for feat in selected_features if feat not in correlated_features]
+        data = data[selected_features]
+
+    if selectedIssues["imbalance"]:
+        # Correct Imbalance - With SMOTE method
+        smote = SMOTE()
+        data, labels = smote.fit_resample(data, labels)
+
+    return data, labels, selected_features
+
+
+def retrain_autocorrect_data(config_data):
+    """
+    Method to auto-correct selected issues and re-train model
+    """
+    user = config_data.UserId
+    # Store auto-correction configurations
+    update_autocorrect_details(
+        user, {"AutoCorrectConfig": config_data.JsonData})
+    
+    # Fetch user details
+    client, user_details = fetch_user_details(user)
+    client.close()
+    if user_details is None:
+        return (False, f"Invalid username: {user}", user_details)
+    filters, selected_features, data, labels = load_filtered_user_data(
+        user_details)
+
+    # re-train model after correction
+    train_score, test_score = training_model(data, labels, selected_features)
+    # Insert in  accuracy information MongoDB
+    accuracy_detail = {
+        "user": user,
+        "cohort": config_data.Cohort,
+        "score": test_score,
+        "type": "autocorrect",
+        "timestamp": datetime.now(),
+    }
+    insert_accuracy_detail(accuracy_detail)
+    # Update old score
+    prev_score = user_details["CurrentScore"]
+    if prev_score != test_score:
+        update_user_details(user, {"CurrentScore": test_score})
+        update_user_details(user, {"PrevScore": prev_score})
+    # Update data issue scores
+    new_data_issues = UpdateDataIssues(
+        data, labels, user_details["DataIssues"], selected_features)
+    update_user_details(user, {"DataIssues": new_data_issues})
+
+    return (True, f"Success. Default score is :{test_score}", user_details)
 
 
 def detect_drift(user):
@@ -849,7 +957,7 @@ def compute_decision_rules(user):
 
     filters, selected_features, train_data, train_labels = load_filtered_user_data(
         user_details)
-    
+
     output_json = {}
     ########################################
     # Code to generate decision rules      #
@@ -860,7 +968,7 @@ def compute_decision_rules(user):
                      recall_min=0.3,
                      random_state=123,
                      feature_names=train_data.columns)
-    for idx, outcome in enumerate(['non-diabetic','diabetic']):
+    for idx, outcome in enumerate(['non-diabetic', 'diabetic']):
         X, y = train_data, train_labels[TARGET_VARIABLE]
         clf.fit(X, y == idx)
         rules = clf.rules_[0:4]
@@ -877,27 +985,29 @@ def compute_decision_rules(user):
                     feature, op, threshold = cond.partition(" < ")
                 elif (">" in cond):
                     feature, op, threshold = cond.partition(" > ")
-                
-                new_rule.append(f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
+
+                new_rule.append(
+                    f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
             rule_list.append(" and ".join(new_rule))
         if len(rule_list) < 1:
-                rule_list.append("No rules found.")
+            rule_list.append("No rules found.")
         output_json[outcome] = rule_list
     #########################################
     return (True, f"Successful. Decision rules obtained for user: {user}", output_json)
+
 
 def save_interaction_data(config_data):
     """
     Method to store interaction data
     """
     interaction_detail = {
-        "user" : config_data.UserId,
-        "cohort" : config_data.Cohort,
-        "viz" : config_data.JsonData["viz"],
-        "eventType" : config_data.JsonData["eventType"],
-        "description" : config_data.JsonData["description"],
+        "user": config_data.UserId,
+        "cohort": config_data.Cohort,
+        "viz": config_data.JsonData["viz"],
+        "eventType": config_data.JsonData["eventType"],
+        "description": config_data.JsonData["description"],
         "timestamp": config_data.JsonData["timestamp"],
-        "duration" : config_data.JsonData["duration"]
+        "duration": config_data.JsonData["duration"]
     }
     insert_interaction_data(interaction_detail)
     return (True, f"Successful. Interaction data inserted for user: {config_data.UserId}", interaction_detail)

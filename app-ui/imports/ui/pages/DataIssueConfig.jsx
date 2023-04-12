@@ -229,7 +229,7 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
         GetSkew({ userid, setSkewData, setDisplayIssue });
         setTimeout(function () {
             setWaitFlag(false);
-        }, 2000);
+        }, 4000);
     }, []);
     const [waitFlag, setWaitFlag] = useState(true);
 
@@ -258,8 +258,9 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
 
     // Handle retrain button
     const handleTrainButton = () => {
+        setActiveTab("tab2");
         if (window.confirm('Do you want to auto-correct and re-train the machine learning model?')) {
-            //window.location.reload();
+            window.location.reload();
             setWaitFlag(true);
             PostConfigData({ userid, cohort, selectedDataIssues });
             setTimeout(function () {

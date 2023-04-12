@@ -11,5 +11,6 @@ shap
 xgboost
 skope-rules
 pymongo
+imbalanced-learn
 pymongo[srv]
 uvicorn[standard]

@@ -12,6 +12,8 @@ USER_COLLECTION = "exmos_collection"
 ACCURACY_COLLECTION = "exmos_accuracy"
 # MONGO COLLECTION FOR IINTERACTIONS DATA
 INTERACTIONS_COLLECTION = "exmos_interactions"
+# MONGO COLLECTION FOR AUTOCORRECT CONFIG
+AUTOCORRECT_CONFIG = "exmos_autocorrect_config"
 # User Detail Template
 USER_DETAIL_JSON = {
     "UserName": None,
