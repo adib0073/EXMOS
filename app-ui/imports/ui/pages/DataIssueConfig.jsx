@@ -99,7 +99,6 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
 };
 
 const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
-    console.log(selectedDataIssues);
     axios.post(BASE_API + '/autocorrectandretrain', {
         UserId: userid,
         Cohort: cohort,

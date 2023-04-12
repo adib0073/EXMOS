@@ -392,11 +392,11 @@ def key_insights_gen(user):
         user_details)
     # Diabetic ratio
     xy_data = data.copy()
-    xy_data['target'] = labels
+    xy_data[TARGET_VARIABLE] = labels
     pct_list = []
     input_list = []
     insight_list = []
-    diabetic_count = len(xy_data[xy_data['target'] == 1])
+    diabetic_count = len(xy_data[xy_data[TARGET_VARIABLE] == 1])
     dc_pct = np.round(100 * (diabetic_count/(len(xy_data))), 0)
     pct_list.append(dc_pct)
     input_list.append("Patients have ")
@@ -618,18 +618,14 @@ def restore_and_retrain(config_data):
     user_details['target'] = config_data.JsonData['target']
     # Update AutoCorrect Configs
     autocorrect_configs = {
-            "UserName": user,
-            "Cohort": config_data.Cohort,
-            "AutoCorrectConfig":   {
-                "outlier": False,
-                "correlation": False,
-                "skew": False,
-                "imbalance": False,
-                "drift": False,
-                "duplicate": False,
-            }
+            "outlier": False,
+            "correlation": False,
+            "skew": False,
+            "imbalance": False,
+            "drift": False,
+            "duplicate": False,
         }
-    update_autocorrect_details(autocorrect_configs)
+    update_autocorrect_details(user, {"AutoCorrectConfig": autocorrect_configs})
     return (True, f"Success. Default score is :{test_score}", user_details)
 
 
@@ -640,10 +636,10 @@ def apply_data_corrections(data, labels, selected_features, selectedIssues=None)
     if selectedIssues["duplicate"]:
         # Drop Duplicates
         complete_data = data.copy()
-        complete_data['target'] = labels
+        complete_data[TARGET_VARIABLE] = labels
         complete_data.drop_duplicates(subset=None, inplace=True)
-        data = complete_data.drop(["target"],axis='columns')
-        labels = complete_data.filter(["target"],axis='columns')
+        data = complete_data.drop([TARGET_VARIABLE],axis='columns')
+        labels = complete_data.filter([TARGET_VARIABLE],axis='columns')
 
     # Apply Corrections to the data
     if selectedIssues["outlier"]:

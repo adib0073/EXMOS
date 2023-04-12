@@ -214,12 +214,16 @@ export const FeatureConfig = ({ userid, cohort }) => {
     };
 
     useEffect(() => {
+        setReloadFlag(true);
         GetConfigData({ userid, setFeatureConfig });
+        setTimeout(function () {
+            setReloadFlag(false);
+        }, 3000);
     }, []);
 
     const loadingIndicator = (
         <>
-            <Spin tip="Please hang tight. Model training in progress ..." size="large" />
+            <Spin tip="Retrieving latest data ..." size="large" />
         </>
     );
 
