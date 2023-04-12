@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { InfoLogo } from '../components/Icons/InfoLogo';
-import { Collapse, Checkbox, Select, Spin, Tooltip } from 'antd';
+import { Collapse, Checkbox, Select, Spin, Tooltip, message } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
 import { ConfigScatter, ConfigScatterCorr } from '../components/ConfigCharts/ConfigScatter';
@@ -98,20 +98,47 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
         });
 };
 
-export const DataIssueConfig = ({ userid, setActiveTab }) => {
+const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
+    console.log(selectedDataIssues);
+    axios.post(BASE_API + '/autocorrectandretrain', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: selectedDataIssues
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            /*"Access-Control-Allow-Origin": "*",*/
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        //console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            /*
+            setFeatureConfig({
+                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
+                "Glucose": response.data["OutputJson"]["Glucose"],
+                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
+                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
+                "Insulin": response.data["OutputJson"]["Insulin"],
+                "BMI": response.data["OutputJson"]["BMI"],
+                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
+                "Age": response.data["OutputJson"]["Age"],
+                "target": response.data["OutputJson"]["target"]
+            });*/
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
 
-    /* Methods */
-    const handleTickClick = (feature) => {
-        console.log(feature);
-        /*
-        const updatedFeature = { ...featureConfig[feature], isSelected: !featureConfig[feature].isSelected }
+export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
 
-        setFeatureConfig({
-            ...featureConfig,
-            [feature]: updatedFeature
-        });
-        */
-    };
     const onOutlierFilter = (value) => {
         outlierData.map((item, index) => {
             if (item.feature == value) {
@@ -191,7 +218,19 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
         },
         "lower": 0,
         "upper": 0
-    })
+    });
+
+    const [selectedDataIssues, setSelectedDataIssues] = useState(
+        {
+            "outlier": false,
+            "correlation": false,
+            "skew": false,
+            "imbalance": false,
+            "drift": false,
+            "duplicate": false,
+        }
+    );
+
     useEffect(() => {
         GetOutliers({ userid, setOutlierData, setDisplayIssue });
         GetImbalance({ userid, setImbalanceData, setDisplayIssue });
@@ -205,6 +244,15 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
     }, []);
     const [waitFlag, setWaitFlag] = useState(true);
 
+    /* Methods */
+    const handleTickClick = (feature) => {
+        console.log(feature);
+        setSelectedDataIssues({
+            ...selectedDataIssues,
+            [feature]: !selectedDataIssues[feature]
+        });
+    };
+
     const loadingIndicator = (
         <>
             <Spin tip="Fetching current data issues ...  " size="large" />
@@ -216,6 +264,20 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
         if (window.confirm('Do you want to revert all your changes?')) {
             setActiveTab("tab2");
             window.location.reload();
+        }
+    };
+
+    // Handle retrain button
+    const handleTrainButton = () => {
+        if (window.confirm('Do you want to auto-correct and re-train the machine learning model?')) {
+            //window.location.reload();
+            setWaitFlag(true);
+            PostConfigData({ userid, cohort, selectedDataIssues });
+            setTimeout(function () {
+                message.success("Model is successfully re-trained with latest changes.", 3);
+                setWaitFlag(false);
+            }, 3000);
+    
         }
     };
 
@@ -418,6 +480,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                         <button
                             className="train-button"
                             type="submit"
+                            onClick={() => { handleTrainButton()}}
                         >
                             {"Autocorrect and Re-train"}
                         </button>

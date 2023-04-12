@@ -34,7 +34,7 @@ export const Configuration = ({ user, activeTab, setActiveTab }) => {
                     >Correct Data Issues</li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} setActiveTab={setActiveTab}/>}
+                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} cohort={cohort} setActiveTab={setActiveTab}/>}
                 </div>
             </div>
         </>);
