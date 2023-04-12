@@ -115,18 +115,7 @@ const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
     }).then(function (response) {
         //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
-            /*
-            setFeatureConfig({
-                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
-                "Glucose": response.data["OutputJson"]["Glucose"],
-                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
-                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
-                "Insulin": response.data["OutputJson"]["Insulin"],
-                "BMI": response.data["OutputJson"]["BMI"],
-                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
-                "Age": response.data["OutputJson"]["Age"],
-                "target": response.data["OutputJson"]["target"]
-            });*/
+            // No action needed
         }
         else {
             console.log("Error reported. Login failed.")

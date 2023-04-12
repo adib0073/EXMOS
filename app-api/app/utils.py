@@ -607,6 +607,12 @@ def restore_and_retrain(config_data):
 
     return (True, f"Success. Default score is :{test_score}", user_details)
 
+def retrain_autocorrect_data(config_data):
+    user = config_data.UserId
+    return (True, f"Success. New score is :{0}", None)
+
+
+
 def detect_drift(user):
     '''
     Method to detect class imbalance and their corrected values

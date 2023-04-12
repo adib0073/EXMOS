@@ -187,6 +187,19 @@ async def config_and_retrain(config_data: ConfigDataModel):
     }
     return response
 
+@app.post("/autocorrectandretrain", response_model=OutputwithPayloadDataModel)
+async def autocorrect_and_retrain(config_data: ConfigDataModel):
+
+    # Call method to validate user
+    code, message, output_json = retrain_autocorrect_data(config_data)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json
+    }
+    return response
+
 @app.post("/restoreandretrain", response_model=OutputwithPayloadDataModel)
 async def restore_default(config_data: ConfigDataModel):
     # Call method to restore default configurations
