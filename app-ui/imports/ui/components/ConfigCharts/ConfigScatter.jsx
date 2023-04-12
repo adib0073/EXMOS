@@ -129,12 +129,17 @@ export const ConfigScatterCorr = ({ y_values, x_values, outlierLimit }) => {
                 position: 'bottom',
                 max: Math.max.apply(Math, x_values) * 1.2,
                 min: 0,
+                title:{
+                    display: true,
+                    text: "feature 1",
+                    padding: -4,
+                },
                 grid: {
                     display: false,
                     borderColor: 'black',
                 },
                 ticks: {
-                    padding: 1,
+                    padding: 0,
                     color: "#000000",
                     font: {
                         size: 0
@@ -144,6 +149,11 @@ export const ConfigScatterCorr = ({ y_values, x_values, outlierLimit }) => {
             y: {
                 max: Math.max.apply(Math, y_values) * 1.2,
                 min: 0,
+                title:{
+                    display: true,
+                    text: "feature 2",
+                    padding: 0,
+                },
                 grid: {
                     display: true,
                     borderColor: 'black',

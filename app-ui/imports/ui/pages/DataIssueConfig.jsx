@@ -283,7 +283,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                         {displayIssue.correlation ?
                             (<Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
                                 <div className='data-issue-r1'>
-                                    <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>.</span>
+                                    <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
@@ -309,7 +309,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                         {displayIssue.skew ?
                             (<Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
                                 <div className='data-issue-r1'>
-                                    <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>.</span>
+                                    <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
@@ -357,7 +357,7 @@ export const DataIssueConfig = ({ userid, setActiveTab }) => {
                         {displayIssue.drift ?
                             (<Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
                                 <div className='data-issue-r1'>
-                                    <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>.</span>
+                                    <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
                                 </div>
                                 <div className='data-issue-r2'>
                                     <div className='di-graph-left'>
