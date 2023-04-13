@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '4551:3000'
+      - '3551:3000'
     depends_on:
       - mongo
     environment:
-      ROOT_URL: ${APP_ROOT_URL:-http://cassatt.experiments.cs.kuleuven.be:4551/exmos}
+      ROOT_URL: ${APP_ROOT_URL:-http://cassatt.experiments.cs.kuleuven.be:3551/exmos}
       MONGO_URL: mongodb://mongo:27017/meteor
       PORT: 3000
       restart: restart
@@ -28,7 +28,7 @@ services:
       context: ./app-api
       dockerfile: Dockerfile
     ports:
-      - "4550:8000"
+      - "3550:8000"
     restart: always
 
 volumes:
