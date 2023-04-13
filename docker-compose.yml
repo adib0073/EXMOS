@@ -10,7 +10,7 @@ services:
     depends_on:
       - mongo
     environment:
-      ROOT_URL: ${APP_ROOT_URL:-http://localhost}
+      ROOT_URL: ${APP_ROOT_URL:-http://cassatt.experiments.cs.kuleuven.be:4551/exmos}
       MONGO_URL: mongodb://mongo:27017/meteor
       PORT: 3000
       restart: restart
