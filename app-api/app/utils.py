@@ -374,7 +374,8 @@ def generate_pred_chart_data(user):
         if autocorrect_config is None:
             autocorrect_on = False
         else:
-            autocorrect_on = any(autocorrect_config.items())
+            logging.error(list(autocorrect_config.values()))
+            autocorrect_on = any(list(autocorrect_config.values()))
 
         output_json = {
             "Accuracy": np.ceil(curr_score),
@@ -595,6 +596,16 @@ def restore_and_retrain(config_data):
         for unwanted_val in ["xdata", "ydata", "average"]:
             del updated_feature[unwanted_val]
         update_user_details(user, {feature: updated_feature})
+    # Update AutoCorrect Configs
+    autocorrect_configs = {
+            "outlier": False,
+            "correlation": False,
+            "skew": False,
+            "imbalance": False,
+            "drift": False,
+            "duplicate": False,
+        }
+    update_autocorrect_details(user, {"AutoCorrectConfig": autocorrect_configs})
     # re-train model with updated data
     client, user_details = fetch_user_details(user)
     client.close()
@@ -624,16 +635,7 @@ def restore_and_retrain(config_data):
     update_user_details(user, {"DataIssues": new_data_issues})
     # Adding target in output json
     user_details['target'] = config_data.JsonData['target']
-    # Update AutoCorrect Configs
-    autocorrect_configs = {
-            "outlier": False,
-            "correlation": False,
-            "skew": False,
-            "imbalance": False,
-            "drift": False,
-            "duplicate": False,
-        }
-    update_autocorrect_details(user, {"AutoCorrectConfig": autocorrect_configs})
+    
     return (True, f"Success. Default score is :{test_score}", user_details)
 
 
