@@ -369,11 +369,19 @@ def generate_pred_chart_data(user):
         else:
             score_change = np.ceil(curr_score) - np.ceil(prev_score)
 
+        # Get if auto-config features are on
+        autocorrect_config = fetch_autocorrect_configs(user)
+        if autocorrect_config is None:
+            autocorrect_on = False
+        else:
+            autocorrect_on = any(autocorrect_config.items())
+
         output_json = {
             "Accuracy": np.ceil(curr_score),
             "NumSamples": data.shape[0],
             "NumFeatures": data.shape[1],
-            "ScoreChange": score_change
+            "ScoreChange": score_change,
+            "AutoCorrectOn" : autocorrect_on
         }
 
         return (True, f"Successful. Data summary details founde for user: {user}", output_json)

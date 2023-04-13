@@ -150,6 +150,7 @@
 }
 
 /* CAPSULE CHARTS */
+
 .capsule-div {
     display: flex;
     flex-direction: row;
@@ -160,6 +161,7 @@
     background-color: #1363DF;
     padding: 2px;
     margin-top: 10px;
+    flex: 1;
 }
 
 .capsule-div-left {
@@ -247,7 +249,8 @@
     display: flex;
     flex-direction: row;
 }
-.bottom-legend{
+
+.bottom-legend {
     flex: 0.5;
     text-align: center;
     padding: 10px;

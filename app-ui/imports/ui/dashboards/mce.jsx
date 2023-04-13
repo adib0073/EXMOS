@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { NavBar } from '../components/NavBar/NavBar.jsx';
 import './mce.css'
 import { Spin, Tooltip } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { UpGreenArrow } from '../components/Icons/UpGreenArrow.jsx';
 import { UpRedArrow } from '../components/Icons/UpRedArrow.jsx';
@@ -24,7 +25,8 @@ const GetPredChartValue = ({ userid, setAccChartVals }) => {
                 accuracy: response.data["OutputJson"]["Accuracy"],
                 nsamples: response.data["OutputJson"]["NumSamples"],
                 nfeats: response.data["OutputJson"]["NumFeatures"],
-                pct: response.data["OutputJson"]["ScoreChange"]
+                pct: response.data["OutputJson"]["ScoreChange"],
+                aco: response.data["OutputJson"]["AutoCorrectOn"]
             });
 
         }).catch(function (error) {
@@ -93,7 +95,7 @@ export const MCE = ({ user }) => {
 
     const accuracyChartRef = useRef();
     // Set UseStates
-    const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0 });
+    const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0, aco: false });
     const [activeFilter, setActiveFilter] = useState("diabetic");
     const [topRules, setTopRules] = useState({
         "diabetic": null,
@@ -184,6 +186,18 @@ export const MCE = ({ user }) => {
                             <div className="chart-title">
                                 Prediction Accuracy
                             </div>
+                            <Tooltip
+                                placement="bottom"
+                                title={lang.dce.accuracyChart.autoCorrectOn}
+                                overlayStyle={{ maxWidth: '500px' }}
+                            >
+                                {accChartVals.aco ?
+                                    <div className="chart-icons">
+                                        <PlusCircleOutlined style={{ fontSize: '15px', color: redFont }} />
+                                    </div>
+                                    : null
+                                }
+                            </Tooltip>
                             <Tooltip
                                 placement="bottom"
                                 title={lang.mce.accuracyChart.title}
