@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3551:3000'
+      - '3951:3000'
     depends_on:
       - mongo
     environment:
@@ -28,7 +28,7 @@ services:
       context: ./app-api
       dockerfile: Dockerfile
     ports:
-      - "3550:8000"
+      - "3950:8000"
     restart: always
 
 volumes:
