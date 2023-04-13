@@ -1,5 +1,5 @@
 from typing import List, Union
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, APIRouter
 from utils import *
 from data_model import *
 from constants import *
@@ -11,6 +11,7 @@ from bson.objectid import ObjectId
 pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 
 app = FastAPI()
+
 origins = ["*"]
 
 # Enable CORS in FastAPI
@@ -25,7 +26,6 @@ app.add_middleware(
 
 @app.get('/')
 def get_root():
-
     return {'message': 'Welcome to Diabetes Detection API'}
 
 
