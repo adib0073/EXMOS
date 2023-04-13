@@ -248,6 +248,9 @@ export const HYB = ({ user }) => {
     // TO-DO: Take language preferred as input
     const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
 
+    // Data Quality Gauage Chart Color
+    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1" 
+
     return (
         <>
             <NavBar user={user} />
@@ -502,9 +505,9 @@ export const HYB = ({ user }) => {
                                                             textColor={"black"}
                                                             hideText={true}
                                                             colors={[
-                                                                (dqChartVals["score"] > 0.0 ? '#1363DF' : '#E5E5E5'),
-                                                                (dqChartVals["score"] > 0.5 ? '#1363DF' : '#E5E5E5'),
-                                                                (dqChartVals["score"] > 0.8 ? '#1363DF' : '#E5E5E5')
+                                                                (dqChartVals["score"] > 0.0 ? dqChartColor : '#E5E5E5'),
+                                                                (dqChartVals["score"] > 0.5 ? dqChartColor : '#E5E5E5'),
+                                                                (dqChartVals["score"] > 0.8 ? dqChartColor : '#E5E5E5')
                                                             ]}
                                                             style={{ width: "15vw" }}
                                                         />

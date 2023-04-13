@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { InfoLogo } from '../components/Icons/InfoLogo';
 import { Collapse, Checkbox, Select, Spin, Tooltip, message } from 'antd';
 const { Panel } = Collapse;
@@ -126,6 +127,8 @@ const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
 };
 
 export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
+
+    const navigate = useNavigate();
 
     const onOutlierFilter = (value) => {
         outlierData.map((item, index) => {
@@ -259,14 +262,14 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
     const handleTrainButton = () => {
         setActiveTab("tab2");
         if (window.confirm('Do you want to auto-correct and re-train the machine learning model?')) {
-            window.location.reload();
             setWaitFlag(true);
             PostConfigData({ userid, cohort, selectedDataIssues });
             setTimeout(function () {
                 message.success("Model is successfully re-trained with latest changes.", 3);
                 setWaitFlag(false);
+                navigate('/dashboard/' + cohort);
             }, 3000);
-    
+
         }
     };
 
@@ -469,7 +472,7 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton()}}
+                            onClick={() => { handleTrainButton() }}
                         >
                             {"Autocorrect and Re-train"}
                         </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
@@ -88,8 +89,7 @@ const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) 
     }).then(function (response) {
         //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
-            // Call Get Config Data
-            GetConfigData({ userid, setFeatureConfig });
+            // Call Get Config Data 
         }
         else {
             console.log("Error reported. Login failed.")
@@ -126,14 +126,15 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag) => {
+const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate) => {
     if (window.confirm('Do you want to reset to default values?')) {
         setReloadFlag(true);
         RestoreConfigData({ userid, cohort, featureConfig, setFeatureConfig });
         setTimeout(function () {
-            message.success("Default model is restored.", 5);
-            setReloadFlag(false);
-        }, 6000);
+            message.success("Default model is restored. Redirecting to dashboard ...", 3);
+            setReloadFlag(false);                       
+            navigate('/dashboard/' + cohort);
+        }, 2000);
     }
 };
 
@@ -161,6 +162,7 @@ const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag) => {
 export const FeatureConfig = ({ userid, cohort }) => {
     const [featureConfig, setFeatureConfig] = useState(DATA_SUMMARY_DEFAULT_MODEL);
     const [reloadFlag, setReloadFlag] = useState(false);
+    const navigate = useNavigate();
 
     const handleTickClick = (feature) => {
         const updatedFeature = { ...featureConfig[feature], isSelected: !featureConfig[feature].isSelected }
@@ -223,7 +225,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
 
     const loadingIndicator = (
         <>
-            <Spin tip="Retrieving latest data ..." size="large" />
+            <Spin tip="Updating changes. Please wait ..." size="large" />
         </>
     );
 
@@ -617,7 +619,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                         <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag) }}
+                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate) }}
                         >
                             {"Reset to defaults"}
                         </button>
