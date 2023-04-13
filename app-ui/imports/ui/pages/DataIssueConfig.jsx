@@ -12,8 +12,21 @@ import { DataIssueArea, DataDriftArea } from '../components/ConfigCharts/DataIss
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
-const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
+const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues }) => {
     //console.log(userid);
+    axios.get(BASE_API + '/getautocorrectconfig/?user=' + userid)
+        .then(function (response) {
+            //console.log(response.data["OutputJson"]);
+            setSelectedDataIssues(response.data["OutputJson"]);
+        }).catch(function (error) {
+            console.log(error);
+        });
+};
+
+
+const GetOutliers = ({ userid, setOutlierData, setDisplayIssue, setWaitFlag }) => {
+    //console.log(userid);
+    setWaitFlag(true);
     axios.get(BASE_API + '/checkoutliers/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -22,13 +35,15 @@ const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
                 ...prevState,
                 "outlier": response.data["isOutlier"]
             }));
+            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
 };
 
-const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue }) => {
+const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue, setWaitFlag }) => {
     //console.log(userid);
+    setWaitFlag(true);
     axios.get(BASE_API + '/checkclassimbalance/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -36,7 +51,8 @@ const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue }) => {
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "imbalance": response.data["isImbalance"]
-            }));
+            }));            
+            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
@@ -56,8 +72,9 @@ const GetDuplicates = ({ userid, setDuplicateData, setDisplayIssue }) => {
             console.log(error);
         });
 };
-const GetSkew = ({ userid, setSkewData, setDisplayIssue }) => {
+const GetSkew = ({ userid, setSkewData, setDisplayIssue, setWaitFlag }) => {
     //console.log(userid);
+    setWaitFlag(true);
     axios.get(BASE_API + '/checkskew/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -66,12 +83,14 @@ const GetSkew = ({ userid, setSkewData, setDisplayIssue }) => {
                 ...prevState,
                 "skew": response.data["isSkew"]
             }));
+            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
 };
-const GetDrift = ({ userid, setDriftData, setDisplayIssue }) => {
+const GetDrift = ({ userid, setDriftData, setDisplayIssue, setWaitFlag }) => {
     //console.log(userid);
+    setWaitFlag(true);
     axios.get(BASE_API + '/checkdatadrift/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -79,13 +98,15 @@ const GetDrift = ({ userid, setDriftData, setDisplayIssue }) => {
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "drift": response.data["isDrift"]
-            }));
+            }));            
+            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
 };
-const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
-    //console.log(userid);
+const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue, setWaitFlag }) => {
+    //console.log(userid);    
+    setWaitFlag(true);
     axios.get(BASE_API + '/checkcorrelation/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -93,7 +114,8 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "correlation": response.data["isCorrelated"]
-            }));
+            }));            
+            setWaitFlag(true);
         }).catch(function (error) {
             console.log(error);
         });
@@ -223,15 +245,13 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
     );
 
     useEffect(() => {
-        GetOutliers({ userid, setOutlierData, setDisplayIssue });
-        GetImbalance({ userid, setImbalanceData, setDisplayIssue });
+        GetAutoCorrectConfigs({ userid, setSelectedDataIssues })
+        GetOutliers({ userid, setOutlierData, setDisplayIssue, setWaitFlag });
+        GetImbalance({ userid, setImbalanceData, setDisplayIssue, setWaitFlag });
         GetDuplicates({ userid, setDuplicateData, setDisplayIssue });
-        GetDrift({ userid, setDriftData, setDisplayIssue });
-        GetCorrelation({ userid, setCorrelationData, setDisplayIssue });
-        GetSkew({ userid, setSkewData, setDisplayIssue });
-        setTimeout(function () {
-            setWaitFlag(false);
-        }, 4000);
+        GetDrift({ userid, setDriftData, setDisplayIssue, setWaitFlag });
+        GetCorrelation({ userid, setCorrelationData, setDisplayIssue, setWaitFlag });
+        GetSkew({ userid, setSkewData, setDisplayIssue, setWaitFlag });
     }, []);
     const [waitFlag, setWaitFlag] = useState(true);
 
