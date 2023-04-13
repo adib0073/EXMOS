@@ -5,7 +5,8 @@ export const tooltipEnglishContent = {
             "trainingSamples": "Number of records used to train the prediction model. It is recommeded to have sufficient number of training samples to get accurate predictions. If the training samples are less than the prediction accuracy can be low.",
             "featuresConsidered": "Number of risk factors selected to train the prediction model. It is recommeded to train the model on relevant features. Noisy and unimportant features can decrease prediction accuracy.",
             "upScore": "Good job! Your current settings have increased the prediction accuracy.",
-            "downScore": "Try a different configuration as your current settings have decreased the prediction accuracy."
+            "downScore": "Try a different configuration as your current settings have decreased the prediction accuracy.",
+            "autoCorrectOn" : "You have selected to auto-correct data issues. Please reset to default model if want to undo the auto-changes.",
         },
         "keyInsights": {
             "title": "This visual shows interesting information about the training dataset and the risk factors. You can use this visual to find any abnormal patterns in the training data.",
