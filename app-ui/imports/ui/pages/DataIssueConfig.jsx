@@ -24,9 +24,8 @@ const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues }) => {
 };
 
 
-const GetOutliers = ({ userid, setOutlierData, setDisplayIssue, setWaitFlag }) => {
+const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
     //console.log(userid);
-    setWaitFlag(true);
     axios.get(BASE_API + '/checkoutliers/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -35,15 +34,13 @@ const GetOutliers = ({ userid, setOutlierData, setDisplayIssue, setWaitFlag }) =
                 ...prevState,
                 "outlier": response.data["isOutlier"]
             }));
-            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
 };
 
-const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue, setWaitFlag }) => {
+const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue }) => {
     //console.log(userid);
-    setWaitFlag(true);
     axios.get(BASE_API + '/checkclassimbalance/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -51,8 +48,7 @@ const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue, setWaitFlag }
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "imbalance": response.data["isImbalance"]
-            }));            
-            setWaitFlag(false);
+            }));
         }).catch(function (error) {
             console.log(error);
         });
@@ -72,9 +68,8 @@ const GetDuplicates = ({ userid, setDuplicateData, setDisplayIssue }) => {
             console.log(error);
         });
 };
-const GetSkew = ({ userid, setSkewData, setDisplayIssue, setWaitFlag }) => {
+const GetSkew = ({ userid, setSkewData, setDisplayIssue }) => {
     //console.log(userid);
-    setWaitFlag(true);
     axios.get(BASE_API + '/checkskew/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -83,14 +78,12 @@ const GetSkew = ({ userid, setSkewData, setDisplayIssue, setWaitFlag }) => {
                 ...prevState,
                 "skew": response.data["isSkew"]
             }));
-            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
 };
-const GetDrift = ({ userid, setDriftData, setDisplayIssue, setWaitFlag }) => {
+const GetDrift = ({ userid, setDriftData, setDisplayIssue }) => {
     //console.log(userid);
-    setWaitFlag(true);
     axios.get(BASE_API + '/checkdatadrift/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -98,15 +91,13 @@ const GetDrift = ({ userid, setDriftData, setDisplayIssue, setWaitFlag }) => {
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "drift": response.data["isDrift"]
-            }));            
-            setWaitFlag(false);
+            }));
         }).catch(function (error) {
             console.log(error);
         });
 };
-const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue, setWaitFlag }) => {
-    //console.log(userid);    
-    setWaitFlag(true);
+const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
+    //console.log(userid);
     axios.get(BASE_API + '/checkcorrelation/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
@@ -114,8 +105,7 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue, setWaitFl
             setDisplayIssue(prevState => ({
                 ...prevState,
                 "correlation": response.data["isCorrelated"]
-            }));            
-            setWaitFlag(true);
+            }));
         }).catch(function (error) {
             console.log(error);
         });
@@ -138,6 +128,32 @@ const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
         //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             // No action needed
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
+const PostInteractions = ({ userid, cohort, interactioData }) => {
+    axios.post(BASE_API + '/trackinteractions', {
+        UserId: userid,
+        Cohort: cohort,
+        JsonData: interactioData
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        //console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Fire and Forget
         }
         else {
             console.log("Error reported. Login failed.")
@@ -246,22 +262,59 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
 
     useEffect(() => {
         GetAutoCorrectConfigs({ userid, setSelectedDataIssues })
-        GetOutliers({ userid, setOutlierData, setDisplayIssue, setWaitFlag });
-        GetImbalance({ userid, setImbalanceData, setDisplayIssue, setWaitFlag });
+        GetOutliers({ userid, setOutlierData, setDisplayIssue });
+        GetImbalance({ userid, setImbalanceData, setDisplayIssue });
         GetDuplicates({ userid, setDuplicateData, setDisplayIssue });
-        GetDrift({ userid, setDriftData, setDisplayIssue, setWaitFlag });
-        GetCorrelation({ userid, setCorrelationData, setDisplayIssue, setWaitFlag });
-        GetSkew({ userid, setSkewData, setDisplayIssue, setWaitFlag });
+        GetDrift({ userid, setDriftData, setDisplayIssue });
+        GetCorrelation({ userid, setCorrelationData, setDisplayIssue });
+        GetSkew({ userid, setSkewData, setDisplayIssue });
+        setTimeout(function () {
+            message.success("Please wait. Loading data issues ...", 3);
+            setWaitFlag(false);
+        }, 3000);
     }, []);
     const [waitFlag, setWaitFlag] = useState(true);
 
     /* Methods */
     const handleTickClick = (feature) => {
-        console.log(feature);
         setSelectedDataIssues({
             ...selectedDataIssues,
             [feature]: !selectedDataIssues[feature]
         });
+
+        let interactioData = {
+            "viz": "autoCorrect",
+            "eventType": "click",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": 0
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
+    };
+
+    // Hover time for interaction data
+    var startTime, endTime;
+    const handleMouseIn = () => {
+        startTime = new Date();
+    };
+    const handleMouseOut = (viz, feature) => {
+        endTime = new Date();
+        var timeDiff = endTime - startTime; //in ms
+        // strip the ms
+        timeDiff /= 1000;
+        // get seconds
+        var duration = Math.round(timeDiff % 60);
+
+        let interactioData = {
+            "viz": viz,
+            "eventType": "hover",
+            "description": feature,
+            "timestamp": Date().toString(),
+            "duration": duration
+        }
+
+        PostInteractions({ userid, cohort, interactioData });
     };
 
     const loadingIndicator = (
@@ -318,8 +371,8 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                 <div className='data-issue-list'>
                     <Collapse accordion>
                         {displayIssue.outlier ?
-                            (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")}>
-                                <div className='data-issue-r1'>
+                            (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")} >
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                     <span>{"Potential outliers have been found in the training dataset."}</span>
                                     <Select
                                         defaultValue={"Please select:"}
@@ -337,7 +390,7 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         })}
                                     </Select>
                                 </div>
-                                <div className='data-issue-r2'>
+                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                     <div className='di-graph-left'>
                                         Before Correction
                                         <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
@@ -350,16 +403,16 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                                     </div>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                     <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.correlation ?
                             (<Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
-                                <div className='data-issue-r1'>
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                     <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
                                 </div>
-                                <div className='data-issue-r2'>
+                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                     <div className='di-graph-left'>
                                         Positive Correlation
                                         <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 3, 4, 5, 8, 6, 10, 12]} outlierLimit={[0, 0]} />
@@ -376,16 +429,16 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 12, 6, 8, 4, 14, 5, 8]} outlierLimit={[0, 20]} />
                                     </div>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                     <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.skew ?
                             (<Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
-                                <div className='data-issue-r1'>
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                     <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
                                 </div>
-                                <div className='data-issue-r2'>
+                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                     <div className='di-graph-left'>
                                         Example: Left Skewed
                                         <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
@@ -402,16 +455,16 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
                                     </div>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                     <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.imbalance ?
                             (<Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
-                                <div className='data-issue-r1'>
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                     <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
                                 </div>
-                                <div className='data-issue-r2'>
+                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                     <div className='di-graph-left'>
                                         Before Correction
                                         <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
@@ -424,16 +477,16 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
                                     </div>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                     <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.drift ?
                             (<Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
-                                <div className='data-issue-r1'>
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                     <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
                                 </div>
-                                <div className='data-issue-r2'>
+                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                     <div className='di-graph-left'>
                                         With Data Drift
                                         <DataDriftArea
@@ -462,16 +515,16 @@ export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
                                         />
                                     </div>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                     <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
                                 </div>
                             </Panel>) : null}
                         {displayIssue.duplicate ?
                             (<Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
-                                <div className='data-issue-r1'>
+                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
                                     <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
                                 </div>
-                                <div className='data-issue-r3'>
+                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
                                     <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
                                 </div>
                             </Panel>) : null}
