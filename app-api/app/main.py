@@ -333,3 +333,15 @@ async def get_decision_rules(user: str):
         "OutputJson": output_json
     }
     return response
+
+@app.get("/getautocorrectconfig")
+async def GetAutoCorrectConfigs(user: str):
+    # Call method to get outlier information for data configured by the user
+    code, message, output_json = get_autocorrect_configs(user)
+
+    response = {
+        "StatusCode": code,
+        "StatusMessage": message,
+        "OutputJson": output_json
+    }
+    return response

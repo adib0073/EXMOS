@@ -1017,3 +1017,20 @@ def save_interaction_data(config_data):
     }
     insert_interaction_data(interaction_detail)
     return (True, f"Successful. Interaction data inserted for user: {config_data.UserId}", interaction_detail)
+
+def get_autocorrect_configs(user):
+    """
+    Fetched Auto Correct Configs
+    """
+    autocorrect_configs = fetch_autocorrect_configs(user)
+    if autocorrect_configs is None:
+        autocorrect_configs = {
+            "outlier": False,
+            "correlation": False,
+            "skew": False,
+            "imbalance": False,
+            "drift": False,
+            "duplicate": False,
+        }
+    return (True, f"Successful. Autocorrect Configs fetched for user: {user}", autocorrect_configs)
+
