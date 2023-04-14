@@ -9,9 +9,4 @@ export const MenuItems = [
         url: '/configuration',
         cName: 'nav-links'
     },
-    {
-        title: 'Feedback',
-        url: '#',
-        cName: 'nav-links'
-    },
 ];
