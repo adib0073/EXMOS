@@ -16,7 +16,7 @@ ul.tab {
     width: 26%;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-items: center;
     padding: 0px;
     padding-bottom: 5px;
