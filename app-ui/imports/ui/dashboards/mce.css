@@ -59,12 +59,13 @@
     flex: 12;
     flex-direction: column;
     justify-content: center;
+    align-items: stretch;
 }
 
 .chart-box-mce {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     padding: 10px;
     margin: 0 10px 0 10px;
@@ -78,14 +79,14 @@
     border-color: 'black';    
     padding-right: 10px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
 .cc-mce-right {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: stetch;
     justify-content: center;
 }
 
