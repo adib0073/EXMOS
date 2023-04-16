@@ -64,7 +64,7 @@ export const LandingPage = ({ user, setUser }) => {
                     <form onClick={(e) => e.preventDefault()}>
                         <input
                             className="lp-container-entry-input"
-                            placeholder="Please enter your user id"
+                            placeholder="Please enter your email id"
                             value={user.id}
                             name="id"
                             onChange={handleChange}

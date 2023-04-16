@@ -2,7 +2,7 @@ export const tooltipEnglishContent = {
     "dce": {
         "accuracyChart": {
             "title": "This visual shows the overall accuracy of the prediction model. It also shows the size of the dataset and number of features present in the dataset. Furthermore, it shows the score difference between the current setting the previous setting.",
-            "trainingSamples": "Number of records used to train the prediction model. It is recommeded to have sufficient number of training samples to get accurate predictions. If the training samples are less than the prediction accuracy can be low.",
+            "trainingSamples": "Number of records used to train the prediction model. It is recommended to have a sufficient number of training samples to get accurate predictions. If the training samples are less than the prediction accuracy can be low.",
             "featuresConsidered": "Number of risk factors selected to train the prediction model. It is recommeded to train the model on relevant features. Noisy and unimportant features can decrease prediction accuracy.",
             "upScore": "Good job! Your current settings have increased the prediction accuracy.",
             "downScore": "Try a different configuration as your current settings have decreased the prediction accuracy.",
