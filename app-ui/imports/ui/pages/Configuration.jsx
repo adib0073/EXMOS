@@ -14,6 +14,10 @@ export const Configuration = ({ user, activeTab, setActiveTab }) => {
     if (cohort == null || cohort == "") {
         cohort = window.localStorage.getItem('cohort');
     }
+    var language = user.language;
+    if (language == null || language == "") {
+        language = window.localStorage.getItem('language');
+    }
     
     const handleTab1View = () => {
         setActiveTab("tab1");

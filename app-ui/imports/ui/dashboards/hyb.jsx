@@ -149,6 +149,10 @@ export const HYB = ({ user }) => {
     if (cohort == null || cohort == "") {
         cohort = window.localStorage.getItem('cohort');
     }
+    var language = user.language;
+    if (language == null || language == "") {
+        language = window.localStorage.getItem('language');
+    }
 
     const accuracyChartRef = useRef();
     // Set UseStates

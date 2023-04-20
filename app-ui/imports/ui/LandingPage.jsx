@@ -12,17 +12,20 @@ export const LandingPage = ({ user, setUser }) => {
     useEffect(() => {
         window.localStorage.setItem('cohort', user.cohort);
     }, [user.cohort]);
+    useEffect(() => {
+        window.localStorage.setItem('language', user.language);
+    }, [user.language]);
 
     const selectedDashType = () => {
         //console.log(user)'
         axios.post(BASE_API + '/validateusers', {
             UserId: user.id,
-            Cohort: user.cohort
+            Cohort: user.cohort,
+            //Language: user.language,
         }, {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                /*"Access-Control-Allow-Origin": "*",*/
                 "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
                 "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
             }
@@ -54,24 +57,52 @@ export const LandingPage = ({ user, setUser }) => {
             <div className="lp-container-inner">
                 <img className="lp-container-image" src="https://raw.githubusercontent.com/adib0073/HCI_design/main/EXMOS2023/exmos_logo_1.png" />
                 <h1 className="lp-container-headerfont-1">
-                    Explanatory Model Steering for Healthcare
+                    {user.language == "ENG"
+                        ?
+                        "Explanatory Model Steering for Healthcare"
+                        :
+                        "Explanatory Model Steering for Healthcare"
+                    }
+
                 </h1>
                 <br />
                 <h1 className="lp-container-headerfont-2">
-                    An Interactive Explainable Machine Learning Platform for Healthcare Experts for Personalized Predictions
+                    {user.language == "ENG"
+                        ?
+                        "An Interactive Explainable Machine Learning Platform for Healthcare Experts for Personalized Predictions"
+                        :
+                        "Interaktivna razložljiva platforma za strojno učenje za zdravstvene strokovnjake za prilagojene napovedi"
+                    }
+
                 </h1>
+
                 <div className="lp-container-entry">
                     <form onClick={(e) => e.preventDefault()}>
+                        <select className="lp-container-entry-input" defaultValue={'DEFAULT'} name="language" onChange={handleChange} required>
+                            <option value="DEFAULT" disabled>Language/Jezik</option>
+                            <option value="ENG">English</option>
+                            <option value="SLO">Slovenščina</option>
+                        </select>
                         <input
                             className="lp-container-entry-input"
-                            placeholder="Please enter your email id"
+                            placeholder={user.language == "ENG"
+                                ?
+                                "Please enter your email id"
+                                :
+                                "Prosimo, vnesite svoj elektronski naslov"
+                            }
                             value={user.id}
                             name="id"
                             onChange={handleChange}
                             required />
                         <br />
                         <select className="lp-container-entry-input" defaultValue={'DEFAULT'} name="cohort" onChange={handleChange} required>
-                            <option value="DEFAULT" disabled>Select your assigned cohort</option>
+                            <option value="DEFAULT" disabled>{user.language == "ENG"
+                                ?
+                                "Select your assigned cohort"
+                                :
+                                "Izberite dodeljeno kohortn skupino"
+                            }</option>
                             <option value="DCE">Cohort-1</option>
                             <option value="MCE">Cohort-2</option>
                             <option value="HYB">Cohort-3</option>
@@ -83,7 +114,12 @@ export const LandingPage = ({ user, setUser }) => {
                             type="submit"
                             onClick={selectedDashType}
                         >
-                            {user.id === "" || user.cohort === "" ? "Not ready yet?" : "Let's Start"}
+                            {
+                                user.id === "" || user.cohort === "" ?
+                                    user.language == "ENG" ? "Not ready yet?" : "Še niste pripravljeni?"
+                                    :
+                                    user.language == "ENG" ? "Let's Start" : "Začnimo"
+                            }
                         </button>
                     </form>
                 </div>

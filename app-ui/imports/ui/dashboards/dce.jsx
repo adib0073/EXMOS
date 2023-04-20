@@ -120,13 +120,17 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
 };
 
 export const DCE = ({ user }) => {
-    var userid = user.id;;
+    var userid = user.id;
     if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
     }
     var cohort = user.cohort;
     if (cohort == null || cohort == "") {
         cohort = window.localStorage.getItem('cohort');
+    }
+    var language = user.language;
+    if (language == null || language == "") {
+        language = window.localStorage.getItem('language');
     }
     const accuracyChartRef = useRef();
     const [accChartVals, setAccChartVals] = useState({ accuracy: 0, nsamples: 0, nfeats: 0, pct: 0, aco: false });

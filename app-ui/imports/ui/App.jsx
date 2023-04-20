@@ -9,7 +9,7 @@ import { LandingPage } from './LandingPage.jsx';
 import { Configuration } from './pages/Configuration.jsx';
 
 export const App = () => {
-    const [user, setUser] = useState({ id: "", cohort: "" });
+    const [user, setUser] = useState({ id: "", cohort: "", language: "ENG" });
     const [activeTab, setActiveTab] = useState("tab1");
 
     return (
