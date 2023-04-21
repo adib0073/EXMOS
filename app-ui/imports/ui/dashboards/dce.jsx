@@ -200,11 +200,10 @@ export const DCE = ({ user }) => {
     );
 
     // Language variable
-    // TO-DO: Take language preferred as input
-    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const lang = (language == 'ENG') ? tooltipEnglishContent : tooltipSloveneContent;
 
     // Data Quality Gauage Chart Color
-    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1" 
+    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1"
 
     return (
         <>
@@ -215,7 +214,11 @@ export const DCE = ({ user }) => {
                         <div className="dce-container-left-r1c1">
                             <div className="chart-title-box">
                                 <div className="chart-title">
-                                    Prediction Accuracy
+                                    {
+                                        language == "ENG"
+                                            ? "Prediction Accuracy"
+                                            : "Natančnost napovedi"
+                                    }
                                 </div>
                                 <Tooltip
                                     placement="bottom"
@@ -241,7 +244,7 @@ export const DCE = ({ user }) => {
                             </div>
                             <div className="chart-container" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                                 <div className='chart-container-viz'>
-                                    <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
+                                    <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} language={language}/>
                                 </div>
                                 <div className='chart-container-info'>
                                     <Tooltip
@@ -249,7 +252,7 @@ export const DCE = ({ user }) => {
                                         title={lang.dce.accuracyChart.trainingSamples}
                                         overlayStyle={{ maxWidth: '400px' }}
                                     >
-                                        <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                        <HollowBullet /> &nbsp;{language == "ENG" ? "Training Samples" : "Vzorci za usposabljanje"} : <b>{accChartVals.nsamples}</b>
                                     </Tooltip>
                                 </div>
                                 <div className='chart-container-info'>
@@ -258,7 +261,7 @@ export const DCE = ({ user }) => {
                                         title={lang.dce.accuracyChart.featuresConsidered}
                                         overlayStyle={{ maxWidth: '400px' }}
                                     >
-                                        <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                        <HollowBullet /> &nbsp;{language == "ENG" ? "Features Considered" : "Upoštevane značilnosti"} : <b>{accChartVals.nfeats}</b>
                                     </Tooltip>
                                 </div>
                                 <div className='chart-container-info'>
@@ -271,7 +274,7 @@ export const DCE = ({ user }) => {
                                             {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
                                             <b> &nbsp;{accChartVals.pct}% </b>
                                         </span>
-                                        from previous score
+                                        {language == "ENG" ? "from previous score" : "od prejšnjega rezultata"}
                                     </Tooltip>
                                 </div>
                             </div>
@@ -279,7 +282,11 @@ export const DCE = ({ user }) => {
                         <div className="dce-container-left-r1c2">
                             <div className="chart-title-box">
                                 <div className="chart-title">
-                                    Key Insights
+                                    {
+                                        language == "ENG"
+                                            ? "Key Insights"
+                                            : "Ključna spoznanja"
+                                    }
                                 </div>
                                 <Tooltip
                                     placement="bottom"
@@ -332,7 +339,11 @@ export const DCE = ({ user }) => {
                     <div className="dce-container-left-r2">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Data Quality Score
+                                {
+                                    language == "ENG"
+                                        ? "Data Quality Score"
+                                        : "Ocena kakovosti podatkov"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -474,7 +485,11 @@ export const DCE = ({ user }) => {
                 <div className="dce-container-right-col">
                     <div className="chart-title-box">
                         <div className="chart-title">
-                            Data Density Distribution
+                            {
+                                language == "ENG"
+                                    ? "Data Density Distribution"
+                                    : "Porazdelitev gostote podatkov"
+                            }
                         </div>
                         <Tooltip
                             placement="left"
@@ -694,14 +709,29 @@ export const DCE = ({ user }) => {
                             title={lang.dce.dataDensity.extreme}
                             overlayStyle={{ maxWidth: '400px' }}
                         >
-                            <RectBlock color="#FFB1C1" /> Extreme Values &nbsp;
+                            <RectBlock color="#FFB1C1" />
+                            &nbsp;
+                            {
+                                language == "ENG"
+                                    ? "Extreme Values"
+                                    : "Ekstremne vrednosti"
+                            }
+                            &nbsp;
                         </Tooltip>
                         <Tooltip
                             placement="bottom"
                             title={lang.dce.dataDensity.nonExtreme}
                             overlayStyle={{ maxWidth: '400px' }}
                         >
-                            <RectBlock color="#67A3FF" /> Non-extreme Values
+                            &nbsp;
+                            &nbsp;
+                            <RectBlock color="#67A3FF" />
+                            &nbsp;
+                            {
+                                language == "ENG"
+                                    ? "Non-extreme Values"
+                                    : "Neekstremne vrednosti"
+                            }
                         </Tooltip>
                     </div>
                 </div >

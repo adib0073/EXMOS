@@ -68,11 +68,14 @@ const centerText = {
         chart.update();
     }
 }
-export const DoughnutChart = ({ accuracy, chartRef }) => {
+export const DoughnutChart = ({ accuracy, chartRef, language = "ENG" }) => {
     accuracy = Math.min(accuracy, 100); // Setting Boundary Conditions for accuracy
     accuracy = Math.max(0, accuracy); // Setting Boundary Conditions for accuracy
 
-    let tooltipMessage = "Overall Prediction Accuracy is " + accuracy + "%.";
+    let tooltipMessage = language == "ENG" ? 
+    "Overall Prediction Accuracy is " + accuracy + "%"
+    :
+    "Skupna natančnost napovedi je " + accuracy + "%";
 
     options.accuracy=accuracy;
 
