@@ -17,7 +17,7 @@ export const tooltipSloveneContent = {
             "nonExtreme" : "Območje v grafu, prikazano z modro barvo, označuje neekstremne vrednosti v podatkih"
         },
         "dataQuality": {
-            "title": "This visual shows the overall quality of the dataset. You can also see if the dataset is affected by any data issues.",
+            "title": "Ta vizualni prikaz prikazuje splošno kakovost nabora podatkov. Vidite lahko tudi, ali na nabor podatkov vplivajo kakršne koli težave s podatki.",
             "skew" : "Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions.",
             "outlier" : "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy.",
             "drift" : "Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions.",
@@ -28,34 +28,35 @@ export const tooltipSloveneContent = {
     },
     "mce": {
         "accuracyChart": {
-            "title": "This visual shows the overall accuracy of the prediction model. It also shows the size of the dataset and number of features present in the dataset. Furthermore, it shows the score difference between the current setting the previous setting.",
-            "trainingSamples": "Number of records used to train the prediction model. It is recommeded to have sufficient number of training samples to get accurate predictions. If the training samples are less than the prediction accuracy can be low.",
-            "featuresConsidered": "Number of risk factors selected to train the prediction model. It is recommeded to train the model on relevant features. Noisy and unimportant features can decrease prediction accuracy.",
-            "upScore": "Good job! Your current settings have increased the prediction accuracy.",
-            "downScore": "Try a different configuration as your current settings have decreased the prediction accuracy."
+            "title": "Ta vizualni prikaz prikazuje splošno natančnost modela napovedi. Prikazuje tudi velikost nabora podatkov in število značilnosti, ki so prisotne v naboru podatkov. Poleg tega prikazuje razliko v rezultatih med trenutno nastavitvijo in prejšnjo nastavitvijo.",
+            "trainingSamples": "Število zapisov, uporabljenih za usposabljanje modela napovedovanja. Priporočljivo je imeti zadostno število vzorcev za usposabljanje, da bi dobili natančne napovedi. Če je vzorcev za usposabljanje manj, je lahko natančnost napovedi nizka.",
+            "featuresConsidered": "Število dejavnikov tveganja, izbranih za usposabljanje modela napovedovanja. Priporočljivo je, da se model usposobi na podlagi ustreznih značilnosti. Moteči in nepomembni elementi lahko zmanjšajo natančnost napovedovanja.",
+            "upScore": "Zelo dobro! Vaše trenutne nastavitve so povečale natančnost napovedi.",
+            "downScore": "Poskusite z drugo konfiguracijo, saj so vaše trenutne nastavitve zmanjšale natančnost napovedi.",
+            "autoCorrectOn" : "Izbrali ste možnost samodejnega odpravljanja težav s podatki. Če želite razveljaviti samodejne spremembe, ponovno vzpostavite privzeti model.",
         },
         "decisionRule": {
-            "title": "This visual shows the top conditions considered by the prediction model for predicting diabetic and non-diabetic states. You can use the switch control below to see the decision rules for diabetic and non-diabetic states.",
+            "title": "a slika prikazuje najpomembnejše pogoje, ki jih upošteva model za napovedovanje diabetičnih in nediabetičnih stanj. Za prikaz pravil odločanja za diabetična in nediabetična stanja lahko uporabite spodnji upravljalnik preklopa.",
         },
         "featureImportance": {
-            "title": "This visual shows the important risk factors and their importance as considered by the prediction model. The actionable features are the risk factors which can be effectively controlled by the patients. Whereas the non-actionable features are the risk factors which are not feasible to change by the patients, but yet can be important for the decision process.",
-            "actionable": "The actionable features are the risk factors which can be effectively controlled by the patients.",
-            "nonActionable": "Non-actionable features are the risk factors which are not feasible to change by the patients, but yet, can be important for the decision process."
+            "title": "Ta slika prikazuje pomembne dejavnike tveganja in njihovo pomembnost, kot jih upošteva model napovedi. Značilnosti, ki jih je mogoče uporabiti, so dejavniki tveganja, ki jih lahko pacienti učinkovito nadzorujejo. Medtem ko so funkcije, ki jih ni mogoče uporabiti dejavniki tveganja, ki jih pacienti ne morejo spremeniti, vendar so lahko kljub temu pomembni za postopek odločanja.",
+            "actionable": "Akcijske značilnosti so dejavniki tveganja, ki jih pacienti lahko učinkovito nadzorujejo.",
+            "nonActionable": "Neakcijske značilnosti so dejavniki tveganja, ki jih pacienti ne morejo učinkovito spremeniti, vendar so lahko kljub temu pomembni za proces odločanja."
         },
     },
     "featureConfig" : {
-        "title" : "You can configure the training data from this page. Please select the risk factors which you think is important for the predictive model. If you observe any abnormal or extreme data value for any of the risk factors, you can use the slider control to filter the data and re-train the model.",
-        "diabetesStatus": "This visual shows the proportion of diabetic and non-diabetic patients in the training data. For a higher prediction accuracy it is recommended that the proportions of diabetic and non-diabetic patients should be almost equal.",
-        "glucose" : "Plasma glucose concentration in saliva after 2 hours of eating in an oral glucose tolerance test.  It is measured in mg/dl",
-        "pregnancies" : "Number of times pregnant in the past",
-        "pressure": "Diastolic blood pressure of patients measured in mm Hg",
-        "skinfold" : "Triceps skin fold thickness of patients",
-        "insulin" : "Two-hour serum insulin that is measured in mu U/ml",
-        "bmi" : "Body mass index of patients",
-        "dpf" : "Diabetes pedigree function is a function which scores likelihood of diabetes based on family history",
-        "age" : "Age of patients in years"
+        "title" : "Na tej strani lahko konfigurirate podatke za usposabljanje. Izberite dejavnike tveganja, za katere menite, da so pomembni za napovedni model. Če opazite neobičajno ali ekstremno vrednost podatkov za katerega koli od dejavnikov tveganja, lahko s krmilnikom drsnika filtrirate podatke in ponovno usposobite model.",
+        "diabetesStatus": "Ta slika prikazuje delež diabetičnih in nediabetičnih bolnikov v podatkih o usposabljanju. Za večjo natančnost napovedi je priporočljivo, da sta deleža bolnikov s sladkorno boleznijo in bolnikov brez sladkorne bolezni skoraj enaka.",
+        "glucose" : "Plazemska koncentracija glukoze v slini po dveh urah po zaužitju hrane pri oralnem tolerančnem testu z glukozo. Meri se v mg/dl",
+        "pregnancies" : "Število nosečnosti v preteklosti",
+        "pressure": "Diastolični krvni tlak pacientov, izmerjen v mmHg",
+        "skinfold" : "Debelina kožne gube tricepsa pri pacientih",
+        "insulin" : "Dveurni serumski inzulin, izmerjen v U/ml",
+        "bmi" : "Indeks telesne mase pacientov (BMI)",
+        "dpf" : "Funkcija rodovnika sladkorne bolezni je funkcija, ki oceni verjetnost sladkorne bolezni na podlagi družinske anamneze",
+        "age" : "Starost pacientov v letih"
     },
     "dataConfig" : {
-        "title": "You can expand to learn more about these data issues. You can also select the data issues which you want to auto-correct and re-train. Please note that auto-correcting data issues may improve the data quality but it may or may not improve the prediction accuracy. Also, auto-correcting one data issue, may introduce other issues."
+        "title": "Te težave s podatki lahko razširite, če želite izvedeti več o teh težavah s podatki. Izberete lahko tudi težave s podatki, ki jih želite samodejno popraviti in ponovno usposobiti. Upoštevajte, da lahko samodejno popravljanje podatkovnih težav izboljša kakovost podatkov, vendar lahko izboljša natančnost napovedi ali pa tudi ne. Prav tako lahko samodejno popravljanje ene podatkovne težave uvede druge težave."
     }
 };
