@@ -136,7 +136,7 @@ export const DATA_ISSUE_FRIENDLY_NAMEs = {
   "drift" : "Data Drift",
   "imbalance" : "Class Imbalance",
   "skew" : "Data Skewness",
-  "duplicate" : "Data Duplicate",
+  "duplicate" : "Duplicate Data",
   "outlier" : "Data Outlier",
   "correlation" : "Feature Correlation",
 }
