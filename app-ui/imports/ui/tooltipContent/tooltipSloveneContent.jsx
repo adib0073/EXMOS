@@ -18,12 +18,12 @@ export const tooltipSloveneContent = {
         },
         "dataQuality": {
             "title": "Ta vizualni prikaz prikazuje splošno kakovost nabora podatkov. Vidite lahko tudi, ali na nabor podatkov vplivajo kakršne koli težave s podatki.",
-            "skew" : "Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions.",
-            "outlier" : "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy.",
-            "drift" : "Data drift is detected when the underlying patterns, distributions of the data changes. It can result in the predictive model making incorrect or outdated predictions.",
-            "duplicate" : "Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy.",
-            "imbalance" : "Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy.",
-            "correlation" : "Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy.",
+            "skew" : "Za podatke velja, da so poševni, kadar je porazdelitev podatkov asimetrična. Napovedni modeli, usposobljeni na poševnih podatkih, so bolj nagnjeni k dajanju napačnih napovedi.",
+            "outlier" : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša natančnost napovedi.",
+            "drift" : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša natančnost napovedi.",
+            "duplicate" : "Usposabljanje napovednega modela s podvojenimi ali odvečnimi zapisi doda več pristranskosti modelu in tako poveča napako napovedi. Z odstranitvijo podvojenih zapisov iz podatkov za učenje lahko povečate natančnost napovedovanja.",
+            "imbalance" : "Neuravnoteženost razredov je težava, pri kateri je napovedni model bolj nagnjen k ustvarjanju pristranskih in nepravičnih rezultatov za večinski razred. S popravljanjem neuravnoteženosti razredov se lahko izboljša splošna natančnost napovedovanja.",
+            "correlation" : "Korelirani elementi zmanjšujejo napovedno moč, saj modelu ne dodajajo novih informacij. Za doseganje boljše natančnosti napovedovanja je med postopkom usposabljanja priporočljivo opustiti zelo korelirane značilnosti.",
         }
     },
     "mce": {
@@ -36,7 +36,7 @@ export const tooltipSloveneContent = {
             "autoCorrectOn" : "Izbrali ste možnost samodejnega odpravljanja težav s podatki. Če želite razveljaviti samodejne spremembe, ponovno vzpostavite privzeti model.",
         },
         "decisionRule": {
-            "title": "a slika prikazuje najpomembnejše pogoje, ki jih upošteva model za napovedovanje diabetičnih in nediabetičnih stanj. Za prikaz pravil odločanja za diabetična in nediabetična stanja lahko uporabite spodnji upravljalnik preklopa.",
+            "title": "Ta slika prikazuje najpomembnejše pogoje, ki jih upošteva model za napovedovanje diabetičnih in nediabetičnih stanj. Za prikaz pravil odločanja za diabetična in nediabetična stanja lahko uporabite spodnji upravljalnik preklopa.",
         },
         "featureImportance": {
             "title": "Ta slika prikazuje pomembne dejavnike tveganja in njihovo pomembnost, kot jih upošteva model napovedi. Značilnosti, ki jih je mogoče uporabiti, so dejavniki tveganja, ki jih lahko pacienti učinkovito nadzorujejo. Medtem ko so funkcije, ki jih ni mogoče uporabiti dejavniki tveganja, ki jih pacienti ne morejo spremeniti, vendar so lahko kljub temu pomembni za postopek odločanja.",
