@@ -10,7 +10,15 @@ import { UpRedArrow } from '../components/Icons/UpRedArrow.jsx';
 import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from '../Constants.jsx';
+import {
+    BASE_API,
+    DATA_SUMMARY_DEFAULT_MODEL,
+    DATA_ISSUE_FRIENDLY_NAMES_Eng,
+    DATA_ISSUE_FRIENDLY_NAMES_Slo,
+    FRIENDLY_NAMES_ENG,
+    FRIENDLY_NAMES_SLO,
+    FEAT_DESCRIPTIONS_SLO
+} from '../Constants.jsx';
 import axios from 'axios';
 import { HorizontalBarCharts } from '../components/FeatureImportance/HorizontalBarCharts.jsx';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
@@ -177,8 +185,9 @@ export const MCE = ({ user }) => {
     );
 
     // Language variable
-    // TO-DO: Take language preferred as input
-    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const lang = (language == 'ENG') ? tooltipEnglishContent : tooltipSloveneContent;
+    const DATA_ISSUE_FRIENDLY_NAMEs = (language == 'ENG') ? DATA_ISSUE_FRIENDLY_NAMES_Eng : DATA_ISSUE_FRIENDLY_NAMES_Slo;
+    const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     return (
         <>
@@ -188,7 +197,11 @@ export const MCE = ({ user }) => {
                     <div className="mce-container-r1c1">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Prediction Accuracy
+                                {
+                                    language == "ENG"
+                                        ? "Prediction Accuracy"
+                                        : "Natančnost napovedi"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -214,7 +227,7 @@ export const MCE = ({ user }) => {
                         </div>
                         <div className="chart-container-mce" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                             <div className='chart-container-viz-mce'>
-                                <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} />
+                                <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} language={language} />
                             </div>
                             <div className='chart-container-info-mce'>
                                 <Tooltip
@@ -222,7 +235,7 @@ export const MCE = ({ user }) => {
                                     title={lang.mce.accuracyChart.trainingSamples}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Training Samples" : "Vzorci za usposabljanje"} : <b>{accChartVals.nsamples}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info-mce'>
@@ -231,7 +244,7 @@ export const MCE = ({ user }) => {
                                     title={lang.mce.accuracyChart.featuresConsidered}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Features Considered" : "Upoštevane značilnosti"} : <b>{accChartVals.nfeats}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info-mce'>
@@ -244,7 +257,7 @@ export const MCE = ({ user }) => {
                                         {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
                                         <b> &nbsp;{accChartVals.pct}% </b>
                                     </span>
-                                    from previous score
+                                    {language == "ENG" ? "from previous score" : "od prejšnjega rezultata"}
                                 </Tooltip>
                             </div>
                         </div>
@@ -252,7 +265,11 @@ export const MCE = ({ user }) => {
                     <div className="mce-container-r1c2">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Top Decision Rules
+                                {
+                                    language == "ENG"
+                                        ? "Top Decision Rules"
+                                        : "Najpomembnejša pravila odločanja"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -293,7 +310,11 @@ export const MCE = ({ user }) => {
                 <div className="mce-container-r2">
                     <div className="chart-title-box">
                         <div className="chart-title">
-                            Important Risk Factors
+                            {
+                                language == "ENG"
+                                    ? "Important Risk Factors"
+                                    : "Pomembni dejavniki tveganja"
+                            }
                         </div>
                         <Tooltip
                             placement="bottom"
