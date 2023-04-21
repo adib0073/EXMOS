@@ -131,12 +131,22 @@ export const DATA_SUMMARY_DEFAULT_MODEL = {
         }
 };
 
-// DATA ISSUE FRIENDLY NAMEs
-export const DATA_ISSUE_FRIENDLY_NAMEs = {
+// DATA ISSUE FRIENDLY NAMES ENG
+export const DATA_ISSUE_FRIENDLY_NAMES_Eng = {
   "drift" : "Data Drift",
   "imbalance" : "Class Imbalance",
   "skew" : "Data Skewness",
   "duplicate" : "Duplicate Data",
   "outlier" : "Data Outlier",
   "correlation" : "Feature Correlation",
+}
+
+// DATA ISSUE FRIENDLY NAMES SLO
+export const DATA_ISSUE_FRIENDLY_NAMES_Slo = {
+  "drift" : "Odstopanje podatkov",
+  "imbalance" : "Neuravnoteženost razredov",
+  "skew" : "Izkrivljenost podatkov",
+  "duplicate" : "Podvajanje podatkov",
+  "outlier" : "Izstopajoče vrednosti",
+  "correlation" : "Korelacija značilnosti",
 }
