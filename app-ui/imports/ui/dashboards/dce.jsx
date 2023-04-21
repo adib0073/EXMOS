@@ -15,7 +15,8 @@ import {
     DATA_ISSUE_FRIENDLY_NAMES_Eng,
     DATA_ISSUE_FRIENDLY_NAMES_Slo,
     FRIENDLY_NAMES_ENG,
-    FRIENDLY_NAMES_SLO
+    FRIENDLY_NAMES_SLO,
+    FEAT_DESCRIPTIONS_SLO
 } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
@@ -519,7 +520,11 @@ export const DCE = ({ user }) => {
                                         <div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["Glucose"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["Glucose"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["Glucose"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -543,7 +548,11 @@ export const DCE = ({ user }) => {
                                         <div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["BloodPressure"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["BloodPressure"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["BloodPressure"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -567,7 +576,11 @@ export const DCE = ({ user }) => {
                                         <div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["Insulin"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["Insulin"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["Insulin"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -591,7 +604,11 @@ export const DCE = ({ user }) => {
                                         <div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["Pregnancies"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["Pregnancies"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["Pregnancies"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -617,7 +634,11 @@ export const DCE = ({ user }) => {
                                         <div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["SkinThickness"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["SkinThickness"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["SkinThickness"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -640,7 +661,11 @@ export const DCE = ({ user }) => {
                                         </div><div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["Age"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["Age"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["Age"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -663,7 +688,11 @@ export const DCE = ({ user }) => {
                                         </div><div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["DiabetesPedigreeFunction"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["DiabetesPedigreeFunction"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["DiabetesPedigreeFunction"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
@@ -686,7 +715,11 @@ export const DCE = ({ user }) => {
                                         </div><div className="summary-chart-box">
                                             <Tooltip
                                                 placement="top"
-                                                title={dsChartVals["BMI"].description}
+                                                title={
+                                                    (language == "ENG") 
+                                                    ? dsChartVals["BMI"].description 
+                                                    : FEAT_DESCRIPTIONS_SLO["BMI"]
+                                                }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">

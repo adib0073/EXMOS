@@ -173,3 +173,14 @@ export const FRIENDLY_NAMES_SLO = {
   "DiabetesPedigreeFunction": "Rodovnik sladkorne bolezni",
   "Age": "Starost"
 }
+
+export const FEAT_DESCRIPTIONS_SLO = {
+  "Pregnancies": "Število nosečnosti v preteklosti",
+  "Glucose": "Plazemska koncentracija glukoze v slini po dveh urah po zaužitju hrane pri oralnem tolerančnem testu z glukozo. Meri se v mg/dl.",
+  "BloodPressure": "Diastolični krvni tlak pacientov, izmerjen v mmHg",
+  "SkinThickness": "Debelina kožne gube tricepsa pri pacientih",
+  "Insulin": "Dveurni serumski inzulin, izmerjen v U/ml",
+  "BMI": "Indeks telesne mase pacientov (BMI)",
+  "DiabetesPedigreeFunction": "Funkcija rodovnika sladkorne bolezni je funkcija, ki oceni verjetnost sladkorne bolezni na podlagi družinske anamneze.",
+  "Age": "Starost pacientov v letih"
+}
