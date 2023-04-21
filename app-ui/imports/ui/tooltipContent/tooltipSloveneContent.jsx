@@ -12,9 +12,9 @@ export const tooltipSloveneContent = {
             "title": "Ta vizualni prikaz prikazuje zanimive informacije o naboru podatkov za usposabljanje in dejavnikih tveganja. Ta vizualni prikaz lahko uporabite za iskanje morebitnih neobičajnih vzorcev v podatkih za usposabljanje.",
         },
         "dataDensity": {
-            "title": "This visual shows the patient count distribution for each risk factor of the dataset. You can use this to find the average risk factor value (shown by the black marker), observe the graphical distribution of the data and see any potential abnormality  present in the data.",
-            "extreme" : "The region in the graph displayed in pink denotes potential abnormal value in the data",
-            "nonExtreme" : "The region in the graph displayed in blue denotes non-abnormal value in the data"
+            "title": "Ta vizualni prikaz prikazuje porazdelitev števila pacientov za vsak dejavnik tveganja v naboru podatkov. S tem lahko poiščete povprečno vrednost dejavnika tveganja (prikazano s črno oznako), opazujete grafično porazdelitev podatkov in vidite morebitne nepravilnosti, ki so prisotne v podatkih.",
+            "extreme" : "Območje v grafu, ki je prikazano z rožnato barvo, označuje morebitne nenormalne vrednosti v podatkih",
+            "nonExtreme" : "Območje v grafu, prikazano z modro barvo, označuje neekstremne vrednosti v podatkih"
         },
         "dataQuality": {
             "title": "This visual shows the overall quality of the dataset. You can also see if the dataset is affected by any data issues.",

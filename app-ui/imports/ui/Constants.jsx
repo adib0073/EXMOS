@@ -150,3 +150,26 @@ export const DATA_ISSUE_FRIENDLY_NAMES_Slo = {
   "outlier" : "Izstopajoče vrednosti",
   "correlation" : "Korelacija značilnosti",
 }
+
+// FRIENDLY NAMES
+export const FRIENDLY_NAMES_ENG = {
+    "Pregnancies": "Number of Pregnancies",
+    "Glucose": "Plasma Glucose Concentration",
+    "BloodPressure": "Diastolic Blood Pressure",
+    "SkinThickness": "Triceps skinfold thickness",
+    "Insulin": "Two-hour Serum Insulin",
+    "BMI": "Body Mass Index",
+    "DiabetesPedigreeFunction": "Diabetes Pedigree Function",
+    "Age": "Age"
+}
+
+export const FRIENDLY_NAMES_SLO = {
+  "Pregnancies": "Število nosečnosti",
+  "Glucose": "Koncentracija glukoze v plazmi",
+  "BloodPressure": "Diastolični krvni tlak",
+  "SkinThickness": "Debelina kožne gube tricepsa",
+  "Insulin": "Dveurni serumski inzulin",
+  "BMI": "Indeks telesne mase (BMI)",
+  "DiabetesPedigreeFunction": "Rodovnik sladkorne bolezni",
+  "Age": "Starost"
+}

@@ -9,7 +9,14 @@ import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { RectBlock } from '../components/Icons/RectBlock.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMES_Eng, DATA_ISSUE_FRIENDLY_NAMES_Slo } from '../Constants.jsx';
+import {
+    BASE_API,
+    DATA_SUMMARY_DEFAULT_MODEL,
+    DATA_ISSUE_FRIENDLY_NAMES_Eng,
+    DATA_ISSUE_FRIENDLY_NAMES_Slo,
+    FRIENDLY_NAMES_ENG,
+    FRIENDLY_NAMES_SLO
+} from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
@@ -202,7 +209,7 @@ export const DCE = ({ user }) => {
     // Language variable
     const lang = (language == 'ENG') ? tooltipEnglishContent : tooltipSloveneContent;
     const DATA_ISSUE_FRIENDLY_NAMEs = (language == 'ENG') ? DATA_ISSUE_FRIENDLY_NAMES_Eng : DATA_ISSUE_FRIENDLY_NAMES_Slo;
-
+    const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     // Data Quality Gauage Chart Color
     const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1"
@@ -246,7 +253,7 @@ export const DCE = ({ user }) => {
                             </div>
                             <div className="chart-container" onClick={() => { handleVizClick("PredictionAccuracy", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("PredictionAccuracy", "Viz") }}>
                                 <div className='chart-container-viz'>
-                                    <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} language={language}/>
+                                    <DoughnutChart accuracy={accChartVals.accuracy} chartRef={accuracyChartRef} language={language} />
                                 </div>
                                 <div className='chart-container-info'>
                                     <Tooltip
@@ -516,7 +523,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["Glucose"].name}: {"(" + dsChartVals["Glucose"].unit + ")"}
+                                                    {FRIENDLY_NAMES["Glucose"]}: {"(" + dsChartVals["Glucose"].unit + ")"}
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -540,7 +547,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["BloodPressure"].name}: {"(" + dsChartVals["BloodPressure"].unit + ")"}
+                                                    {FRIENDLY_NAMES["BloodPressure"]}: {"(" + dsChartVals["BloodPressure"].unit + ")"}
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -564,7 +571,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["Insulin"].name}: {"(" + dsChartVals["Insulin"].unit + ")"}
+                                                    {FRIENDLY_NAMES["Insulin"]}: {"(" + dsChartVals["Insulin"].unit + ")"}
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -588,7 +595,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["Pregnancies"].name}:
+                                                    {FRIENDLY_NAMES["Pregnancies"]}:
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -614,7 +621,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["SkinThickness"].name}: {"(" + dsChartVals["SkinThickness"].unit + ")"}
+                                                    {FRIENDLY_NAMES["SkinThickness"]}: {"(" + dsChartVals["SkinThickness"].unit + ")"}
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -637,7 +644,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["Age"].name}:
+                                                    {FRIENDLY_NAMES["Age"]}:
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -660,7 +667,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["DiabetesPedigreeFunction"].name}:
+                                                    {FRIENDLY_NAMES["DiabetesPedigreeFunction"]}:
                                                 </span>
                                             </Tooltip>
                                             <br />
@@ -683,7 +690,7 @@ export const DCE = ({ user }) => {
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
                                                 <span className="ValueLabel">
-                                                    {dsChartVals["BMI"].name}: {"(" + dsChartVals["BMI"].unit + ")"}
+                                                    {FRIENDLY_NAMES["BMI"]}: {"(" + dsChartVals["BMI"].unit + ")"}
                                                 </span>
                                             </Tooltip>
                                             <br />

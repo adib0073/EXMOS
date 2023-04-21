@@ -9,7 +9,7 @@ import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { RectBlock } from '../components/Icons/RectBlock.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMEs } from '../Constants.jsx';
+import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMES_Eng, DATA_ISSUE_FRIENDLY_NAMES_Slo } from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
@@ -251,6 +251,7 @@ export const HYB = ({ user }) => {
     // Language variable
     // TO-DO: Take language preferred as input
     const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const DATA_ISSUE_FRIENDLY_NAMEs = (language == 'ENG') ? DATA_ISSUE_FRIENDLY_NAMES_Eng : DATA_ISSUE_FRIENDLY_NAMES_Slo;
 
     // Data Quality Gauage Chart Color
     const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1" 
