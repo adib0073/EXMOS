@@ -97,7 +97,7 @@ async def filter_feature_ranges(features: FeatureRanges):
 async def validate_user(user: ValidateUserModel):
 
     # Call method to validate user
-    code, message, output_json = login_service(user.UserId, user.Cohort)
+    code, message, output_json = login_service(user.UserId, user.Cohort, user.Language)
 
     response = {
         "StatusCode": code,

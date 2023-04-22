@@ -130,6 +130,19 @@ FRIENDLY_NAMES = {
     "DiabetesPedigreeFunction": "Diabetes Pedigree Function",
     "Age": "Age"
 }
+
+# FRIENDLY NAMES in SLOEVNIAN
+FRIENDLY_NAMES_SLO = {
+    "Pregnancies": "Število nosečnosti",
+    "Glucose": "Koncentracija glukoze v plazmi",
+    "BloodPressure": "Diastolični krvni tlak",
+    "SkinThickness": "Debelina kožne gube tricepsa",
+    "Insulin": "Dveurni serumski inzulin",
+    "BMI": "Indeks telesne mase (BMI)",
+    "DiabetesPedigreeFunction": "Rodovnik sladkorne bolezni",
+    "Age": "Starost"
+}
+
 # ACTIONABLE FEATURES
 ACTIONABLE_FEATURES = ["Glucose", "BloodPressure",
                        "SkinThickness", "Insulin", "BMI"]

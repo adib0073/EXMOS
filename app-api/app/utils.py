@@ -221,7 +221,7 @@ def get_default_feature_values():
     return feature_bounds
 
 
-def login_service(user_name, cohort):
+def login_service(user_name, cohort, language):
     """
     Method to relieve user details if exists
     or create a new user if doesn't exist
@@ -236,6 +236,7 @@ def login_service(user_name, cohort):
         new_user = USER_DETAIL_JSON
         new_user["UserName"] = user_name
         new_user["Cohort"] = cohort
+        new_user["Language"] = language
         new_user.update({"_id": user_name+cohort})
         collection_name.insert_one(new_user)
         user_details = collection_name.find_one({"UserName": user_name})
@@ -399,6 +400,8 @@ def key_insights_gen(user):
 
     filters, selected_features, data, labels = load_filtered_user_data(
         user_details)
+    # fetch language
+    lang = user_details["Language"]
     # Diabetic ratio
     xy_data = data.copy()
     xy_data[TARGET_VARIABLE] = labels
@@ -408,8 +411,12 @@ def key_insights_gen(user):
     diabetic_count = len(xy_data[xy_data[TARGET_VARIABLE] == 1])
     dc_pct = np.round(100 * (diabetic_count/(len(xy_data))), 0)
     pct_list.append(dc_pct)
-    input_list.append("Patients have ")
-    insight_list.append("diabetes")
+    if lang == "SLO":
+        input_list.append("pacientov ima ")
+        insight_list.append("sladkorno bolezen")
+    else:
+        input_list.append("Patients have ")
+        insight_list.append("diabetes")
     # Zero Counts insights
     for feat in ACTIONABLE_FEATURES:
         if feat not in selected_features:
@@ -417,21 +424,33 @@ def key_insights_gen(user):
         zero_counts_pct = np.round(
             100 * (len(data[data[feat] == 0.0])/len(data)), 0)
         pct_list.append(zero_counts_pct)
-        input_list.append(f"{FRIENDLY_NAMES[feat]} feature has ")
-        insight_list.append("value equal to zero")
+        if lang == "SLO":
+            input_list.append(f"{FRIENDLY_NAMES_SLO[feat]} ima ")
+            insight_list.append("vrednost, ki je enaka nič")
+        else:
+            input_list.append(f"{FRIENDLY_NAMES[feat]} feature has ")
+            insight_list.append("value equal to zero")
         # 90th and 10th Percentile Insights
         # Greater than
         qv = np.round(data[feat].quantile(0.9), 1)
         qvc_pct = np.round(100 * (len(data[data[feat] > qv])/len(data)), 0)
         pct_list.append(qvc_pct)
-        input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
-        insight_list.append(f"greater than {qv}")
+        if lang == "SLO":
+            input_list.append(f"Pacientov ima {FRIENDLY_NAMES_SLO[feat]} ")
+            insight_list.append(f"> {qv}")
+        else:
+            input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
+            insight_list.append(f"greater than {qv}")
         # Lesser than
         qv = np.round(data[feat].quantile(0.1), 1)
         qvc_pct = np.round(100 * (len(data[data[feat] < qv])/len(data)), 0)
         pct_list.append(qvc_pct)
-        input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
-        insight_list.append(f"lesser than {qv}")
+        if lang == "SLO":
+            input_list.append(f"Pacientov ima {FRIENDLY_NAMES_SLO[feat]} ")
+            insight_list.append(f"< {qv}")
+        else:
+            input_list.append(f"Patients have {FRIENDLY_NAMES[feat]} ")
+            insight_list.append(f"lesser than {qv}")
 
     # Sorting in a dataframe
     ki_df = pd.DataFrame()

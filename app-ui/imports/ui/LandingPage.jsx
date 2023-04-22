@@ -21,7 +21,7 @@ export const LandingPage = ({ user, setUser }) => {
         axios.post(BASE_API + '/validateusers', {
             UserId: user.id,
             Cohort: user.cohort,
-            //Language: user.language,
+            Language: user.language,
         }, {
             headers: {
                 "Accept": "application/json",

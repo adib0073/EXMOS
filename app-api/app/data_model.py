@@ -19,6 +19,7 @@ class ConfigDataModel(BaseModel):
 class ValidateUserModel(BaseModel):
     UserId: str
     Cohort: str
+    Language: str = "ENG"
 
 class FeaturesToInclude(BaseModel):
     features_to_include: list[str] = ALL_FEATURES
