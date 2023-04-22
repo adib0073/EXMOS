@@ -373,7 +373,12 @@ export const DCE = ({ user }) => {
                                         <div className='dq-div-left'>
                                             <Tooltip
                                                 placement="top"
-                                                title={"The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."}
+                                                title=
+                                                {
+                                                    language == "ENG"
+                                                        ? "The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."
+                                                        : "Kakovost podatkov je " + dqChartVals["quality_class"].toLowerCase() + ". Če je število točk > 80, je kakovost podatkov dobra. Če je število točk > 50, je kakovost srednja. Če je rezultat < 50, je kakovost nizka."
+                                                }
                                                 overlayStyle={{ maxWidth: '400px' }}
                                             >
                                                 <div>
@@ -395,7 +400,12 @@ export const DCE = ({ user }) => {
                                             <div className='dq-div-left-info'>
                                                 <Tooltip
                                                     placement="bottom"
-                                                    title={"The data quality is " + dqChartVals["quality_class"] + ". The data quality changes based on how it is configured."}
+                                                    title=
+                                                    {
+                                                        language == "ENG"
+                                                            ? "The data quality is " + dqChartVals["quality_class"] + ". The data quality changes based on how it is configured."
+                                                            : "Kakovost podatkov je " + dqChartVals["quality_class"] + ". Kakovost podatkov se spreminja glede na to, kako so konfigurirani."
+                                                    }
                                                     overlayStyle={{ maxWidth: '400px' }}
                                                 >
                                                     {dqChartVals["quality_class"]} - {Math.round((dqChartVals["score"] * 100 + Number.EPSILON) * 10) / 10} %
@@ -521,9 +531,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["Glucose"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["Glucose"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["Glucose"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["Glucose"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -549,9 +559,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["BloodPressure"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["BloodPressure"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["BloodPressure"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["BloodPressure"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -577,9 +587,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["Insulin"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["Insulin"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["Insulin"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["Insulin"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -605,9 +615,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["Pregnancies"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["Pregnancies"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["Pregnancies"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["Pregnancies"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -635,9 +645,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["SkinThickness"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["SkinThickness"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["SkinThickness"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["SkinThickness"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -662,9 +672,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["Age"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["Age"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["Age"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["Age"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -689,9 +699,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["DiabetesPedigreeFunction"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["DiabetesPedigreeFunction"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["DiabetesPedigreeFunction"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["DiabetesPedigreeFunction"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >
@@ -716,9 +726,9 @@ export const DCE = ({ user }) => {
                                             <Tooltip
                                                 placement="top"
                                                 title={
-                                                    (language == "ENG") 
-                                                    ? dsChartVals["BMI"].description 
-                                                    : FEAT_DESCRIPTIONS_SLO["BMI"]
+                                                    (language == "ENG")
+                                                        ? dsChartVals["BMI"].description
+                                                        : FEAT_DESCRIPTIONS_SLO["BMI"]
                                                 }
                                                 overlayStyle={{ maxWidth: '500px' }}
                                             >

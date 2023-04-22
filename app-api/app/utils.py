@@ -902,16 +902,28 @@ def data_quality_gen(user):
 
     data_issues = user_details["DataIssues"]
     data_issue_df = pd.DataFrame(data_issues).transpose()
+    
+    # fetch language
+    lang = user_details["Language"]
 
     data_issue_df['delta_pct'] = np.round(
         data_issue_df['curr'] - data_issue_df['prev'], 1)
     quality_score = (100 - (data_issue_df['curr'].sum()/5))/100
-    quality_class = "Poor"
+    if lang == "SLO":
+        quality_class = "Nizka"
+    else:
+        quality_class = "Poor"
 
     if quality_score > 0.80:
-        quality_class = "Good"
+        if lang == "SLO":
+            quality_class = "Dobra"
+        else:
+            quality_class = "Good"
     elif quality_score > 0.50:
-        quality_class = "Moderate"
+        if lang == "SLO":
+            quality_class = "Srednja"
+        else:
+            quality_class = "Moderate"
 
     data_issue_df.sort_values(by="delta_pct", ascending=False, inplace=True)
 
