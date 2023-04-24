@@ -17,7 +17,7 @@ export const NavBar = ({ user }) => {
     return (
         <nav className='NavBarItems'>
             <h1 className='navbar-logo'>
-                <b>EXMOS Dashboard</b>
+                <b>EXMOS Platform</b>
             </h1>
             <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview" className="augment-logo"></img>
             <div className='menu-icon' onClick={handleClick}>
