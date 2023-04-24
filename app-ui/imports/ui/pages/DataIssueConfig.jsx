@@ -189,7 +189,16 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
         <>
             <Tooltip
                 placement="top"
-                title={isDisabled ? "Unfortunately, this issue cannot be auto-corrected" : "Select to auto-correct"}
+                title={isDisabled
+                    ?
+                    lang == "ENG"
+                        ? "Unfortunately, this issue cannot be auto-corrected"
+                        : "Žal te težave ni mogoče samodejno popraviti"
+                    :
+                    lang == "ENG"
+                        ? "Select to auto-correct"
+                        : "Izberite za samodejno popravljanje"
+                }
                 overlayStyle={{ maxWidth: '400px' }}
             >
                 <Checkbox checked={selectedDataIssues[issueName]} disabled={isDisabled} onChange={() => { handleTickClick(issueName) }} />
