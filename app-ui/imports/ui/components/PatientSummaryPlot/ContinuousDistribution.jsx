@@ -146,6 +146,7 @@ export const ContinuousDistribution = (
         q3,
         name,
         unit,
+        lang = "ENG"
     }) => {
 
     let x_values = [0];
@@ -229,7 +230,7 @@ export const ContinuousDistribution = (
                 displayColors: false,
                 callbacks: {
                     label: function (context) {
-                        let label = "Patient Counts " || '';
+                        let label = lang == "ENG" ? "Patient Counts " || '' : "Pacient šteje " || '';
                         if (label) {
                             label += ': ';
                         }
@@ -409,12 +410,20 @@ export const ContinuousDistribution = (
             <div className="SummaryValue">
                 <Tooltip
                     placement="bottom"
-                    title={"As indicated by the black marker the average value of this factor is " + average}
-                    overlayStyle={{ maxWidth: '200px'}}
+                    title={
+                        (lang == "ENG")
+                            ? "As indicated by the black marker the average value of this factor is " + average
+                            : "Kot je prikazano s črnim markerjem, je povprečna vrednost tega faktorja " + average
+                    }
+                    overlayStyle={{ maxWidth: '200px' }}
                 >
                     {average}
                     <div className="SummaryAvg">
-                        AVERAGE
+                        {
+                            (lang == "ENG")
+                                ? "AVERAGE"
+                                : "Povprečje"
+                        }
                     </div>
                 </Tooltip>
             </div>

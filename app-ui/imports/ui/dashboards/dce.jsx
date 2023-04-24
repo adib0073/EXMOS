@@ -551,8 +551,13 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["Glucose"].isSelected}
                                                 q1={dsChartVals["Glucose"].q1}
                                                 q3={dsChartVals["Glucose"].q3}
-                                                name={"Glucose"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Glucose"
+                                                        : "Glukoza"
+                                                }
                                                 unit={dsChartVals["Glucose"].unit}
+                                                lang={language}
                                             />
                                         </div>
                                         <div className="summary-chart-box">
@@ -579,8 +584,13 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["BloodPressure"].isSelected}
                                                 q1={dsChartVals["BloodPressure"].q1}
                                                 q3={dsChartVals["BloodPressure"].q3}
-                                                name={"Blood Pressure"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Blood Pressure"
+                                                        : "Krvni pritisk"
+                                                }
                                                 unit={dsChartVals["BloodPressure"].unit}
+                                                lang={language}
                                             />
                                         </div>
                                         <div className="summary-chart-box">
@@ -607,7 +617,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["Insulin"].isSelected}
                                                 q1={dsChartVals["Insulin"].q1}
                                                 q3={dsChartVals["Insulin"].q3}
-                                                name={"Insulin"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Insulin"
+                                                        : "Insulin"
+                                                }
+                                                lang={language}
                                                 unit={dsChartVals["Insulin"].unit}
                                             />
                                         </div>
@@ -635,7 +650,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["Pregnancies"].isSelected}
                                                 q1={dsChartVals["Pregnancies"].q1}
                                                 q3={dsChartVals["Pregnancies"].q3}
-                                                name={"Pregnancies"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Pregnancies"
+                                                        : "Število nosečnosti"
+                                                }
+                                                lang={language}
                                                 unit={""}
                                             />
                                         </div>
@@ -665,7 +685,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["SkinThickness"].isSelected}
                                                 q1={dsChartVals["SkinThickness"].q1}
                                                 q3={dsChartVals["SkinThickness"].q3}
-                                                name={"Skin Thickness"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Skin Thickness"
+                                                        : "Debelina kože"
+                                                }
+                                                lang={language}
                                                 unit={dsChartVals["SkinThickness"].unit}
                                             />
                                         </div><div className="summary-chart-box">
@@ -692,7 +717,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["Age"].isSelected}
                                                 q1={dsChartVals["Age"].q1}
                                                 q3={dsChartVals["Age"].q3}
-                                                name={"Age"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Age"
+                                                        : "Starost"
+                                                }
+                                                lang={language}
                                                 unit={""}
                                             />
                                         </div><div className="summary-chart-box">
@@ -719,7 +749,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["DiabetesPedigreeFunction"].isSelected}
                                                 q1={dsChartVals["DiabetesPedigreeFunction"].q1}
                                                 q3={dsChartVals["DiabetesPedigreeFunction"].q3}
-                                                name={"Pedigree Function"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "Pedigree Function"
+                                                        : "Funkcija rodovnika"
+                                                }
+                                                lang={language}
                                                 unit={""}
                                             />
                                         </div><div className="summary-chart-box">
@@ -746,7 +781,12 @@ export const DCE = ({ user }) => {
                                                 isActive={dsChartVals["BMI"].isSelected}
                                                 q1={dsChartVals["BMI"].q1}
                                                 q3={dsChartVals["BMI"].q3}
-                                                name={"BMI"}
+                                                name={
+                                                    language == "ENG"
+                                                        ? "BMI"
+                                                        : "BMI"
+                                                }
+                                                lang={language}
                                                 unit={dsChartVals["BMI"].unit}
                                             />
                                         </div>
