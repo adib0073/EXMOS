@@ -353,7 +353,13 @@ export const MCE = ({ user }) => {
                                             title={lang.mce.featureImportance.actionable}
                                             overlayStyle={{ maxWidth: '400px' }}
                                         >
-                                            <b>Actionable Factors</b>
+                                            <b>
+                                                {
+                                                    lang == "ENG"
+                                                        ? "Actionable Factors"
+                                                        : "Ukrepljivi dejavniki"
+                                                }
+                                            </b>
                                         </Tooltip>
                                     </div>
                                     <div className="cc-text-right">
@@ -362,7 +368,13 @@ export const MCE = ({ user }) => {
                                             title={lang.mce.featureImportance.nonActionable}
                                             overlayStyle={{ maxWidth: '400px' }}
                                         >
-                                            <b>Non-actionable Factors</b>
+                                            <b>
+                                                {
+                                                    lang == "ENG"
+                                                        ? "Non-actionable Factors"
+                                                        : "Neukrepljivi dejavniki"
+                                                }
+                                            </b>
                                         </Tooltip>
                                     </div>
                                 </div>

@@ -951,7 +951,9 @@ def compute_feature_importance(user):
 
     filters, selected_features, train_data, train_labels = load_filtered_user_data(
         user_details)
-    # TO-DO Add SHAP based execution
+    
+    # fetch language
+    lang = user_details["Language"]
 
     model = xgboost.XGBClassifier().fit(
         train_data, train_labels[TARGET_VARIABLE].values)
@@ -981,15 +983,15 @@ def compute_feature_importance(user):
 
     output_json = {
         "actionable": {
-            "features": [FRIENDLY_NAMES[feat] for feat in actionable_features['feature'].tolist()],
+            "features": [FRIENDLY_NAMES[feat] if lang == "ENG" else FRIENDLY_NAMES_SLO[feat] for feat in actionable_features['feature'].tolist()],
             "importance": list(np.around(actionable_features['importance'].values, 0))
         },
         "non-actionable": {
-            "features": [FRIENDLY_NAMES[feat] for feat in non_actionable_features['feature'].tolist()],
+            "features": [FRIENDLY_NAMES[feat] if lang == "ENG" else FRIENDLY_NAMES_SLO[feat] for feat in non_actionable_features['feature'].tolist()],
             "importance": list(np.around(non_actionable_features['importance'].values, 0))
         },
     }
-    return (True, f"Successful. Data quality information obtained for user: {user}", output_json)
+    return (True, f"Successful. Feature importance information obtained for user: {user}", output_json)
 
 
 def compute_decision_rules(user):
