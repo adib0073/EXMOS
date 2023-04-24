@@ -160,7 +160,8 @@ export const FRIENDLY_NAMES_ENG = {
     "Insulin": "Two-hour Serum Insulin",
     "BMI": "Body Mass Index",
     "DiabetesPedigreeFunction": "Diabetes Pedigree Function",
-    "Age": "Age"
+    "Age": "Age",
+    "target" : "Diabetes Status"
 }
 
 export const FRIENDLY_NAMES_SLO = {
@@ -171,7 +172,8 @@ export const FRIENDLY_NAMES_SLO = {
   "Insulin": "Dveurni serumski inzulin",
   "BMI": "Indeks telesne mase (BMI)",
   "DiabetesPedigreeFunction": "Rodovnik sladkorne bolezni",
-  "Age": "Starost"
+  "Age": "Starost",
+  "target" : "Stanje sladkorne bolezni"
 }
 
 export const FEAT_DESCRIPTIONS_SLO = {

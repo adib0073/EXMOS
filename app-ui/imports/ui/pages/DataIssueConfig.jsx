@@ -164,7 +164,7 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-export const DataIssueConfig = ({ userid, cohort, setActiveTab }) => {
+export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
 
     const navigate = useNavigate();
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { InfoLogo } from '../components/Icons/InfoLogo.jsx';
 import { SelectedIcon } from '../components/Icons/SelectedIcon.jsx';
 import { UnselectedIcon } from '../components/Icons/UnselectedIcon.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL } from '../Constants.jsx';
+import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, FRIENDLY_NAMES_ENG, FRIENDLY_NAMES_SLO } from '../Constants.jsx';
 import { ConfigBar } from '../components/ConfigCharts/ConfigBar.jsx';
 import { ConfigSlider } from '../components/ConfigCharts/ConfigSlider.jsx';
 import 'antd/dist/antd.css';
@@ -132,7 +132,7 @@ const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setR
         RestoreConfigData({ userid, cohort, featureConfig, setFeatureConfig });
         setTimeout(function () {
             message.success("Default model is restored. Redirecting to dashboard ...", 3);
-            setReloadFlag(false);                       
+            setReloadFlag(false);
             navigate('/dashboard/' + cohort);
         }, 2000);
     }
@@ -159,7 +159,7 @@ const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag) => {
 };
 
 
-export const FeatureConfig = ({ userid, cohort }) => {
+export const FeatureConfig = ({ userid, cohort, language }) => {
     const [featureConfig, setFeatureConfig] = useState(DATA_SUMMARY_DEFAULT_MODEL);
     const [reloadFlag, setReloadFlag] = useState(false);
     const navigate = useNavigate();
@@ -206,11 +206,6 @@ export const FeatureConfig = ({ userid, cohort }) => {
         PostInteractions({ userid, cohort, interactioData });
     };
 
-    const sliderClick = (viz, feature) => {
-        console.log("slider clicked");
-
-    };
-
     const inputOnChange = (e) => {
         console.log(e.target.value);
     };
@@ -230,19 +225,23 @@ export const FeatureConfig = ({ userid, cohort }) => {
     );
 
     // Language variable
-    // TO-DO: Take language preferred as input
-    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const lang = (language == "ENG") ? tooltipEnglishContent : tooltipSloveneContent;
+    const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     return (
         reloadFlag ? loadingIndicator :
             <>
                 <div className='config-display-fc-r1'>
                     <div className='config-display-fc-r1-text'>
-                        {"The current model is trained on the selected features with selected data configurations:"}
+                        {
+                            language == "ENG"
+                                ? "The current model is trained on the selected features with selected data configurations:"
+                                : "Trenutni model se usposobi na izbranih funkcijah z izbranimi konfiguracijami podatkov:"
+                        }
                     </div>
                     <Tooltip
                         placement="top"
-                        title={lang.featureConfig.title}                        
+                        title={lang.featureConfig.title}
                         overlayStyle={{ maxWidth: '500px' }}
                     >
                         <div className='config-display-fc-r1-icon'>
@@ -264,12 +263,12 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                             title={lang.featureConfig.diabetesStatus}
                                             overlayStyle={{ maxWidth: '400px' }}
                                         >
-                                            <b>{featureConfig["target"].name}</b>
+                                            <b>{FRIENDLY_NAMES["target"]}</b>
                                         </Tooltip>
                                     </div>
                                     <div className='cd-chart-left-control'>
-                                        <Input addonBefore={featureConfig["target"]["categories"][0]} key={featureConfig["target"]["categories"][0] + featureConfig["target"]["category_ratio"][0]} defaultValue={featureConfig["target"]["category_ratio"][0]+"%"} size="small" />
-                                        <Input addonBefore={featureConfig["target"]["categories"][1]} key={featureConfig["target"]["categories"][1] + featureConfig["target"]["category_ratio"][1]} defaultValue={featureConfig["target"]["category_ratio"][1]+"%"} onChange={inputOnChange} />
+                                        <Input addonBefore={featureConfig["target"]["categories"][0]} key={featureConfig["target"]["categories"][0] + featureConfig["target"]["category_ratio"][0]} defaultValue={featureConfig["target"]["category_ratio"][0] + "%"} size="small" />
+                                        <Input addonBefore={featureConfig["target"]["categories"][1]} key={featureConfig["target"]["categories"][1] + featureConfig["target"]["category_ratio"][1]} defaultValue={featureConfig["target"]["category_ratio"][1] + "%"} onChange={inputOnChange} />
                                     </div>
                                 </div>
                                 <div className='cd-chart-right'>
@@ -289,7 +288,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.glucose}
                                             >
-                                                <b>{featureConfig["Glucose"].name}</b> {"(" + featureConfig["Glucose"].unit + ")"}
+                                                <b>{FRIENDLY_NAMES["Glucose"]}</b> {"(" + featureConfig["Glucose"].unit + ")"}
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -330,7 +329,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.bmi}
                                             >
-                                                <b>{featureConfig["BMI"].name}</b> {"(" + featureConfig["BMI"].unit + ")"}
+                                                <b>{FRIENDLY_NAMES["BMI"]}</b> {"(" + featureConfig["BMI"].unit + ")"}
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -373,7 +372,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.insulin}
                                             >
-                                                <b>{featureConfig["Insulin"].name}</b> {"(" + featureConfig["Insulin"].unit + ")"}
+                                                <b>{FRIENDLY_NAMES["Insulin"]}</b> {"(" + featureConfig["Insulin"].unit + ")"}
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -414,7 +413,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.age}
                                             >
-                                                <b>{featureConfig["Age"].name}</b>
+                                                <b>{FRIENDLY_NAMES["Age"]}</b>
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -455,7 +454,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.pregnancies}
                                             >
-                                                <b>{featureConfig["Pregnancies"].name}</b>
+                                                <b>{FRIENDLY_NAMES["Pregnancies"]}</b>
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -498,7 +497,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.pressure}
                                             >
-                                                <b>{featureConfig["BloodPressure"].name}</b> {"(" + featureConfig["BloodPressure"].unit + ")"}
+                                                <b>{FRIENDLY_NAMES["BloodPressure"]}</b> {"(" + featureConfig["BloodPressure"].unit + ")"}
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -539,7 +538,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.skinfold}
                                             >
-                                                <b>{featureConfig["SkinThickness"].name}</b> {"(" + featureConfig["SkinThickness"].unit + ")"}
+                                                <b>{FRIENDLY_NAMES["SkinThickness"]}</b> {"(" + featureConfig["SkinThickness"].unit + ")"}
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -580,7 +579,7 @@ export const FeatureConfig = ({ userid, cohort }) => {
                                                 placement="rightTop"
                                                 title={lang.featureConfig.dpf}
                                             >
-                                                <b>{featureConfig["DiabetesPedigreeFunction"].name}</b>
+                                                <b>{FRIENDLY_NAMES["DiabetesPedigreeFunction"]}</b>
                                             </Tooltip>
                                         </span>
                                     </div>
@@ -613,7 +612,11 @@ export const FeatureConfig = ({ userid, cohort }) => {
                 </div>
                 <div className='config-display-fc-r3'>
                     <div className='config-display-fc-r3-text'>
-                        * You can select/deselect features or filter feature values to tune the trained model
+                        {
+                            language == "ENG"
+                                ? "* You can select/deselect features or filter feature values to tune the trained model"
+                                : "* Izberete/odstranite lahko funkcije ali filtrirate vrednosti funkcij, da prilagodite trenirani model"
+                        }
                     </div>
                     <div className='config-display-fc-r3-item'>
                         <button
@@ -621,7 +624,11 @@ export const FeatureConfig = ({ userid, cohort }) => {
                             type="submit"
                             onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate) }}
                         >
-                            {"Reset to defaults"}
+                            {
+                                language == "ENG"
+                                    ? "Reset to defaults"
+                                    : "Ponastavi na privzeto"
+                            }
                         </button>
 
                         <button
@@ -629,14 +636,22 @@ export const FeatureConfig = ({ userid, cohort }) => {
                             type="submit"
                             onClick={() => { handleCancelButton(userid, setFeatureConfig) }}
                         >
-                            {"Cancel changes"}
+                            {
+                                language == "ENG"
+                                    ? "Cancel changes"
+                                    : "Prekliči spremembe"
+                            }
                         </button>
                         <button
                             className="train-button"
                             type="submit"
                             onClick={() => { handleTrainButton(userid, cohort, featureConfig, setReloadFlag) }}
                         >
-                            {"Save and Re-train"}
+                            {
+                                language == "ENG"
+                                    ? "Save and Re-train"
+                                    : "Shrani in ponovno usposobi"
+                            }
                         </button>
                     </div>
                 </div>

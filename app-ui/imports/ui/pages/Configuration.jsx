@@ -18,7 +18,7 @@ export const Configuration = ({ user, activeTab, setActiveTab }) => {
     if (language == null || language == "") {
         language = window.localStorage.getItem('language');
     }
-    
+
     const handleTab1View = () => {
         setActiveTab("tab1");
     };
@@ -32,13 +32,28 @@ export const Configuration = ({ user, activeTab, setActiveTab }) => {
                 <ul className="tab">
                     <li className={activeTab === "tab1" ? "active" : ""}
                         onClick={handleTab1View}
-                    >Configure Features</li>
+                    >
+                        {
+                            language == "ENG"
+                                ? "Configure Features"
+                                : "Konfigurirajte funkcije"
+                        }
+                    </li>
                     <li className={activeTab === "tab2" ? "active" : ""}
                         onClick={handleTab2View}
-                    >Correct Data Issues</li>
+                    >
+                        {
+                            language == "ENG"
+                                ? "Correct Data Issues"
+                                : "Odpravite težave s podatki"
+                        }
+                    </li>
                 </ul>
                 <div className="config-display">
-                    {activeTab === "tab1" ? <FeatureConfig userid={userid} cohort={cohort} /> : <DataIssueConfig userid={userid} cohort={cohort} setActiveTab={setActiveTab}/>}
+                    {activeTab === "tab1"
+                        ? <FeatureConfig userid={userid} cohort={cohort} language={language} />
+                        : <DataIssueConfig userid={userid} cohort={cohort} language={language} setActiveTab={setActiveTab} />
+                    }
                 </div>
             </div>
         </>);
