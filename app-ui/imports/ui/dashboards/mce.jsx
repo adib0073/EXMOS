@@ -344,6 +344,7 @@ export const MCE = ({ user }) => {
                                             x_values={featureImportance.actionable.importance}
                                             y_labels={featureImportance.actionable.features}
                                             isActionable={true}
+                                            lang={language}
                                         />
                                     </div>
                                     <div className="cc-mce-right">
@@ -351,6 +352,7 @@ export const MCE = ({ user }) => {
                                             x_values={featureImportance['non-actionable'].importance}
                                             y_labels={featureImportance['non-actionable'].features}
                                             isActionable={false}
+                                            lang={language}
                                         />
                                     </div>
                                 </div>

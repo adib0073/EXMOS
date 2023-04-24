@@ -6,7 +6,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './HorizontalBarCharts.css';
 import 'antd/dist/antd.css';
 
-export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
+export const HorizontalBarCharts = ({y_labels, x_values, isActionable, lang="ENG"}) => {
 
     let bdColor = [];
     let maxXval = Math.max.apply(Math, x_values);
@@ -83,7 +83,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
                 displayColors: false,
                 callbacks: {
                     label: function (context) {
-                        let label = "Importance " || '';
+                        let label = lang == "ENG" ? "Importance " || '': "Pomembnost " || '';
 
                         if (label) {
                             label += ': ';
@@ -94,7 +94,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable}) => {
                         return label;
                     },
                     title: function (context) {
-                        let label = "Risk Factor " || '';
+                        let label = lang == "ENG" ? "Risk Factor " || '': "Dejavnik tveganja " || '';
 
                         if (label) {
                             label += ': ';
