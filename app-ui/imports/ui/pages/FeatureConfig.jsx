@@ -126,33 +126,54 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate) => {
-    if (window.confirm('Do you want to reset to default values?')) {
+const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) => {
+    if (window.confirm(
+        language == "ENG"
+            ? "Do you want to reset to default values?"
+            : "Ali želite ponastaviti na privzete vrednosti?"
+    )) {
         setReloadFlag(true);
         RestoreConfigData({ userid, cohort, featureConfig, setFeatureConfig });
         setTimeout(function () {
-            message.success("Default model is restored. Redirecting to dashboard ...", 3);
+            message.success(
+                language == "ENG"
+                    ? "Default model is restored. Redirecting to dashboard ..."
+                    : "Privzeti model je obnovljen. Preusmerjanje na dashboard ..."
+                , 3);
             setReloadFlag(false);
             navigate('/dashboard/' + cohort);
         }, 2000);
     }
 };
 
-const handleCancelButton = (userid, setFeatureConfig) => {
-    if (window.confirm('Do you want to revert all your changes?')) {
+const handleCancelButton = (userid, setFeatureConfig, language) => {
+    if (window.confirm(
+        language == "ENG"
+            ? "Do you want to revert all your changes?"
+            : "Ali želite razveljaviti vse svoje spremembe?"
+    )) {
         GetConfigData({ userid, setFeatureConfig });
         window.location.reload();
     }
 };
 
-const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag) => {
-    if (window.confirm('Do you want to save and re-train the machine learning model?')) {
+const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag, navigate, language) => {
+    if (window.confirm(
+        language == "ENG"
+            ? 'Do you want to save and re-train the machine learning model?'
+            : 'Ali želite shraniti in ponovno usposobiti model strojnega učenja?'
+    )) {
         //window.location.reload();
         setReloadFlag(true);
         PostConfigData({ userid, cohort, featureConfig });
         setTimeout(function () {
-            message.success("Model is successfully re-trained with latest changes.", 3);
+            message.success(
+                language == "ENG"
+                    ? "Model is successfully re-trained with latest changes."
+                    : "Model je uspešno ponovno usposobljen z najnovejšimi spremembami."
+                , 3);
             setReloadFlag(false);
+            navigate('/dashboard/' + cohort);
         }, 3000);
 
     }
@@ -220,7 +241,13 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
 
     const loadingIndicator = (
         <>
-            <Spin tip="Updating changes. Please wait ..." size="large" />
+            <Spin tip=
+                {
+                    (language == "ENG")
+                        ? "Updating changes. Please wait ..."
+                        : "Posodabljanje sprememb. Prosim počakaj ..."
+                }
+                size="large" />
         </>
     );
 
@@ -662,7 +689,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                         <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate) }}
+                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) }}
                         >
                             {
                                 language == "ENG"
@@ -674,7 +701,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                         <button
                             className="cancel-button"
                             type="submit"
-                            onClick={() => { handleCancelButton(userid, setFeatureConfig) }}
+                            onClick={() => { handleCancelButton(userid, setFeatureConfig, language) }}
                         >
                             {
                                 language == "ENG"
@@ -685,7 +712,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton(userid, cohort, featureConfig, setReloadFlag) }}
+                            onClick={() => { handleTrainButton(userid, cohort, featureConfig, setReloadFlag, navigate, language) }}
                         >
                             {
                                 language == "ENG"

@@ -334,13 +334,23 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
 
     const loadingIndicator = (
         <>
-            <Spin tip="Fetching current data issues ...  " size="large" />
+            <Spin tip=
+                {
+                    (language == "ENG")
+                        ? "Fetching current data issues ..."
+                        : "Pridobivanje trenutnih težav s podatki ..."
+                }
+                size="large" />
         </>
     );
 
     // Handle cancel button
     const handleCancelButton = () => {
-        if (window.confirm('Do you want to revert all your changes?')) {
+        if (window.confirm(
+            language == "ENG"
+                ? "Do you want to revert all your changes?"
+                : "Ali želite razveljaviti vse svoje spremembe?"
+        )) {
             setActiveTab("tab2");
             window.location.reload();
         }
@@ -349,11 +359,19 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
     // Handle retrain button
     const handleTrainButton = () => {
         setActiveTab("tab2");
-        if (window.confirm('Do you want to auto-correct and re-train the machine learning model?')) {
+        if (window.confirm(
+            language == "ENG"
+                ? 'Do you want to auto-correct and re-train the machine learning model?'
+                : 'Ali želite samodejno popraviti in znova usposobiti model strojnega učenja?'
+        )) {
             setWaitFlag(true);
             PostConfigData({ userid, cohort, selectedDataIssues });
             setTimeout(function () {
-                message.success("Model is successfully re-trained with latest changes.", 3);
+                message.success(
+                    language == "ENG"
+                        ? "Model is successfully re-trained with latest changes."
+                        : "Model je uspešno ponovno usposobljen z najnovejšimi spremembami."
+                    , 3);
                 setWaitFlag(false);
                 navigate('/dashboard/' + cohort);
             }, 3000);
