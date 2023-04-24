@@ -158,13 +158,14 @@
     padding: 10px;
     flex: 1;
     margin: 0px 10px 20px 10px;
+    align-items: stretch;
 }
 .chart-container-density {
     border: 1px;
     border-style: solid;
     border-color: transparent;
     display: flex;
-    flex: 6;
+    flex: 12;
     flex-direction: column;
     padding: 10px 0px 10px 0px;
 }

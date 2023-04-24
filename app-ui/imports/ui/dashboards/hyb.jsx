@@ -9,7 +9,15 @@ import { DownRedArrow } from '../components/Icons/DownRedArrow.jsx';
 import { DoughnutChart } from '../components/EstimatedRiskChart/DoughnutChart.jsx';
 import { HollowBullet } from '../components/Icons/HollowBullet.jsx';
 import { RectBlock } from '../components/Icons/RectBlock.jsx';
-import { BASE_API, DATA_SUMMARY_DEFAULT_MODEL, DATA_ISSUE_FRIENDLY_NAMES_Eng, DATA_ISSUE_FRIENDLY_NAMES_Slo } from '../Constants.jsx';
+import {
+    BASE_API,
+    DATA_SUMMARY_DEFAULT_MODEL,
+    DATA_ISSUE_FRIENDLY_NAMES_Eng,
+    DATA_ISSUE_FRIENDLY_NAMES_Slo,
+    FRIENDLY_NAMES_ENG,
+    FRIENDLY_NAMES_SLO,
+    FEAT_DESCRIPTIONS_SLO
+} from '../Constants.jsx';
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart'
 import { ContinuousDistribution } from '../components/PatientSummaryPlot/ContinuousDistribution.jsx';
@@ -127,7 +135,7 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
             "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
         }
     }).then(function (response) {
-        console.log(response.data["OutputJson"]);
+        //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
             // Fire and Forget
         }
@@ -249,12 +257,12 @@ export const HYB = ({ user }) => {
     );
 
     // Language variable
-    // TO-DO: Take language preferred as input
-    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const lang = (language == 'ENG') ? tooltipEnglishContent : tooltipSloveneContent;
     const DATA_ISSUE_FRIENDLY_NAMEs = (language == 'ENG') ? DATA_ISSUE_FRIENDLY_NAMES_Eng : DATA_ISSUE_FRIENDLY_NAMES_Slo;
+    const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     // Data Quality Gauage Chart Color
-    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1" 
+    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1"
 
     return (
         <>
@@ -264,7 +272,11 @@ export const HYB = ({ user }) => {
                     <div className="hyb-container-r1c1">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Prediction Accuracy
+                                {
+                                    language == "ENG"
+                                        ? "Prediction Accuracy"
+                                        : "Natančnost napovedi"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -298,7 +310,7 @@ export const HYB = ({ user }) => {
                                     title={lang.dce.accuracyChart.trainingSamples}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;Training Samples : <b>{accChartVals.nsamples}</b>
+                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Training Samples" : "Vzorci za usposabljanje"} : <b>{accChartVals.nsamples}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info' style={{ marginLeft: "20%" }}>
@@ -307,7 +319,7 @@ export const HYB = ({ user }) => {
                                     title={lang.dce.accuracyChart.featuresConsidered}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;Features Considered : <b>{accChartVals.nfeats}</b>
+                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Features Considered" : "Upoštevane značilnosti"} : <b>{accChartVals.nfeats}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info' style={{ marginLeft: "20%" }}>
@@ -320,7 +332,7 @@ export const HYB = ({ user }) => {
                                         {(accChartVals.pct > 0) ? <UpGreenArrow /> : <DownRedArrow />}
                                         <b> &nbsp;{accChartVals.pct}% </b>
                                     </span>
-                                    from previous score
+                                    {language == "ENG" ? "from previous score" : "od prejšnjega rezultata"}
                                 </Tooltip>
                             </div>
                         </div>
@@ -328,7 +340,11 @@ export const HYB = ({ user }) => {
                     <div className="hyb-container-r1c2">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Top Decision Rules
+                                {
+                                    language == "ENG"
+                                        ? "Top Decision Rules"
+                                        : "Najpomembnejša pravila odločanja"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -346,10 +362,18 @@ export const HYB = ({ user }) => {
                                 <>
                                     <div className="top-rules-filter">
                                         <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"} onClick={() => { handleFilterClick("diabetic") }}>
-                                            Diabetic
+                                            {
+                                                language == "ENG"
+                                                    ? "Diabetic"
+                                                    : "Diabetik"
+                                            }
                                         </div>
                                         <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"} onClick={() => { handleFilterClick("non-diabetic") }}>
-                                            Non-diabetic
+                                            {
+                                                language == "ENG"
+                                                    ? "Non-diabetic"
+                                                    : "Nediabetik"
+                                            }
                                         </div>
                                     </div>
                                     <div className="top-rules-viz" onClick={() => { handleVizClick("DecisionRules", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
@@ -368,7 +392,11 @@ export const HYB = ({ user }) => {
                     <div className="hyb-container-r1c3">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Key Insights
+                                {
+                                    language == "ENG"
+                                        ? "Key Insights"
+                                        : "Ključna spoznanja"
+                                }
                             </div>
                             <Tooltip
                                 placement="bottom"
@@ -423,7 +451,11 @@ export const HYB = ({ user }) => {
                         <div className="hyb-container-r2c1-r1">
                             <div className="chart-title-box">
                                 <div className="chart-title">
-                                    Important Risk Factors
+                                    {
+                                        language == "ENG"
+                                            ? "Important Risk Factors"
+                                            : "Pomembni dejavniki tveganja"
+                                    }
                                 </div>
                                 <Tooltip
                                     placement="bottom"
@@ -445,6 +477,7 @@ export const HYB = ({ user }) => {
                                                     x_values={featureImportance.actionable.importance}
                                                     y_labels={featureImportance.actionable.features}
                                                     isActionable={true}
+                                                    lang={language}
                                                 />
                                             </div>
                                             <div className="cc-text-left">
@@ -453,7 +486,13 @@ export const HYB = ({ user }) => {
                                                     title={lang.mce.featureImportance.actionable}
                                                     overlayStyle={{ maxWidth: '400px' }}
                                                 >
-                                                    <b>Actionable Factors</b>
+                                                    <b>
+                                                        {
+                                                            lang == "ENG"
+                                                                ? "Actionable Factors"
+                                                                : "Ukrepljivi dejavniki"
+                                                        }
+                                                    </b>
                                                 </Tooltip>
                                             </div>
                                             <div className="cc-fi-right">
@@ -461,6 +500,7 @@ export const HYB = ({ user }) => {
                                                     x_values={featureImportance['non-actionable'].importance}
                                                     y_labels={featureImportance['non-actionable'].features}
                                                     isActionable={false}
+                                                    lang={language}
                                                 />
                                             </div>
                                             <div className="cc-text-right">
@@ -469,7 +509,13 @@ export const HYB = ({ user }) => {
                                                     title={lang.mce.featureImportance.nonActionable}
                                                     overlayStyle={{ maxWidth: '400px' }}
                                                 >
-                                                    <b>Non-actionable Factors</b>
+                                                    <b>
+                                                        {
+                                                            lang == "ENG"
+                                                                ? "Non-actionable Factors"
+                                                                : "Neukrepljivi dejavniki"
+                                                        }
+                                                    </b>
                                                 </Tooltip>
                                             </div>
                                         </div>
@@ -479,7 +525,11 @@ export const HYB = ({ user }) => {
                         </div><div className="hyb-container-r2c1-r2">
                             <div className="chart-title-box">
                                 <div className="chart-title">
-                                    Data Quality Score
+                                    {
+                                        language == "ENG"
+                                            ? "Data Quality Score"
+                                            : "Ocena kakovosti podatkov"
+                                    }
                                 </div>
                                 <Tooltip
                                     placement="bottom"
@@ -499,7 +549,12 @@ export const HYB = ({ user }) => {
                                             <div className='dq-div-left'>
                                                 <Tooltip
                                                     placement="top"
-                                                    title={"The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."}
+                                                    title=
+                                                    {
+                                                        language == "ENG"
+                                                            ? "The data quality is " + dqChartVals["quality_class"].toLowerCase() + ". If the score > 80, then the quality is good. If the score > 50, the quality is moderate. If the score < 50, the quality is poor."
+                                                            : "Kakovost podatkov je " + dqChartVals["quality_class"].toLowerCase() + ". Če je število točk > 80, je kakovost podatkov dobra. Če je število točk > 50, je kakovost srednja. Če je rezultat < 50, je kakovost nizka."
+                                                    }
                                                     overlayStyle={{ maxWidth: '400px' }}
                                                 >
                                                     <div>
@@ -521,7 +576,12 @@ export const HYB = ({ user }) => {
                                                 <div className='dq-div-left-info'>
                                                     <Tooltip
                                                         placement="bottom"
-                                                        title={"The data quality is " + dqChartVals["quality_class"] + ". The data quality changes based on how it is configured."}
+                                                        title=
+                                                        {
+                                                            language == "ENG"
+                                                                ? "The data quality is " + dqChartVals["quality_class"] + ". The data quality changes based on how it is configured."
+                                                                : "Kakovost podatkov je " + dqChartVals["quality_class"] + ". Kakovost podatkov se spreminja glede na to, kako so konfigurirani."
+                                                        }
                                                         overlayStyle={{ maxWidth: '400px' }}
                                                     >
                                                         {dqChartVals["quality_class"]} - {Math.round((dqChartVals["score"] * 100 + Number.EPSILON) * 10) / 10} %
@@ -621,7 +681,11 @@ export const HYB = ({ user }) => {
                     <div className="hyb-container-r2c2">
                         <div className="chart-title-box">
                             <div className="chart-title">
-                                Data Density Distribution
+                                {
+                                    language == "ENG"
+                                        ? "Data Density Distribution"
+                                        : "Porazdelitev gostote podatkov"
+                                }
                             </div>
                             <Tooltip
                                 placement="left"
@@ -642,11 +706,15 @@ export const HYB = ({ user }) => {
                                             <div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["Glucose"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["Glucose"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["Glucose"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["Glucose"].name}: {"(" + dsChartVals["Glucose"].unit + ")"}
+                                                        {FRIENDLY_NAMES["Glucose"]}: {"(" + dsChartVals["Glucose"].unit + ")"}
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -659,18 +727,27 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["Glucose"].isSelected}
                                                     q1={dsChartVals["Glucose"].q1}
                                                     q3={dsChartVals["Glucose"].q3}
-                                                    name={"Glucose"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Glucose"
+                                                            : "Glukoza"
+                                                    }
                                                     unit={dsChartVals["Glucose"].unit}
+                                                    lang={language}
                                                 />
                                             </div>
                                             <div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["BloodPressure"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["BloodPressure"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["BloodPressure"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["BloodPressure"].name}: {"(" + dsChartVals["BloodPressure"].unit + ")"}
+                                                        {FRIENDLY_NAMES["BloodPressure"]}: {"(" + dsChartVals["BloodPressure"].unit + ")"}
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -683,18 +760,27 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["BloodPressure"].isSelected}
                                                     q1={dsChartVals["BloodPressure"].q1}
                                                     q3={dsChartVals["BloodPressure"].q3}
-                                                    name={"Blood Pressure"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Blood Pressure"
+                                                            : "Krvni pritisk"
+                                                    }
                                                     unit={dsChartVals["BloodPressure"].unit}
+                                                    lang={language}
                                                 />
                                             </div>
                                             <div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["Insulin"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["Insulin"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["Insulin"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["Insulin"].name}: {"(" + dsChartVals["Insulin"].unit + ")"}
+                                                        {FRIENDLY_NAMES["Insulin"]}: {"(" + dsChartVals["Insulin"].unit + ")"}
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -707,18 +793,27 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["Insulin"].isSelected}
                                                     q1={dsChartVals["Insulin"].q1}
                                                     q3={dsChartVals["Insulin"].q3}
-                                                    name={"Insulin"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Insulin"
+                                                            : "Insulin"
+                                                    }
+                                                    lang={language}
                                                     unit={dsChartVals["Insulin"].unit}
                                                 />
                                             </div>
                                             <div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["Pregnancies"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["Pregnancies"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["Pregnancies"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["Pregnancies"].name}:
+                                                        {FRIENDLY_NAMES["Pregnancies"]}:
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -731,7 +826,12 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["Pregnancies"].isSelected}
                                                     q1={dsChartVals["Pregnancies"].q1}
                                                     q3={dsChartVals["Pregnancies"].q3}
-                                                    name={"Pregnancies"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Pregnancies"
+                                                            : "Število nosečnosti"
+                                                    }
+                                                    lang={language}
                                                     unit={""}
                                                 />
                                             </div>
@@ -740,11 +840,15 @@ export const HYB = ({ user }) => {
                                             <div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["SkinThickness"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["SkinThickness"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["SkinThickness"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["SkinThickness"].name}: {"(" + dsChartVals["SkinThickness"].unit + ")"}
+                                                        {FRIENDLY_NAMES["SkinThickness"]}: {"(" + dsChartVals["SkinThickness"].unit + ")"}
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -757,17 +861,26 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["SkinThickness"].isSelected}
                                                     q1={dsChartVals["SkinThickness"].q1}
                                                     q3={dsChartVals["SkinThickness"].q3}
-                                                    name={"Skin Thickness"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Skin Thickness"
+                                                            : "Debelina kože"
+                                                    }
+                                                    lang={language}
                                                     unit={dsChartVals["SkinThickness"].unit}
                                                 />
                                             </div><div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["Age"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["Age"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["Age"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["Age"].name}:
+                                                        {FRIENDLY_NAMES["Age"]}:
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -780,17 +893,26 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["Age"].isSelected}
                                                     q1={dsChartVals["Age"].q1}
                                                     q3={dsChartVals["Age"].q3}
-                                                    name={"Age"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Age"
+                                                            : "Starost"
+                                                    }
+                                                    lang={language}
                                                     unit={""}
                                                 />
                                             </div><div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["DiabetesPedigreeFunction"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["DiabetesPedigreeFunction"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["DiabetesPedigreeFunction"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["DiabetesPedigreeFunction"].name}:
+                                                        {FRIENDLY_NAMES["DiabetesPedigreeFunction"]}:
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -803,17 +925,26 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["DiabetesPedigreeFunction"].isSelected}
                                                     q1={dsChartVals["DiabetesPedigreeFunction"].q1}
                                                     q3={dsChartVals["DiabetesPedigreeFunction"].q3}
-                                                    name={"Pedigree Function"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "Pedigree Function"
+                                                            : "Funkcija rodovnika"
+                                                    }
+                                                    lang={language}
                                                     unit={""}
                                                 />
                                             </div><div className="summary-chart-box">
                                                 <Tooltip
                                                     placement="top"
-                                                    title={dsChartVals["BMI"].description}
+                                                    title={
+                                                        (language == "ENG")
+                                                            ? dsChartVals["BMI"].description
+                                                            : FEAT_DESCRIPTIONS_SLO["BMI"]
+                                                    }
                                                     overlayStyle={{ maxWidth: '500px' }}
                                                 >
                                                     <span className="ValueLabel">
-                                                        {dsChartVals["BMI"].name}: {"(" + dsChartVals["BMI"].unit + ")"}
+                                                        {FRIENDLY_NAMES["BMI"]}: {"(" + dsChartVals["BMI"].unit + ")"}
                                                     </span>
                                                 </Tooltip>
                                                 <br />
@@ -826,7 +957,12 @@ export const HYB = ({ user }) => {
                                                     isActive={dsChartVals["BMI"].isSelected}
                                                     q1={dsChartVals["BMI"].q1}
                                                     q3={dsChartVals["BMI"].q3}
-                                                    name={"BMI"}
+                                                    name={
+                                                        language == "ENG"
+                                                            ? "BMI"
+                                                            : "BMI"
+                                                    }
+                                                    lang={language}
                                                     unit={dsChartVals["BMI"].unit}
                                                 />
                                             </div>
@@ -841,14 +977,29 @@ export const HYB = ({ user }) => {
                                 title={lang.dce.dataDensity.extreme}
                                 overlayStyle={{ maxWidth: '400px' }}
                             >
-                                <RectBlock color="#FFB1C1" /> Extreme Values &nbsp;
+                                <RectBlock color="#FFB1C1" />
+                                &nbsp;
+                                {
+                                    language == "ENG"
+                                        ? "Extreme Values"
+                                        : "Ekstremne vrednosti"
+                                }
+                                &nbsp;
                             </Tooltip>
                             <Tooltip
                                 placement="bottom"
                                 title={lang.dce.dataDensity.nonExtreme}
                                 overlayStyle={{ maxWidth: '400px' }}
                             >
-                                <RectBlock color="#67A3FF" /> Non-extreme Values
+                                &nbsp;
+                                &nbsp;
+                                <RectBlock color="#67A3FF" />
+                                &nbsp;
+                                {
+                                    language == "ENG"
+                                        ? "Non-extreme Values"
+                                        : "Neekstremne vrednosti"
+                                }
                             </Tooltip>
                         </div>
                     </div>
