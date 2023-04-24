@@ -20,7 +20,7 @@ import { DataIssueArea, DataDriftArea } from '../components/ConfigCharts/DataIss
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
-const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues,setWaitFlag }) => {
+const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues, setWaitFlag }) => {
     //console.log(userid);
     axios.get(BASE_API + '/getautocorrectconfig/?user=' + userid)
         .then(function (response) {
@@ -269,7 +269,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
         }
     );
 
-    useEffect(() => {        
+    useEffect(() => {
         setWaitFlag(true);
         GetAutoCorrectConfigs({ userid, setSelectedDataIssues, setWaitFlag })
         GetOutliers({ userid, setOutlierData, setDisplayIssue });
@@ -362,8 +362,11 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
             <>
                 <div className='config-display-fc-r1'>
                     <div className='config-display-fc-r1-text'>
-                        {"The following data quality issues have been observed in the training data:"}
-
+                        {
+                            (lang == "ENG")
+                                ? "The following data quality issues have been observed in the training data:"
+                                : "V podatkih za usposabljanje so bile opažene naslednje težave s kakovostjo podatkov:"
+                        }
                     </div>
                     <Tooltip
                         placement="top"
@@ -533,7 +536,11 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 </div>
                 <div className='config-display-fc-r3'>
                     <div className='config-display-fc-r3-text'>
-                        * You can auto correct the selected issues and re-train the model Please note that resolving these issues may or may not improve prediction accuracy.
+                        {
+                            (lang == "ENG")
+                                ? "* You can auto correct the selected issues and re-train the model. Please note that resolving these issues may or may not improve prediction accuracy."
+                                : "* Izbrane težave lahko samodejno popravite in ponovno usposobite model. Upoštevajte, da reševanje teh težav lahko izboljša natančnost napovedi ali pa tudi ne."
+                        }
                     </div>
                     <div className='config-display-fc-r3-item'>
                         <button
@@ -541,14 +548,22 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             type="submit"
                             onClick={() => { handleCancelButton() }}
                         >
-                            Cancel changes
+                            {
+                                (lang == "ENG")
+                                    ? "Cancel changes"
+                                    : "Prekliči spremembe"
+                            }
                         </button>
                         <button
                             className="train-button"
                             type="submit"
                             onClick={() => { handleTrainButton() }}
                         >
-                            {"Autocorrect and Re-train"}
+                            {
+                                (lang == "ENG")
+                                    ? "Autocorrect and Re-train"
+                                    : "Samodejni popravek"
+                            }
                         </button>
                     </div>
                 </div>
