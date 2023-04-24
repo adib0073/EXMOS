@@ -1006,7 +1006,8 @@ def compute_decision_rules(user):
 
     filters, selected_features, train_data, train_labels = load_filtered_user_data(
         user_details)
-
+    # fetch language
+    lang = user_details["Language"]
     output_json = {}
     ########################################
     # Code to generate decision rules      #
@@ -1034,12 +1035,21 @@ def compute_decision_rules(user):
                     feature, op, threshold = cond.partition(" < ")
                 elif (">" in cond):
                     feature, op, threshold = cond.partition(" > ")
-
-                new_rule.append(
-                    f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
-            rule_list.append(" and ".join(new_rule))
+                if lang == "ENG":
+                    new_rule.append(
+                        f"{FRIENDLY_NAMES[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
+                else:
+                    new_rule.append(
+                        f"{FRIENDLY_NAMES_SLO[feature]}{op}{round(float(threshold),2)} {USER_DETAIL_JSON[feature]['unit']}")
+            if lang == "ENG":
+                rule_list.append(" and ".join(new_rule))
+            else:
+                rule_list.append(" in ".join(new_rule))
         if len(rule_list) < 1:
-            rule_list.append("No rules found.")
+            if lang == "ENG":
+                rule_list.append("No rules found.")
+            else:
+                rule_list.append("Ni najdenih pravil.")
         output_json[outcome] = rule_list
     #########################################
     return (True, f"Successful. Decision rules obtained for user: {user}", output_json)
