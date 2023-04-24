@@ -5,19 +5,28 @@ import { Collapse, Checkbox, Select, Spin, Tooltip, message } from 'antd';
 const { Panel } = Collapse;
 const { Option } = Select;
 import { ConfigScatter, ConfigScatterCorr } from '../components/ConfigCharts/ConfigScatter';
-import { BASE_API } from '../Constants';
+import {
+    BASE_API,
+    DATA_SUMMARY_DEFAULT_MODEL,
+    DATA_ISSUE_FRIENDLY_NAMES_Eng,
+    DATA_ISSUE_FRIENDLY_NAMES_Slo,
+    FRIENDLY_NAMES_ENG,
+    FRIENDLY_NAMES_SLO,
+    FEAT_DESCRIPTIONS_SLO
+} from '../Constants.jsx';
 import axios from 'axios';
 import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
 import { DataIssueArea, DataDriftArea } from '../components/ConfigCharts/DataIssueArea';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
 
-const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues }) => {
+const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues,setWaitFlag }) => {
     //console.log(userid);
     axios.get(BASE_API + '/getautocorrectconfig/?user=' + userid)
         .then(function (response) {
             //console.log(response.data["OutputJson"]);
             setSelectedDataIssues(response.data["OutputJson"]);
+            setWaitFlag(false);
         }).catch(function (error) {
             console.log(error);
         });
@@ -183,7 +192,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 title={isDisabled ? "Unfortunately, this issue cannot be auto-corrected" : "Select to auto-correct"}
                 overlayStyle={{ maxWidth: '400px' }}
             >
-                <Checkbox disabled={isDisabled} onChange={() => { handleTickClick(issueName) }} />
+                <Checkbox checked={selectedDataIssues[issueName]} disabled={isDisabled} onChange={() => { handleTickClick(issueName) }} />
             </Tooltip>
         </>
     );
@@ -260,18 +269,15 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
         }
     );
 
-    useEffect(() => {
-        GetAutoCorrectConfigs({ userid, setSelectedDataIssues })
+    useEffect(() => {        
+        setWaitFlag(true);
+        GetAutoCorrectConfigs({ userid, setSelectedDataIssues, setWaitFlag })
         GetOutliers({ userid, setOutlierData, setDisplayIssue });
         GetImbalance({ userid, setImbalanceData, setDisplayIssue });
         GetDuplicates({ userid, setDuplicateData, setDisplayIssue });
         GetDrift({ userid, setDriftData, setDisplayIssue });
         GetCorrelation({ userid, setCorrelationData, setDisplayIssue });
         GetSkew({ userid, setSkewData, setDisplayIssue });
-        setTimeout(function () {
-            message.success("Please wait. Loading data issues ...", 3);
-            setWaitFlag(false);
-        }, 3000);
     }, []);
     const [waitFlag, setWaitFlag] = useState(true);
 
@@ -347,8 +353,9 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
     };
 
     // Language variable
-    // TO-DO: Take language preferred as input
-    const lang = (1 == 1) ? tooltipEnglishContent : tooltipSloveneContent;
+    const lang = (language == 'ENG') ? tooltipEnglishContent : tooltipSloveneContent;
+    const DATA_ISSUE_FRIENDLY_NAMEs = (language == 'ENG') ? DATA_ISSUE_FRIENDLY_NAMES_Eng : DATA_ISSUE_FRIENDLY_NAMES_Slo;
+    const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     return (
         waitFlag ? loadingIndicator :
@@ -370,164 +377,158 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 </div>
                 <div className='data-issue-list'>
                     <Collapse accordion>
-                        {displayIssue.outlier ?
-                            (<Panel header="Data Outliers" key="1" extra={selectGen("outlier")} >
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
-                                    <span>{"Potential outliers have been found in the training dataset."}</span>
-                                    <Select
-                                        defaultValue={"Please select:"}
-                                        style={{
-                                            margin: '0 8px',
-                                        }}
-                                        onChange={onOutlierFilter}>
+                        <Panel header="Data Outliers" key="1" extra={selectGen("outlier")} >
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
+                                <span>{"Potential outliers have been found in the training dataset."}</span>
+                                <Select
+                                    defaultValue={"Please select:"}
+                                    style={{
+                                        margin: '0 8px',
+                                    }}
+                                    onChange={onOutlierFilter}>
 
-                                        {outlierData.map((item, index) => {
-                                            if (item.status) {
-                                                return (
-                                                    <Option key={index} value={item.feature}>{item.feature}</Option>
-                                                );
-                                            }
-                                        })}
-                                    </Select>
+                                    {outlierData.map((item, index) => {
+                                        if (item.status) {
+                                            return (
+                                                <Option key={index} value={item.feature}>{item.feature}</Option>
+                                            );
+                                        }
+                                    })}
+                                </Select>
+                            </div>
+                            <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
+                                <div className='di-graph-left'>
+                                    Before Correction
+                                    <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                                 </div>
-                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
-                                    <div className='di-graph-left'>
-                                        Before Correction
-                                        <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
-                                    </div>
-                                    <div className='di-graph-middle'>
-                                        {"---->"}
-                                    </div>
-                                    <div className='di-graph-right'>
-                                        After Correction
-                                        <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
-                                    </div>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
-                                    <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
+                                <div className='di-graph-right'>
+                                    After Correction
+                                    <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                                 </div>
-                            </Panel>) : null}
-                        {displayIssue.correlation ?
-                            (<Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
-                                    <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
+                                <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
+                            </div>
+                        </Panel>
+                        <Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
+                                <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
+                            </div>
+                            <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
+                                <div className='di-graph-left'>
+                                    Positive Correlation
+                                    <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 3, 4, 5, 8, 6, 10, 12]} outlierLimit={[0, 0]} />
                                 </div>
-                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
-                                    <div className='di-graph-left'>
-                                        Positive Correlation
-                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 3, 4, 5, 8, 6, 10, 12]} outlierLimit={[0, 0]} />
-                                    </div>
-                                    <div className='di-graph-left'>
-                                        Negative Correlation
-                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[14, 11, 10, 6, 5, 3, 2, 1]} outlierLimit={[0, 0]} />
-                                    </div>
-                                    <div className='di-graph-middle'>
-                                        {"---->"}
-                                    </div>
-                                    <div className='di-graph-right'>
-                                        No Correlation
-                                        <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 12, 6, 8, 4, 14, 5, 8]} outlierLimit={[0, 20]} />
-                                    </div>
+                                <div className='di-graph-left'>
+                                    Negative Correlation
+                                    <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[14, 11, 10, 6, 5, 3, 2, 1]} outlierLimit={[0, 0]} />
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
-                                    <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
                                 </div>
-                            </Panel>) : null}
-                        {displayIssue.skew ?
-                            (<Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
-                                    <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
+                                <div className='di-graph-right'>
+                                    No Correlation
+                                    <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 12, 6, 8, 4, 14, 5, 8]} outlierLimit={[0, 20]} />
                                 </div>
-                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
-                                    <div className='di-graph-left'>
-                                        Example: Left Skewed
-                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
-                                    </div>
-                                    <div className='di-graph-left'>
-                                        Example: Right Skewed
-                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 15, 5, 4, 3, 3, 2, 1]} color1={"#D64242"} color2={"#D6424230"} />
-                                    </div>
-                                    <div className='di-graph-middle'>
-                                        {"---->"}
-                                    </div>
-                                    <div className='di-graph-right'>
-                                        Symmetrical Distribution
-                                        <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
-                                    </div>
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
+                                <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
+                            </div>
+                        </Panel>
+                        <Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
+                                <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
+                            </div>
+                            <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
+                                <div className='di-graph-left'>
+                                    Example: Left Skewed
+                                    <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
-                                    <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
+                                <div className='di-graph-left'>
+                                    Example: Right Skewed
+                                    <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 15, 5, 4, 3, 3, 2, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
-                            </Panel>) : null}
-                        {displayIssue.imbalance ?
-                            (<Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
-                                    <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
                                 </div>
-                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
-                                    <div className='di-graph-left'>
-                                        Before Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
-                                    </div>
-                                    <div className='di-graph-middle'>
-                                        {"---->"}
-                                    </div>
-                                    <div className='di-graph-right'>
-                                        After Correction
-                                        <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
-                                    </div>
+                                <div className='di-graph-right'>
+                                    Symmetrical Distribution
+                                    <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
-                                    <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
+                                <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
+                            </div>
+                        </Panel>
+                        <Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
+                                <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
+                            </div>
+                            <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
+                                <div className='di-graph-left'>
+                                    Before Correction
+                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
                                 </div>
-                            </Panel>) : null}
-                        {displayIssue.drift ?
-                            (<Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
-                                    <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
                                 </div>
-                                <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
-                                    <div className='di-graph-left'>
-                                        With Data Drift
-                                        <DataDriftArea
-                                            x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
-                                            y1_values={[1, 8, 15, 6, 1, 1, 2, 1]}
-                                            primColor1={"#244CB1"}
-                                            secColor1={"#244CB130"}
-                                            y2_values={[1, 2, 2, 1, 2, 5, 9, 3]}
-                                            primColor2={"#D64242"}
-                                            secColor2={"#D6424230"}
-                                        />
-                                    </div>
-                                    <div className='di-graph-middle'>
-                                        {"---->"}
-                                    </div>
-                                    <div className='di-graph-right'>
-                                        Without Data Drift
-                                        <DataDriftArea
-                                            x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
-                                            y1_values={[1, 2, 3, 6, 8, 6, 4, 2]}
-                                            primColor1={"#244CB1"}
-                                            secColor1={"#244CB130"}
-                                            y2_values={[1, 1, 3, 4, 6, 5, 3, 1]}
-                                            primColor2={"#D64242"}
-                                            secColor2={"#D6424230"}
-                                        />
-                                    </div>
+                                <div className='di-graph-right'>
+                                    After Correction
+                                    <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
-                                    <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
+                                <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
+                            </div>
+                        </Panel>
+                        <Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
+                                <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
+                            </div>
+                            <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
+                                <div className='di-graph-left'>
+                                    With Data Drift
+                                    <DataDriftArea
+                                        x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
+                                        y1_values={[1, 8, 15, 6, 1, 1, 2, 1]}
+                                        primColor1={"#244CB1"}
+                                        secColor1={"#244CB130"}
+                                        y2_values={[1, 2, 2, 1, 2, 5, 9, 3]}
+                                        primColor2={"#D64242"}
+                                        secColor2={"#D6424230"}
+                                    />
                                 </div>
-                            </Panel>) : null}
-                        {displayIssue.duplicate ?
-                            (<Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
-                                <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
-                                    <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
+                                <div className='di-graph-middle'>
+                                    {"---->"}
                                 </div>
-                                <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
-                                    <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
+                                <div className='di-graph-right'>
+                                    Without Data Drift
+                                    <DataDriftArea
+                                        x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
+                                        y1_values={[1, 2, 3, 6, 8, 6, 4, 2]}
+                                        primColor1={"#244CB1"}
+                                        secColor1={"#244CB130"}
+                                        y2_values={[1, 1, 3, 4, 6, 5, 3, 1]}
+                                        primColor2={"#D64242"}
+                                        secColor2={"#D6424230"}
+                                    />
                                 </div>
-                            </Panel>) : null}
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
+                                <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                            </div>
+                        </Panel>
+                        <Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
+                            <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
+                                <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
+                            </div>
+                            <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
+                                <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
+                            </div>
+                        </Panel>
                     </Collapse>
                 </div>
                 <div className='config-display-fc-r3'>
