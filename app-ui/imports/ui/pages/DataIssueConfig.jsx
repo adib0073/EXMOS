@@ -591,11 +591,19 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["drift"]} key="5" extra={selectGen("drift", true)}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
-                                <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
+                                {
+                                    (lang == "ENG")
+                                        ? <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
+                                        : <span> Odstopanje podatkov je zaznano v podatkih za učenje z oceno odstopanja <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. Naslednji diagrami prikazujejo primere prikazov premikanja podatkov. </span>
+                                }
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                 <div className='di-graph-left'>
-                                    With Data Drift
+                                    {
+                                        (lang == "ENG")
+                                            ? "With Data Drift"
+                                            : "Z odstopanjem podatkov"
+                                    }
                                     <DataDriftArea
                                         x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
                                         y1_values={[1, 8, 15, 6, 1, 1, 2, 1]}
@@ -610,7 +618,11 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     {"---->"}
                                 </div>
                                 <div className='di-graph-right'>
-                                    Without Data Drift
+                                    {
+                                        (lang == "ENG")
+                                            ? "Without Data Drift"
+                                            : "Brez odstopanja podatkov"
+                                    }
                                     <DataDriftArea
                                         x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
                                         y1_values={[1, 2, 3, 6, 8, 6, 4, 2]}
@@ -623,15 +635,31 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
-                                <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."
+                                            : "Odstopanje podatkov se zazna, ko se spremenijo osnovni vzorci in porazdelitve podatkov. Zaradi tega lahko napovedni model pripravi napačne ali zastarele napovedi."
+                                    }
+                                </p>
                             </div>
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["duplicate"]} key="6" extra={selectGen("duplicate")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
-                                <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
+                                {
+                                    (lang == "ENG")
+                                        ? <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
+                                        : <span> Podatki za usposabljanje vsebujejo <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> podvojenih zapisov. </span>
+                                }
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
-                                <p>{"Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."
+                                            : "Usposabljanje napovednega modela s podvojenimi ali odvečnimi zapisi doda več pristranskosti modelu in tako poveča napako napovedi. Z odstranitvijo podvojenih zapisov iz podatkov za učenje lahko povečate natančnost napovedovanja."
+                                    }
+                                </p>
                             </div>
                         </Panel>
                     </Collapse>
