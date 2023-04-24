@@ -287,10 +287,18 @@ export const MCE = ({ user }) => {
                                 <>
                                     <div className="top-rules-filter">
                                         <div className={activeFilter === "diabetic" ? "top-rules-filter-left-active" : "top-rules-filter-left"} onClick={() => { handleFilterClick("diabetic") }}>
-                                            Diabetic
+                                            {
+                                                language == "ENG"
+                                                    ? "Diabetic"
+                                                    : "Diabetik"
+                                            }
                                         </div>
                                         <div className={activeFilter === "non-diabetic" ? "top-rules-filter-right-active" : "top-rules-filter-right"} onClick={() => { handleFilterClick("non-diabetic") }}>
-                                            Non-diabetic
+                                            {
+                                                language == "ENG"
+                                                    ? "Non-diabetic"
+                                                    : "Nediabetik"
+                                            }
                                         </div>
                                     </div>
                                     <div className="top-rules-viz" onClick={() => { handleVizClick("DecisionRules", "Viz") }} onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("DecisionRules", "Viz") }}>
