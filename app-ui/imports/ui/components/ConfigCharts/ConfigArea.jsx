@@ -13,6 +13,7 @@ export const ConfigArea = ({
     isActive,
     name,
     unit,
+    lang="ENG"
 }) => {
 
     let filtered_x = x_values.filter((function (value) {
@@ -80,7 +81,7 @@ export const ConfigArea = ({
                 displayColors: false,
                 callbacks: {
                     label: function (context) {
-                        let label = "Patient Counts " || '';
+                        let label = lang == "ENG" ? "Patient Counts " || '' : "Pacient šteje " || '';
                         if (label) {
                             label += ': ';
                         }
@@ -140,7 +141,7 @@ export const ConfigArea = ({
                         }
                     }
                 },
-                text: "Blood Sugar Measures",
+                text: "Measures",
             }
         },
     };

@@ -311,7 +311,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Glucose"].ydata}
                                         selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]}
                                         isActive={featureConfig["Glucose"].isSelected}
-                                        name={"Glucose"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Glucose"
+                                                : "Glukoza"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["Glucose"].unit}
                                     />
                                 </div>
@@ -352,7 +357,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["BMI"].ydata}
                                         selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
                                         isActive={featureConfig["BMI"].isSelected}
-                                        name={"BMI"}
+                                        name={
+                                            language == "ENG"
+                                                ? "BMI"
+                                                : "BMI"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["BMI"].unit}
                                     />
                                 </div>
@@ -382,7 +392,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
-                                            featureName={"Insulin"}
+                                            name={"Insulin"}
                                             isActive={featureConfig["Insulin"].isSelected}
                                             userid={userid}
                                             cohort={cohort}
@@ -395,7 +405,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Insulin"].ydata}
                                         selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
                                         isActive={featureConfig["Insulin"].isSelected}
-                                        name={"Insulin"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Insulin"
+                                                : "Inzulin"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["Insulin"].unit}
                                     />
                                 </div>
@@ -436,7 +451,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Age"].ydata}
                                         selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
                                         isActive={featureConfig["Age"].isSelected}
-                                        name={"Age"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Age"
+                                                : "Starost"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["Age"].unit}
                                     />
                                 </div>
@@ -477,7 +497,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Pregnancies"].ydata}
                                         selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]}
                                         isActive={featureConfig["Pregnancies"].isSelected}
-                                        name={"Pregnancies"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Pregnancies"
+                                                : "Število nosečnosti"
+                                        }
+                                        lang={language}
                                         unit={""}
                                     />
                                 </div>
@@ -520,7 +545,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["BloodPressure"].ydata}
                                         selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
                                         isActive={featureConfig["BloodPressure"].isSelected}
-                                        name={"Pressure"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Pressure"
+                                                : "Krvni pritisk"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["BloodPressure"].unit}
                                     />
                                 </div>
@@ -561,7 +591,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["SkinThickness"].ydata}
                                         selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
                                         isActive={featureConfig["SkinThickness"].isSelected}
-                                        name={"Skin Thickness"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Skin Thickness"
+                                                : "Debelina kože"
+                                        }
+                                        lang={language}
                                         unit={featureConfig["SkinThickness"].unit}
                                     />
                                 </div>
@@ -602,7 +637,12 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["DiabetesPedigreeFunction"].ydata}
                                         selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]}
                                         isActive={featureConfig["DiabetesPedigreeFunction"].isSelected}
-                                        name={"Pedigree Function"}
+                                        name={
+                                            language == "ENG"
+                                                ? "Pedigree Function"
+                                                : "Funkcija rodovnika"
+                                        }
+                                        lang={language}
                                         unit={""}
                                     />
                                 </div>
