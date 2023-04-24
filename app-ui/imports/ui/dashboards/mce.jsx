@@ -365,7 +365,7 @@ export const MCE = ({ user }) => {
                                         >
                                             <b>
                                                 {
-                                                    lang == "ENG"
+                                                    language == "ENG"
                                                         ? "Actionable Factors"
                                                         : "Ukrepljivi dejavniki"
                                                 }
@@ -380,7 +380,7 @@ export const MCE = ({ user }) => {
                                         >
                                             <b>
                                                 {
-                                                    lang == "ENG"
+                                                    language == "ENG"
                                                         ? "Non-actionable Factors"
                                                         : "Neukrepljivi dejavniki"
                                                 }
