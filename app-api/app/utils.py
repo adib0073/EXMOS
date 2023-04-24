@@ -57,6 +57,8 @@ def detect_outliers(user):
 
     filters, selected_features, data, labels = load_filtered_user_data(
         user_details)
+    # fetch language
+    lang = user_details["Language"]
     # Calculate feature wise outlier
     isOutlier = False
     outliers = []
@@ -73,7 +75,7 @@ def detect_outliers(user):
         out_count += len(original_feature_values) - \
             len(corrected_feature_values)
         outliers.append(
-            {"feature": FRIENDLY_NAMES[f],
+            {"feature": FRIENDLY_NAMES[f] if (lang == "ENG")  else FRIENDLY_NAMES_SLO[f],
              "status": outlier_status,
              "actuals": {
                 "y_val": original_feature_values,

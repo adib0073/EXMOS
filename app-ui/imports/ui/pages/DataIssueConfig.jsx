@@ -380,11 +380,21 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 </div>
                 <div className='data-issue-list'>
                     <Collapse accordion>
-                        <Panel header="Data Outliers" key="1" extra={selectGen("outlier")} >
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["outlier"]} key="1" extra={selectGen("outlier")} >
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
-                                <span>{"Potential outliers have been found in the training dataset."}</span>
+                                <span>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Potential outliers have been found in the training dataset."
+                                            : "V naboru podatkov za učenje so bili najdeni potencialni izstopajoči podatki."
+                                    }
+                                </span>
                                 <Select
-                                    defaultValue={"Please select:"}
+                                    defaultValue={
+                                        (lang == "ENG")
+                                            ? "Please select:"
+                                            : "Prosim izberite"
+                                    }
                                     style={{
                                         margin: '0 8px',
                                     }}
@@ -401,22 +411,36 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                 <div className='di-graph-left'>
-                                    Before Correction
+                                    {
+                                        (lang == "ENG")
+                                            ? "Before Correction"
+                                            : "Pred popravkom"
+                                    }
                                     <ConfigScatter x_values={outlierMapData.actuals.x_val} y_values={outlierMapData.actuals.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                                 </div>
                                 <div className='di-graph-middle'>
                                     {"---->"}
                                 </div>
                                 <div className='di-graph-right'>
-                                    After Correction
+                                    {
+                                        (lang == "ENG")
+                                            ? "After Correction"
+                                            : "Po popravku"
+                                    }
                                     <ConfigScatter x_values={outlierMapData.corrected.x_val} y_values={outlierMapData.corrected.y_val} outlierLimit={[outlierMapData.lower, outlierMapData.upper]} />
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
-                                <p>{"An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."
+                                            : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša natančnost napovedi."
+                                    }
+                                </p>
                             </div>
                         </Panel>
-                        <Panel header="Data Correlation" key="2" extra={selectGen("correlation")}>
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["correlation"]} key="2" extra={selectGen("correlation")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                 <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
                             </div>
@@ -441,7 +465,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
                             </div>
                         </Panel>
-                        <Panel header="Skewed Data" key="3" extra={selectGen("skew", true)}>
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["skew"]} key="3" extra={selectGen("skew", true)}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                 <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
                             </div>
@@ -466,20 +490,28 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
                             </div>
                         </Panel>
-                        <Panel header="Class Imbalance" key="4" extra={selectGen("imbalance")}>
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["imbalance"]} key="4" extra={selectGen("imbalance")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 <div className='di-graph-left'>
-                                    Before Correction
+                                    {
+                                        (lang == "ENG")
+                                            ? "Before Correction"
+                                            : "Pred popravkom"
+                                    }
                                     <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[imblanceData.majority_pct, imblanceData.minority_pct]} />
                                 </div>
                                 <div className='di-graph-middle'>
                                     {"---->"}
                                 </div>
                                 <div className='di-graph-right'>
-                                    After Correction
+                                    {
+                                        (lang == "ENG")
+                                            ? "After Correction"
+                                            : "Po popravku"
+                                    }
                                     <DataIssueBar x_values={[imblanceData.majority, imblanceData.minority]} y_values={[50, 50]} />
                                 </div>
                             </div>
@@ -487,7 +519,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
                             </div>
                         </Panel>
-                        <Panel header="Data Drift" key="5" extra={selectGen("drift", true)}>
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["drift"]} key="5" extra={selectGen("drift", true)}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                 <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
                             </div>
@@ -524,7 +556,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 <p>{"Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."}</p>
                             </div>
                         </Panel>
-                        <Panel header="Duplicate Data" key="6" extra={selectGen("duplicate")}>
+                        <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["duplicate"]} key="6" extra={selectGen("duplicate")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
                                 <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
                             </div>
