@@ -497,32 +497,66 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["skew"]} key="3" extra={selectGen("skew", true)}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
-                                <span>Skewness is detected in the training data with a skewness score of <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>. The following plots show example representations of skewness.</span>
+                                <span>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Skewness is detected in the training data with a skewness score of "
+                                            : "Asimetrija je zaznana v podatkih o vadbi z oceno asimetrije "
+                                    }
+                                    <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>
+                                    {
+                                        (lang == "ENG")
+                                            ? ". The following plots show example representations of skewness."
+                                            : ". Naslednji diagrami prikazujejo primere prikazov poševnosti."
+                                    }
+                                </span>
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                 <div className='di-graph-left'>
-                                    Example: Left Skewed
+                                    {
+                                        (lang == "ENG")
+                                            ? "Example: Left Skewed"
+                                            : "Primer: levo poševno"
+                                    }
                                     <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
                                 <div className='di-graph-left'>
-                                    Example: Right Skewed
+                                    {
+                                        (lang == "ENG")
+                                            ? "Example: Right Skewed"
+                                            : "Primer: desno poševno"
+                                    }
                                     <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 15, 5, 4, 3, 3, 2, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
                                 <div className='di-graph-middle'>
                                     {"---->"}
                                 </div>
                                 <div className='di-graph-right'>
-                                    Symmetrical Distribution
+                                    {
+                                        (lang == "ENG")
+                                            ? "Symmetrical Distribution"
+                                            : "Simetrična porazdelitev"
+                                    }
                                     <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
-                                <p>{"Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."
+                                            : "Za podatke velja, da so poševni, kadar je porazdelitev podatkov asimetrična. Napovedni modeli, usposobljeni na poševnih podatkih, so bolj nagnjeni k dajanju napačnih napovedi."
+                                    }
+                                </p>
                             </div>
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["imbalance"]} key="4" extra={selectGen("imbalance")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
-                                <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
+                                {
+                                    (lang == "ENG")
+                                        ? <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
+                                        : <span>Podatki za učenje so neuravnoteženi, saj je {imblanceData.majority_pct}% pacientov brez sladkorne bolezni in {imblanceData.minority_pct}% pacientov s sladkorno boleznijo.</span>
+                                }
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 <div className='di-graph-left'>
@@ -546,7 +580,13 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
-                                <p>{"Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."
+                                            : "Neuravnoteženost razredov je težava, pri kateri je napovedni model bolj nagnjen k ustvarjanju pristranskih in nepravičnih rezultatov za večinski razred. S popravljanjem neuravnoteženosti razredov se lahko izboljša splošna natančnost napovedovanja."
+                                    }
+                                </p>
                             </div>
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["drift"]} key="5" extra={selectGen("drift", true)}>
