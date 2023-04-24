@@ -442,27 +442,57 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["correlation"]} key="2" extra={selectGen("correlation")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
-                                <span>Feature correlation is detected in the training data with a correlation score of <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>. The following plots show example representations of correlation.</span>
+                                <span>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Feature correlation is detected in the training data with a correlation score of "
+                                            : "Korelacija značilnosti je zaznana v podatkih o usposabljanju s korelacijsko oceno "
+                                    }
+                                    <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>
+                                    {
+                                        (lang == "ENG")
+                                            ? ". The following plots show example representations of correlation."
+                                            : ". Naslednji diagrami prikazujejo primere predstavitev korelacije."
+                                    }
+                                </span>
                             </div>
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                 <div className='di-graph-left'>
-                                    Positive Correlation
+                                    {
+                                        (lang == "ENG")
+                                            ? "Positive Correlation"
+                                            : "Pozitivna korelacija"
+                                    }
                                     <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 3, 4, 5, 8, 6, 10, 12]} outlierLimit={[0, 0]} />
                                 </div>
                                 <div className='di-graph-left'>
-                                    Negative Correlation
+                                    {
+                                        (lang == "ENG")
+                                            ? "Negative Correlation"
+                                            : "Negativna korelacija"
+                                    }
                                     <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[14, 11, 10, 6, 5, 3, 2, 1]} outlierLimit={[0, 0]} />
                                 </div>
                                 <div className='di-graph-middle'>
                                     {"---->"}
                                 </div>
                                 <div className='di-graph-right'>
-                                    No Correlation
+                                    {
+                                        (lang == "ENG")
+                                            ? "No Correlation"
+                                            : "Brez korelacije"
+                                    }
                                     <ConfigScatterCorr x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 12, 6, 8, 4, 14, 5, 8]} outlierLimit={[0, 20]} />
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
-                                <p>{"Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."}</p>
+                                <p>
+                                    {
+                                        (lang == "ENG")
+                                            ? "Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."
+                                            : "Korelirani elementi zmanjšujejo napovedno moč, saj modelu ne dodajajo novih informacij. Za doseganje boljše natančnosti napovedovanja je med postopkom usposabljanja priporočljivo opustiti zelo korelirane značilnosti."
+                                    }
+                                </p>
                             </div>
                         </Panel>
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["skew"]} key="3" extra={selectGen("skew", true)}>
