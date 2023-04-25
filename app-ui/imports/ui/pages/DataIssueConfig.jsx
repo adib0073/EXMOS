@@ -191,11 +191,11 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 placement="top"
                 title={isDisabled
                     ?
-                    lang == "ENG"
+                    language == "ENG"
                         ? "Unfortunately, this issue cannot be auto-corrected"
                         : "Žal te težave ni mogoče samodejno popraviti"
                     :
-                    lang == "ENG"
+                    language == "ENG"
                         ? "Select to auto-correct"
                         : "Izberite za samodejno popravljanje"
                 }
@@ -390,7 +390,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 <div className='config-display-fc-r1'>
                     <div className='config-display-fc-r1-text'>
                         {
-                            (lang == "ENG")
+                            (language == "ENG")
                                 ? "The following data quality issues have been observed in the training data:"
                                 : "V podatkih za usposabljanje so bile opažene naslednje težave s kakovostjo podatkov:"
                         }
@@ -411,14 +411,14 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                 <span>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Potential outliers have been found in the training dataset."
                                             : "V naboru podatkov za učenje so bili najdeni potencialni izstopajoči podatki."
                                     }
                                 </span>
                                 <Select
                                     defaultValue={
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Please select:"
                                             : "Prosim izberite"
                                     }
@@ -439,7 +439,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Before Correction"
                                             : "Pred popravkom"
                                     }
@@ -450,7 +450,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-right'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "After Correction"
                                             : "Po popravku"
                                     }
@@ -460,7 +460,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."
                                             : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša natančnost napovedi."
                                     }
@@ -471,13 +471,13 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                 <span>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Feature correlation is detected in the training data with a correlation score of "
                                             : "Korelacija značilnosti je zaznana v podatkih o usposabljanju s korelacijsko oceno "
                                     }
                                     <span style={{ color: "#D64242", fontWeight: 600 }}>{correlationData.corrScore}%</span>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? ". The following plots show example representations of correlation."
                                             : ". Naslednji diagrami prikazujejo primere predstavitev korelacije."
                                     }
@@ -486,7 +486,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Positive Correlation"
                                             : "Pozitivna korelacija"
                                     }
@@ -494,7 +494,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Negative Correlation"
                                             : "Negativna korelacija"
                                     }
@@ -505,7 +505,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-right'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "No Correlation"
                                             : "Brez korelacije"
                                     }
@@ -515,7 +515,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "correlation") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Correlated features degrade the predictive power as they do not add new information to the model. Dropping highly correlated features is recommended during the training process to obtain a better prediction accuracy."
                                             : "Korelirani elementi zmanjšujejo napovedno moč, saj modelu ne dodajajo novih informacij. Za doseganje boljše natančnosti napovedovanja je med postopkom usposabljanja priporočljivo opustiti zelo korelirane značilnosti."
                                     }
@@ -526,13 +526,13 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                 <span>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Skewness is detected in the training data with a skewness score of "
                                             : "Asimetrija je zaznana v podatkih o vadbi z oceno asimetrije "
                                     }
                                     <span style={{ color: "#D64242", fontWeight: 600 }}>{skewData.skew_score}%</span>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? ". The following plots show example representations of skewness."
                                             : ". Naslednji diagrami prikazujejo primere prikazov poševnosti."
                                     }
@@ -541,7 +541,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Example: Left Skewed"
                                             : "Primer: levo poševno"
                                     }
@@ -549,7 +549,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Example: Right Skewed"
                                             : "Primer: desno poševno"
                                     }
@@ -560,7 +560,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-right'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Symmetrical Distribution"
                                             : "Simetrična porazdelitev"
                                     }
@@ -570,7 +570,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Data is considered to be skewed when the data distribution is asymmetrical. Predictive models trained on skewed data are more prone towards giving incorrect predictions. This issue cannot be auto-corrected. Please use configure features to manually adjust the data range to reduce skewness."
                                             : "Za podatke velja, da so poševni, kadar je porazdelitev podatkov asimetrična. Napovedni modeli, usposobljeni na poševnih podatkih, so bolj nagnjeni k dajanju napačnih napovedi."
                                     }
@@ -580,7 +580,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["imbalance"]} key="4" extra={selectGen("imbalance")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 {
-                                    (lang == "ENG")
+                                    (language == "ENG")
                                         ? <span>The training data is imbalanced with {imblanceData.majority_pct}% {imblanceData.majority} patients and {imblanceData.minority_pct}% {imblanceData.minority} patients.</span>
                                         : <span>Podatki za učenje so neuravnoteženi, saj je {imblanceData.majority_pct}% pacientov brez sladkorne bolezni in {imblanceData.minority_pct}% pacientov s sladkorno boleznijo.</span>
                                 }
@@ -588,7 +588,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Before Correction"
                                             : "Pred popravkom"
                                     }
@@ -599,7 +599,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-right'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "After Correction"
                                             : "Po popravku"
                                     }
@@ -609,7 +609,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "imbalance") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Class imbalance is an issue in which the predictive model has a higher tendency to generate biased and unfair results towards the majority class. Correcting class imbalance can improve the overall prediction accuracy."
                                             : "Neuravnoteženost razredov je težava, pri kateri je napovedni model bolj nagnjen k ustvarjanju pristranskih in nepravičnih rezultatov za večinski razred. S popravljanjem neuravnoteženosti razredov se lahko izboljša splošna natančnost napovedovanja."
                                     }
@@ -619,7 +619,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["drift"]} key="5" extra={selectGen("drift", true)}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                 {
-                                    (lang == "ENG")
+                                    (language == "ENG")
                                         ? <span>Data drift is detected in the training data with a drift score of <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. The following plots show example representations of data drift.</span>
                                         : <span> Odstopanje podatkov je zaznano v podatkih za učenje z oceno odstopanja <span style={{ color: "#D64242", fontWeight: 600 }}>{driftData.overall.drift_score}%</span>. Naslednji diagrami prikazujejo primere prikazov premikanja podatkov. </span>
                                 }
@@ -627,7 +627,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r2' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                 <div className='di-graph-left'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "With Data Drift"
                                             : "Z odstopanjem podatkov"
                                     }
@@ -646,7 +646,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                 </div>
                                 <div className='di-graph-right'>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Without Data Drift"
                                             : "Brez odstopanja podatkov"
                                     }
@@ -664,7 +664,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "drift") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Data drift is detected when the underlying patterns, distributions of the current data changes from the distribution of the training data. It can result in the predictive model making incorrect or outdated predictions. Thus, the predictive accuracy decreases due to data drift."
                                             : "Odstopanje podatkov se zazna, ko se spremenijo osnovni vzorci in porazdelitve podatkov. Zaradi tega lahko napovedni model pripravi napačne ali zastarele napovedi."
                                     }
@@ -674,7 +674,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["duplicate"]} key="6" extra={selectGen("duplicate")}>
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
                                 {
-                                    (lang == "ENG")
+                                    (language == "ENG")
                                         ? <span>The training data contains <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> duplicate records.</span>
                                         : <span> Podatki za usposabljanje vsebujejo <span style={{ color: "#D64242", fontWeight: 600 }}>{duplicateData.duplicate_score}%</span> podvojenih zapisov. </span>
                                 }
@@ -682,7 +682,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "duplicate") }}>
                                 <p>
                                     {
-                                        (lang == "ENG")
+                                        (language == "ENG")
                                             ? "Training a predictive model with duplicate or redundant records add more bias to model, thus, increasing the prediction error. Removing duplicate records from training data can increase the prediction accuracy."
                                             : "Usposabljanje napovednega modela s podvojenimi ali odvečnimi zapisi doda več pristranskosti modelu in tako poveča napako napovedi. Z odstranitvijo podvojenih zapisov iz podatkov za učenje lahko povečate natančnost napovedovanja."
                                     }
@@ -694,7 +694,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 <div className='config-display-fc-r3'>
                     <div className='config-display-fc-r3-text'>
                         {
-                            (lang == "ENG")
+                            (language == "ENG")
                                 ? "* You can auto correct the selected issues and re-train the model. Please note that resolving these issues may or may not improve prediction accuracy."
                                 : "* Izbrane težave lahko samodejno popravite in ponovno usposobite model. Upoštevajte, da reševanje teh težav lahko izboljša natančnost napovedi ali pa tudi ne."
                         }
@@ -706,7 +706,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             onClick={() => { handleCancelButton() }}
                         >
                             {
-                                (lang == "ENG")
+                                (language == "ENG")
                                     ? "Cancel changes"
                                     : "Prekliči spremembe"
                             }
@@ -717,7 +717,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                             onClick={() => { handleTrainButton() }}
                         >
                             {
-                                (lang == "ENG")
+                                (language == "ENG")
                                     ? "Autocorrect and Re-train"
                                     : "Samodejni popravek"
                             }
