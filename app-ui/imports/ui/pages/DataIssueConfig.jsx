@@ -120,7 +120,7 @@ const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
         });
 };
 
-const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
+const PostConfigData = ({ userid, cohort, selectedDataIssues, navigate }) => {
     axios.post(BASE_API + '/autocorrectandretrain', {
         UserId: userid,
         Cohort: cohort,
@@ -136,7 +136,8 @@ const PostConfigData = ({ userid, cohort, selectedDataIssues }) => {
     }).then(function (response) {
         //console.log(response.data["OutputJson"]);
         if (response.data["StatusCode"]) {
-            // No action needed
+            // Navigate to main dashboard            
+            navigate('/dashboard/' + cohort);
         }
         else {
             console.log("Error reported. Login failed.")
@@ -365,7 +366,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 : 'Ali želite samodejno popraviti in znova usposobiti model strojnega učenja?'
         )) {
             setWaitFlag(true);
-            PostConfigData({ userid, cohort, selectedDataIssues });
+            PostConfigData({ userid, cohort, selectedDataIssues, navigate });
             setTimeout(function () {
                 message.success(
                     language == "ENG"
@@ -373,7 +374,6 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         : "Model je uspešno ponovno usposobljen z najnovejšimi spremembami."
                     , 3);
                 setWaitFlag(false);
-                navigate('/dashboard/' + cohort);
             }, 3000);
 
         }
