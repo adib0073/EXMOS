@@ -419,7 +419,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
                                             featureConfig={featureConfig}
                                             setFeatureConfig={setFeatureConfig}
-                                            name={"Insulin"}
+                                            featureName={"Insulin"}
                                             isActive={featureConfig["Insulin"].isSelected}
                                             userid={userid}
                                             cohort={cohort}
