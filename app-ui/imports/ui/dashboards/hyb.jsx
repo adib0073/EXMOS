@@ -275,7 +275,7 @@ export const HYB = ({ user }) => {
                                 {
                                     language == "ENG"
                                         ? "Prediction Accuracy"
-                                        : "Natančnost napovedi"
+                                        : "Točnost napovedi"
                                 }
                             </div>
                             <Tooltip

@@ -227,7 +227,7 @@ export const DCE = ({ user }) => {
                                     {
                                         language == "ENG"
                                             ? "Prediction Accuracy"
-                                            : "Natančnost napovedi"
+                                            : "Točnost napovedi"
                                     }
                                 </div>
                                 <Tooltip
