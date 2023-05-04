@@ -1,13 +1,13 @@
 fastapi
 matplotlib
-numpy
+numpy==1.23.5
 pandas
 pydantic
 scikit-learn
 scipy
 seaborn
 evidently
-shap
+shap==0.41.0
 xgboost
 skope-rules
 pymongo
