@@ -1,5 +1,5 @@
-//export const BASE_API = "http://cassatt.experiments.cs.kuleuven.be:3950"; //"http://127.0.0.1:8000";
-export const BASE_API = "http://127.0.0.1:8000";
+export const BASE_API = "http://cassatt.experiments.cs.kuleuven.be:3950"; //"http://127.0.0.1:8000";
+//export const BASE_API = "http://127.0.0.1:8000";
 
 // DATA SUMMARY VIZ DEFAULT MODEL
 export const DATA_SUMMARY_DEFAULT_MODEL = {
