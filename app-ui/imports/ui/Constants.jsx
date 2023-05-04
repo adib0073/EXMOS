@@ -171,7 +171,7 @@ export const FRIENDLY_NAMES_SLO = {
   "SkinThickness": "Debelina kožne gube tricepsa",
   "Insulin": "Dveurni serumski inzulin",
   "BMI": "Indeks telesne mase (BMI)",
-  "DiabetesPedigreeFunction": "Rodovnik sladkorne bolezni",
+  "DiabetesPedigreeFunction": "Rodovniška funkcija diabetesa",
   "Age": "Starost",
   "target" : "Stanje sladkorne bolezni"
 }

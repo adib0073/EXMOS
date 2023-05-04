@@ -462,7 +462,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     {
                                         (language == "ENG")
                                             ? "An outlier is data point which is significantly different from majority of the data points and does not follow the general patterns present in the data. Removing outliers can improve the prediction accuracy."
-                                            : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša natančnost napovedi."
+                                            : "Izstopajoča vrednost je podatkovna točka, ki se bistveno razlikuje od večine podatkovnih točk in ne sledi splošnim vzorcem, prisotnim v podatkih. Z odstranitvijo izstopajočih vrednosti se lahko izboljša točnost napovedi."
                                     }
                                 </p>
                             </div>
@@ -534,7 +534,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     {
                                         (language == "ENG")
                                             ? ". The following plots show example representations of skewness."
-                                            : ". Naslednji diagrami prikazujejo primere prikazov poševnosti."
+                                            : ". Naslednji diagrami prikazujejo primere prikazov poševnosti/asimtrije."
                                     }
                                 </span>
                             </div>
@@ -543,7 +543,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     {
                                         (language == "ENG")
                                             ? "Example: Left Skewed"
-                                            : "Primer: levo poševno"
+                                            : "Primer: levo asimetrija"
                                     }
                                     <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 3, 3, 3, 3, 15, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
@@ -551,7 +551,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     {
                                         (language == "ENG")
                                             ? "Example: Right Skewed"
-                                            : "Primer: desno poševno"
+                                            : "Primer: desno asimetrija"
                                     }
                                     <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 15, 5, 4, 3, 3, 2, 1]} color1={"#D64242"} color2={"#D6424230"} />
                                 </div>
@@ -696,7 +696,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         {
                             (language == "ENG")
                                 ? "* You can auto correct the selected issues and re-train the model. Please note that resolving these issues may or may not improve prediction accuracy."
-                                : "* Izbrane težave lahko samodejno popravite in ponovno usposobite model. Upoštevajte, da reševanje teh težav lahko izboljša natančnost napovedi ali pa tudi ne."
+                                : "* Izbrane težave lahko samodejno popravite in ponovno usposobite model. Upoštevajte, da reševanje teh težav lahko izboljša točnost napovedi ali pa tudi ne."
                         }
                     </div>
                     <div className='config-display-fc-r3-item'>

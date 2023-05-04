@@ -36,7 +36,7 @@ export const Configuration = ({ user, activeTab, setActiveTab }) => {
                         {
                             language == "ENG"
                                 ? "Configure Features"
-                                : "Konfigurirajte funkcije"
+                                : "Konfiguracija spremenljivk"
                         }
                     </li>
                     <li className={activeTab === "tab2" ? "active" : ""}

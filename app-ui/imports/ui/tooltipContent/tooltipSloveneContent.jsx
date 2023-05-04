@@ -36,7 +36,7 @@ export const tooltipSloveneContent = {
             "autoCorrectOn" : "Izbrali ste možnost samodejnega odpravljanja težav s podatki. Če želite razveljaviti samodejne spremembe, ponovno vzpostavite privzeti model.",
         },
         "decisionRule": {
-            "title": "Ta slika prikazuje najpomembnejše pogoje, ki jih upošteva model za napovedovanje diabetičnih in nediabetičnih stanj. Za prikaz pravil odločanja za diabetična in nediabetična stanja lahko uporabite spodnji upravljalnik preklopa.",
+            "title": "Ta slika prikazuje najpomembnejše pogoje, ki jih model upošteva za napovedovanje diabetičnih in nediabetičnih stanj. Lahko kliknete gumb za prikaz pravil odločanja za diabetična in nediabetična stanja.",
         },
         "featureImportance": {
             "title": "Ta slika prikazuje pomembne dejavnike tveganja in njihovo pomembnost, kot jih upošteva model napovedi. Značilnosti, ki jih je mogoče uporabiti, so dejavniki tveganja, ki jih lahko pacienti učinkovito nadzorujejo. Medtem ko so funkcije, ki jih ni mogoče uporabiti dejavniki tveganja, ki jih pacienti ne morejo spremeniti, vendar so lahko kljub temu pomembni za postopek odločanja.",

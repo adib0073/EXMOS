@@ -87,7 +87,7 @@ export const LandingPage = ({ user, setUser }) => {
                             className="lp-container-entry-input"
                             placeholder={user.language == "ENG"
                                 ?
-                                "Please enter your email id"
+                                "Please enter your email address"
                                 :
                                 "Prosimo, vnesite svoj elektronski naslov"
                             }
@@ -101,7 +101,7 @@ export const LandingPage = ({ user, setUser }) => {
                                 ?
                                 "Select your assigned cohort"
                                 :
-                                "Izberite dodeljeno kohortn skupino"
+                                "Izberite dodeljeno kohortno skupino"
                             }</option>
                             <option value="DCE">Cohort-1</option>
                             <option value="MCE">Cohort-2</option>
