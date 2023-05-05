@@ -277,6 +277,12 @@ def prepare_user_data(user):
         user_details)
     # Load unfiltered data
     unfiltered_data, _ = load_training_data(filters)
+    # fetch language
+    lang = user_details["Language"]
+    if lang == "ENG":
+        target_categories = ["Diabetic", "Non-diabetic"]
+    else:
+        target_categories = ["Diabetik", "Nediabetik"]
 
     output_json = {}
     for feat in ALL_FEATURES:
@@ -314,7 +320,7 @@ def prepare_user_data(user):
 
     output_json['target'] = {
         "name": "Diabetes Status",
-        "categories": ["Diabetic", "Non-diabetic"],
+        "categories": target_categories,
         "category_ratio": [dc_pct, 100 - dc_pct],
         "isSelected": True
     }
