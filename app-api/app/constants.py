@@ -3,17 +3,17 @@ ALL_FEATURES = ["Pregnancies", "Glucose", "BloodPressure",
 DEFAULT_VALUES = [(0, 15), (0, 199), (0, 122), (0, 99),
                   (0, 846), (0.0, 67.1), (0.078, 2.329), (21, 81)]
 # Provide the mongodb atlas url to connect python to mongodb using pymongo
-CONNECTION_STRING = "mongodb+srv://exmos:Exmos1005@exmoscluster1.rt8qvof.mongodb.net/?retryWrites=true&w=majority"
+CONNECTION_STRING = <your_connection_string>
 # MONGO DATABASE NAME
-DBNAME = "exmos_db"
+DBNAME = <your_db_name>
 # MONGO COLLECTION NAME FOR USER DETAILS
-USER_COLLECTION = "exmos_collection"
+USER_COLLECTION = <your_user_collections>
 # MONGO COLLECTION FOR ACCURACY
-ACCURACY_COLLECTION = "exmos_accuracy"
+ACCURACY_COLLECTION = <your_collections_name_for_storing_accuracy>
 # MONGO COLLECTION FOR IINTERACTIONS DATA
-INTERACTIONS_COLLECTION = "exmos_interactions"
+INTERACTIONS_COLLECTION = <your_collections_name_for_storing_interaction_data>
 # MONGO COLLECTION FOR AUTOCORRECT CONFIG
-AUTOCORRECT_CONFIG = "exmos_autocorrect_config"
+AUTOCORRECT_CONFIG = <your_collections_name_for_storing_config_data>
 # User Detail Template
 USER_DETAIL_JSON = {
     "UserName": None,
