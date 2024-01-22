@@ -567,13 +567,6 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
 
     return data_issue_json
 
-def score_adjustment(score, selected_features):
-    if "SkinThickness" not in selected_features:
-        score+=2
-    if "Insulin" not in selected_features:
-        score+=2
-    return score
-
 def retrain_config_data(config_data):
     user = config_data.UserId
     # Update records lower and upper limited and isSelected
@@ -591,8 +584,6 @@ def retrain_config_data(config_data):
         user_details)
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
-    # adjustment
-    test_score = score_adjustment(test_score, selected_features)
     # Insert in  accuracy information MongoDB
     accuracy_detail = {
         "user": user,
