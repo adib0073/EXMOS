@@ -10,17 +10,31 @@ Explanations in interactive machine-learning systems facilitate debugging and im
 
 Please check the demonstration for our EXMOS system:
 <br/>
+<br/>
+
 [![Demo_Video](https://img.youtube.com/vi/DP1tAejstAg/0.jpg)](https://www.youtube.com/watch?v=DP1tAejstAg)
+<br/>
 <br/>
 
 ## How to Get Started?
+The source code for our React.js based front-end web application, FastAPI Python based backend application and deployment-ready docker configurations are available on GitHub: [https://github.com/adib0073/EXMOS](https://github.com/adib0073/EXMOS). 
 
+Please update necessary constant values, such as, the `Mongo DB connection string`, `collection names` and `application URL` in 
+```
+EXMOS > app-api > app > constants.py
+```
+and 
+
+```
+EXMOS > app-ui > imports > ui > Constants.jsx
+```
+to successfully launch the applications.
 
 ## Citation
 If you use EXMOS in your research, please cite us as follows:
 
-Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Verbert. 2024. EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI ’24), May 11–16, 2024, Honolulu, HI, USA. https:
-//doi.org/10.1145/3613904.3642106
+Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Verbert. 2024. EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI ’24), May 11–16, 2024, Honolulu, HI, USA. [https:
+//doi.org/10.1145/3613904.3642106](https://doi.org/10.1145/3613904.3642106)
 
 BibTex:
 
