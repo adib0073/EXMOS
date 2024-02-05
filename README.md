@@ -10,9 +10,10 @@ Explanations in interactive machine-learning systems facilitate debugging and im
 
 Please check the demonstration for our EXMOS system:
 
-<object width="625" height="800">
-<iframe width="914" height="514" src="https://www.youtube.com/embed/DP1tAejstAg" title="EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</object>
+<center>
+    <img src="[assets/images/grin-logo.png](https://www.youtube.com/embed/DP1tAejstAg)">
+</center>
+
 
 ## How to Get Started?
 
