@@ -4,13 +4,14 @@ Explanations in interactive machine-learning systems facilitate debugging and im
 
 <p align="center" width="100%">
 <a href="https://www.youtube.com/watch?v=DP1tAejstAg" target="_blank"><img src="https://github.com/adib0073/EXMOS/blob/main/images/XIL%20Systems.jpg" width="650" alt="EXMOS System"/></a>
-</p>p>
+</p>
 
 ## Demo
 
 Please check the demonstration for our EXMOS system:
 
-
+<p align="center" width="100%">
 [![EXMOS System Demo](https://img.youtube.com/vi/DP1tAejstAg/0.jpg)](https://www.youtube.com/watch?v=DP1tAejstAg)
+</p>
 
 
