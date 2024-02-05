@@ -15,3 +15,29 @@ Please check the demonstration for our EXMOS system:
 </object>
 
 ## How to Get Started?
+
+
+## Citation
+If you use EXMOS in your research, please cite us as follows:
+
+Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Verbert. 2024. EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI ’24), May 11–16, 2024, Honolulu, HI, USA. https:
+//doi.org/10.1145/3613904.3642106
+
+BibTex:
+
+```
+@article{bhattacharya2024exmos,
+  author    = {Aditya Bhattacharya and
+               Simone Stumpf and
+               Lucija Gosak and
+               Gregor Stiglic and
+               Katrien Verbert},
+  title     = {{EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations}},
+  journal   = {arXiv:2402.00491},
+  year      = {2024},
+  eprint    = {2402.00491},
+  primaryClass  = {cs.AI},
+  url       = {https://arxiv.org/abs/2402.00491},
+  doi       = {10.48550/arXiv.2402.00491},
+}
+```
