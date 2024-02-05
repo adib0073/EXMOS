@@ -9,11 +9,9 @@ Explanations in interactive machine-learning systems facilitate debugging and im
 ## Demo
 
 Please check the demonstration for our EXMOS system:
-
-<center>
-    <img src="[https://github.com/adib0073/EXMOS/blob/main/images/exmos_hyb.png](https://www.youtube.com/embed/DP1tAejstAg)">
-</center>
-
+<br/>
+[![Demo_Video](https://img.youtube.com/vi/DP1tAejstAg/0.jpg)](https://www.youtube.com/watch?v=DP1tAejstAg)
+<br/>
 
 ## How to Get Started?
 
