@@ -19,7 +19,7 @@ Please check the demonstration for our EXMOS system:
 ## How to Get Started?
 The source code for our React.js based front-end web application, FastAPI Python based backend application and deployment-ready docker configurations are available on GitHub: [https://github.com/adib0073/EXMOS](https://github.com/adib0073/EXMOS). 
 
-Please update necessary constant values, such as, the `Mongo DB connection string`, `collection names` and `application URL` in 
+**Step 1**: Please update necessary constant values, such as, the `Mongo DB connection string`, `collection names` and `application URL` in 
 ```
 EXMOS > app-api > app > constants.py
 ```
@@ -28,7 +28,17 @@ and
 ```
 EXMOS > app-ui > imports > ui > Constants.jsx
 ```
-to successfully launch the applications.
+
+**Step 2**: Build the docker image. You need to have [Docker](https://www.docker.com) installed for building the docker image. The `docker-compose` and the `Dockerfile` files can be directly used to build the docker application. The build process can take up to 10 minutes to complete.
+```
+docker-compose build
+```
+
+**Step 3**: After the docker image is ready and the build process is successful, then use the following command to run the application:
+```
+docker-compose up --force-recreate
+```
+
 
 ## Citation
 If you use EXMOS in your research, please cite us as follows:
