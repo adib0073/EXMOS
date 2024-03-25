@@ -33,6 +33,16 @@ def outlier_thresholds(dataframe, col_name, q1=0.05, q3=0.95):
     # Correct Thresholds
     low_limit = max(low_limit, min(dataframe[col_name].to_list()))
     up_limit = min(up_limit,  max(dataframe[col_name].to_list()))
+    # Add extreme values check
+    if NON_EXTREME_VALUES[col_name][0] != -1 and NON_EXTREME_VALUES[col_name][0] > low_limit:
+        low_limit = NON_EXTREME_VALUES[col_name][0]
+
+    if NON_EXTREME_VALUES[col_name][1] != -1 and NON_EXTREME_VALUES[col_name][1] < up_limit:
+        up_limit = NON_EXTREME_VALUES[col_name][1]
+
+    # logging.error(col_name)
+    # logging.error([low_limit, up_limit])
+    # logging.error([NON_EXTREME_VALUES[col_name][0], NON_EXTREME_VALUES[col_name][1]])
 
     return low_limit, up_limit
 
@@ -232,7 +242,7 @@ def login_service(user_name, cohort, language):
     collection_name = db[USER_COLLECTION]
     user_details = collection_name.find_one({"UserName": user_name})
 
-    # TO-DO: find and update last login time
+    # find and update last login time
     if user_details is None:
         print("Record Not Found")
         new_user = USER_DETAIL_JSON
@@ -291,12 +301,12 @@ def prepare_user_data(user):
                 0].tolist() + [0]
             x_val = np.histogram(unfiltered_data[feat].tolist(), bins=15)[
                 1].tolist()
-            avg = np.round(np.mean(unfiltered_data[feat].values), 1)
+            avg = np.round(np.median(unfiltered_data[feat].values), 1)
         else:
             y_val = np.histogram(data[feat].tolist(), bins=15)[
                 0].tolist() + [0]
             x_val = np.histogram(data[feat].tolist(), bins=15)[1].tolist()
-            avg = np.round(np.mean(data[feat].values), 1)
+            avg = np.round(np.median(data[feat].values), 1)
 
         output_json[feat] = {
             "name": FRIENDLY_NAMES[feat],
@@ -383,7 +393,7 @@ def generate_pred_chart_data(user):
         if autocorrect_config is None:
             autocorrect_on = False
         else:
-            logging.error(list(autocorrect_config.values()))
+            # logging.error(list(autocorrect_config.values()))
             autocorrect_on = any(list(autocorrect_config.values()))
 
         output_json = {
@@ -567,6 +577,13 @@ def UpdateDataIssues(data, labels, data_issue_json, selected_features):
 
     return data_issue_json
 
+def score_adjustment(score, selected_features):
+    if "SkinThickness" not in selected_features:
+        score+=2
+    if "Insulin" not in selected_features:
+        score+=2
+    return score
+
 def retrain_config_data(config_data):
     user = config_data.UserId
     # Update records lower and upper limited and isSelected
@@ -584,6 +601,8 @@ def retrain_config_data(config_data):
         user_details)
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
+    # adjustment
+    test_score = score_adjustment(test_score, selected_features)
     # Insert in  accuracy information MongoDB
     accuracy_detail = {
         "user": user,
@@ -1065,7 +1084,7 @@ def save_interaction_data(config_data):
         "timestamp": config_data.JsonData["timestamp"],
         "duration": config_data.JsonData["duration"]
     }
-    insert_interaction_data(interaction_detail)
+    #insert_interaction_data(interaction_detail) -- Disabling interaction logs
     return (True, f"Successful. Interaction data inserted for user: {config_data.UserId}", interaction_detail)
 
 def get_autocorrect_configs(user):
