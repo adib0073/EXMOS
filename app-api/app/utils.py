@@ -602,7 +602,7 @@ def retrain_config_data(config_data):
     # train model
     train_score, test_score = training_model(data, labels, selected_features)
     # adjustment
-    test_score = score_adjustment(test_score, selected_features)
+    # test_score = score_adjustment(test_score, selected_features)
     # Insert in  accuracy information MongoDB
     accuracy_detail = {
         "user": user,
