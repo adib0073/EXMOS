@@ -28,6 +28,7 @@ and
 ```
 EXMOS > app-ui > imports > ui > Constants.jsx
 ```
+The search tag `<update_here>` will help you to find the constants that should be updated.
 
 **Step 2**: Build the docker image. You need to have [Docker](https://www.docker.com) installed for building the docker image. The `docker-compose` and the `Dockerfile` files can be directly used to build the docker application. The build process can take up to 10 minutes to complete.
 ```
