@@ -1,4 +1,4 @@
-export const BASE_API = "http://cassatt.experiments.cs.kuleuven.be:3950";
+export const BASE_API = <update_here> // For example: "http://exmos.mywebsite.com:3970/";
 
 // DATA SUMMARY VIZ DEFAULT MODEL
 export const DATA_SUMMARY_DEFAULT_MODEL = {
