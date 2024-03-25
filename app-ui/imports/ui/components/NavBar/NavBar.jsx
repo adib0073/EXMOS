@@ -9,6 +9,10 @@ export const NavBar = ({ user }) => {
     if (cohort == null || cohort==""){
         cohort = window.localStorage.getItem('cohort');
     }
+    var group = user.group;
+    if (group == null || group==""){
+        group = window.localStorage.getItem('group');
+    }
 
     handleClick = () => {
         setStateClick(!stateClick)
@@ -19,7 +23,6 @@ export const NavBar = ({ user }) => {
             <h1 className='navbar-logo'>
                 <b>EXMOS Platform</b>
             </h1>
-            <img src="https://wms.cs.kuleuven.be/cs/onderzoek/augment/afbeeldingen/group-3.png/@@images/image/preview" className="augment-logo"></img>
             <div className='menu-icon' onClick={handleClick}>
                 <i className={stateClick ? 'fas fa-times' : 'fas fa-bars'}></i>
 
@@ -35,6 +38,10 @@ export const NavBar = ({ user }) => {
                                 </Link>
                             </li>
                         )
+                    }
+                    else if (group == "ncon"){
+
+                        return null;
                     }
 
                     return (

@@ -16,7 +16,7 @@ export const ConfigScatter = ({ y_values, x_values, outlierLimit }) => {
             bgColor.push("#D64242");
         }
         else {
-            bgColor.push("#1363DF");
+            bgColor.push("#6929c4");
         }
     };
 
@@ -96,7 +96,7 @@ export const ConfigScatterCorr = ({ y_values, x_values, outlierLimit }) => {
             bgColor.push("#D64242");
         }
         else {
-            bgColor.push("#1363DF");
+            bgColor.push("#6929c4");
         }
     };
 

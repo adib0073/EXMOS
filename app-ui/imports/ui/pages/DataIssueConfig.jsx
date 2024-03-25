@@ -19,111 +19,14 @@ import { DataIssueBar } from '../components/ConfigCharts/DataIssueBar';
 import { DataIssueArea, DataDriftArea } from '../components/ConfigCharts/DataIssueArea';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent';
-
-const GetAutoCorrectConfigs = ({ userid, setSelectedDataIssues, setWaitFlag }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/getautocorrectconfig/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setSelectedDataIssues(response.data["OutputJson"]);
-            setWaitFlag(false);
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
+import { GetConfigData} from './Configuration.jsx';
 
 
-const GetOutliers = ({ userid, setOutlierData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkoutliers/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setOutlierData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "outlier": response.data["isOutlier"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
 
-const GetImbalance = ({ userid, setImbalanceData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkclassimbalance/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setImbalanceData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "imbalance": response.data["isImbalance"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-
-const GetDuplicates = ({ userid, setDuplicateData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkduplicates/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setDuplicateData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "duplicate": response.data["isDuplicate"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-const GetSkew = ({ userid, setSkewData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkskew/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setSkewData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "skew": response.data["isSkew"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-const GetDrift = ({ userid, setDriftData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkdatadrift/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setDriftData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "drift": response.data["isDrift"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-const GetCorrelation = ({ userid, setCorrelationData, setDisplayIssue }) => {
-    //console.log(userid);
-    axios.get(BASE_API + '/checkcorrelation/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setCorrelationData(response.data["OutputJson"]);
-            setDisplayIssue(prevState => ({
-                ...prevState,
-                "correlation": response.data["isCorrelated"]
-            }));
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-
-const PostConfigData = ({ userid, cohort, selectedDataIssues, navigate }) => {
+const PostConfigData = ({ userid, cohort, group, selectedDataIssues, navigate }) => {
     axios.post(BASE_API + '/autocorrectandretrain', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: selectedDataIssues
     }, {
         headers: {
@@ -148,10 +51,10 @@ const PostConfigData = ({ userid, cohort, selectedDataIssues, navigate }) => {
     });
 };
 
-const PostInteractions = ({ userid, cohort, interactioData }) => {
+const PostInteractions = ({ userid, group, interactioData }) => {
     axios.post(BASE_API + '/trackinteractions', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: interactioData
     }, {
         headers: {
@@ -174,7 +77,45 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
+const RestoreConfigData = ({ userid, group, featureConfig }) => {
+    axios.post(BASE_API + '/restoreandretrain', {
+        UserId: userid,
+        Cohort: group,
+        JsonData: featureConfig
+    }, {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Auth-Token, Origin, Authorization, X-Requested-With, Content-Type, Accept"
+        }
+    }).then(function (response) {
+        //console.log(response.data["OutputJson"]);
+        if (response.data["StatusCode"]) {
+            // Call Get Config Data 
+        }
+        else {
+            console.log("Error reported. Login failed.")
+            // TO-DO: Navigate to Error Screen.
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+};
+
+export const DataIssueConfig = ({ userid, cohort, group, language,
+    outlierData, setOutlierData,
+    duplicateData, setDuplicateData,
+    imblanceData, setImbalanceData,
+    driftData, setDriftData,
+    skewData, setSkewData,
+    correlationData, setCorrelationData,
+    displayIssue, setDisplayIssue,
+    outlierMapData, setOutlierMapData,
+    selectedDataIssues, setSelectedDataIssues,
+    waitFlag, setWaitFlag,
+    setActiveTab
+}) => {
 
     const navigate = useNavigate();
 
@@ -207,89 +148,9 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
         </>
     );
 
-    /* Use State Initializations */
-    const [outlierData, setOutlierData] = useState([
-        {
-            "feature": "No feature",
-            "status": false,
-        }
-    ]);
-    const [duplicateData, setDuplicateData] = useState(
-        {
-            "duplicate_score": 0
-        }
-    );
-    const [imblanceData, setImbalanceData] = useState({
-        "majority": "non-diabetic",
-        "majority_pct": 0,
-        "minority": "diabetic",
-        "minority_pct": 0
-    });
-    const [driftData, setDriftData] = useState({
-        "overall": {
-            "drift_score": 0
-        },
-        "feature": "No feature",
-    }
-    );
-    const [skewData, setSkewData] = useState(
-        {
-            "skew_score": 0,
-            "features": "No features"
-        }
-    );
-    const [correlationData, setCorrelationData] = useState(
-        {
-            "corrScore": 0,
-            "corrFeatures": "No features"
-        }
-    );
-    const [displayIssue, setDisplayIssue] = useState(
-        {
-            "outlier": true,
-            "correlation": true,
-            "skew": true,
-            "imbalance": true,
-            "drift": true,
-            "duplicate": true,
-        }
-    );
 
-    const [outlierMapData, setOutlierMapData] = useState({
-        "actuals": {
-            "y_val": [0],
-            "x_val": [0]
-        },
-        "corrected": {
-            "y_val": [0],
-            "x_val": [0]
-        },
-        "lower": 0,
-        "upper": 0
-    });
 
-    const [selectedDataIssues, setSelectedDataIssues] = useState(
-        {
-            "outlier": false,
-            "correlation": false,
-            "skew": false,
-            "imbalance": false,
-            "drift": false,
-            "duplicate": false,
-        }
-    );
 
-    useEffect(() => {
-        setWaitFlag(true);
-        GetAutoCorrectConfigs({ userid, setSelectedDataIssues, setWaitFlag })
-        GetOutliers({ userid, setOutlierData, setDisplayIssue });
-        GetImbalance({ userid, setImbalanceData, setDisplayIssue });
-        GetDuplicates({ userid, setDuplicateData, setDisplayIssue });
-        GetDrift({ userid, setDriftData, setDisplayIssue });
-        GetCorrelation({ userid, setCorrelationData, setDisplayIssue });
-        GetSkew({ userid, setSkewData, setDisplayIssue });
-    }, []);
-    const [waitFlag, setWaitFlag] = useState(true);
 
     /* Methods */
     const handleTickClick = (feature) => {
@@ -298,6 +159,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
             [feature]: !selectedDataIssues[feature]
         });
 
+        /*
         let interactioData = {
             "viz": "autoCorrect",
             "eventType": "click",
@@ -305,8 +167,9 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
             "timestamp": Date().toString(),
             "duration": 0
         }
+        */
 
-        PostInteractions({ userid, cohort, interactioData });
+        //PostInteractions({ userid, group, interactioData }); // disabling logs
     };
 
     // Hover time for interaction data
@@ -315,6 +178,8 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
         startTime = new Date();
     };
     const handleMouseOut = (viz, feature) => {
+        /* 
+        // Do nothing -- disabling logs
         endTime = new Date();
         var timeDiff = endTime - startTime; //in ms
         // strip the ms
@@ -329,8 +194,9 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
             "timestamp": Date().toString(),
             "duration": duration
         }
+        */
 
-        PostInteractions({ userid, cohort, interactioData });
+        // PostInteractions({ userid, group, interactioData }); // disabling logs
     };
 
     const loadingIndicator = (
@@ -365,8 +231,8 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                 ? 'Do you want to auto-correct and re-train the machine learning model?'
                 : 'Ali želite samodejno popraviti in znova usposobiti model strojnega učenja?'
         )) {
+            PostConfigData({ userid, cohort, group, selectedDataIssues, navigate });
             setWaitFlag(true);
-            PostConfigData({ userid, cohort, selectedDataIssues, navigate });
             setTimeout(function () {
                 message.success(
                     language == "ENG"
@@ -374,8 +240,26 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         : "Model je uspešno ponovno usposobljen z najnovejšimi spremembami."
                     , 3);
                 setWaitFlag(false);
-            }, 3000);
+            }, 4000);
 
+        }
+    };
+
+    // handle reset button
+    const handleResetButton = () => {
+        GetConfigData({ userid, DATA_SUMMARY_DEFAULT_MODEL });
+        if (window.confirm(
+            language == "ENG"
+                ? "Do you want to reset to default values?"
+                : "Ali želite ponastaviti na privzete vrednosti?"
+        )) {            
+            RestoreConfigData({ userid, group, DATA_SUMMARY_DEFAULT_MODEL });
+            setWaitFlag(true);
+            setTimeout(function () {
+                message.success("Default model is restored. Redirecting to dashboard ...", 3);
+                setWaitFlag(false);
+                navigate('/dashboard/' + cohort);
+            }, 3000);
         }
     };
 
@@ -389,11 +273,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
             <>
                 <div className='config-display-fc-r1'>
                     <div className='config-display-fc-r1-text'>
-                        {
-                            (language == "ENG")
-                                ? "The following data quality issues have been observed in the training data:"
-                                : "V podatkih za usposabljanje so bile opažene naslednje težave s kakovostjo podatkov:"
-                        }
+                        The following data quality issues have been observed in the training data:
                     </div>
                     <Tooltip
                         placement="top"
@@ -410,11 +290,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         <Panel header={DATA_ISSUE_FRIENDLY_NAMEs["outlier"]} key="1" extra={selectGen("outlier")} >
                             <div className='data-issue-r1' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "outlier") }}>
                                 <span>
-                                    {
-                                        (language == "ENG")
-                                            ? "Potential outliers have been found in the training dataset."
-                                            : "V naboru podatkov za učenje so bili najdeni potencialni izstopajoči podatki."
-                                    }
+                                    Potential outliers have been found in the training dataset.
                                 </span>
                                 <Select
                                     defaultValue={
@@ -564,7 +440,7 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                             ? "Symmetrical Distribution"
                                             : "Simetrična porazdelitev"
                                     }
-                                    <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#244CB1"} color2={"#244CB130"} />
+                                    <DataIssueArea x_values={[1, 2, 3, 4, 5, 6, 7, 8]} y_values={[1, 2, 5, 12, 12, 4, 1, 1]} color1={"#491d8b"} color2={"#491d8b30"} />
                                 </div>
                             </div>
                             <div className='data-issue-r3' onMouseEnter={() => { handleMouseIn() }} onMouseLeave={() => { handleMouseOut("autoCorrect", "skew") }}>
@@ -634,8 +510,8 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     <DataDriftArea
                                         x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
                                         y1_values={[1, 8, 15, 6, 1, 1, 2, 1]}
-                                        primColor1={"#244CB1"}
-                                        secColor1={"#244CB130"}
+                                        primColor1={"#491d8b"}
+                                        secColor1={"#491d8b30"}
                                         y2_values={[1, 2, 2, 1, 2, 5, 9, 3]}
                                         primColor2={"#D64242"}
                                         secColor2={"#D6424230"}
@@ -653,8 +529,8 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                                     <DataDriftArea
                                         x_values={[1, 2, 3, 4, 5, 6, 7, 8]}
                                         y1_values={[1, 2, 3, 6, 8, 6, 4, 2]}
-                                        primColor1={"#244CB1"}
-                                        secColor1={"#244CB130"}
+                                        primColor1={"#491d8b"}
+                                        secColor1={"#491d8b30"}
                                         y2_values={[1, 1, 3, 4, 6, 5, 3, 1]}
                                         primColor2={"#D64242"}
                                         secColor2={"#D6424230"}
@@ -700,6 +576,17 @@ export const DataIssueConfig = ({ userid, cohort, language, setActiveTab }) => {
                         }
                     </div>
                     <div className='config-display-fc-r3-item'>
+                        <button
+                            className="reset-button"
+                            type="submit"
+                            onClick={() => { handleResetButton() }}
+                        >
+                            {
+                                language == "ENG"
+                                    ? "Reset to defaults"
+                                    : "Ponastavi na privzeto"
+                            }
+                        </button>
                         <button
                             className="cancel-button"
                             type="submit"

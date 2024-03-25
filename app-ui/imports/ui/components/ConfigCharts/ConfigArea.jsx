@@ -11,9 +11,11 @@ export const ConfigArea = ({
     defaultLimit,
     selectedLimit,
     isActive,
+    q1,
+    q3,
     name,
     unit,
-    lang="ENG"
+    lang = "ENG"
 }) => {
 
     let filtered_x = x_values.filter((function (value) {
@@ -32,12 +34,24 @@ export const ConfigArea = ({
     boundary_ind1 = x_values.indexOf(boundary_val1);
     boundary_ind2 = x_values.indexOf(boundary_val2);
 
-    const chartColor = isActive ? "#67A3FF" : "#C5C4C4";
-    const pinColor = isActive ? "#244CB1" : "#C5C4C4";
+    if (q1 < 0) {
+        q1 = Math.min(...x_values);
+    }
+    if (q3 < 0) {
+        q3 = Math.max(...x_values);
+    }
+
+    const chartColor = isActive ? "#be95ff" : "#C5C4C4";
+    const pinColor = isActive ? "#491d8b" : "#C5C4C4";
 
     const highlightRegion = (ctx) => {
         if (ctx.p0DataIndex >= boundary_ind1 && ctx.p0DataIndex < boundary_ind2) {
-            return chartColor;
+            if (x_values[ctx.p0DataIndex] >= q1 && x_values[ctx.p0DataIndex] <= q3) {
+                return chartColor;
+            }
+            else {
+                return isActive ? "#FFB1C1" : "#E5E5E5";
+            }
         }
         else {
 
@@ -47,19 +61,34 @@ export const ConfigArea = ({
     // background color function
     const bgColor = ctx => highlightRegion(ctx);
 
+    let bdrColor = [];
+    for (let i = 0; i < x_values.length; i++) {
+        if (x_values[i] >= q1 && x_values[i] <= q3) {
+            bdrColor.push(isActive ? "#6929c4" : "#E5E5E5");
+        }
+        else {
+            if (selectedLimit[0] >= boundary_val1 && selectedLimit[1] <= boundary_val1) {
+                bdrColor.push(isActive ? "#6929c4" : "#C5C4C4");
+            }
+            else {
+                bdrColor.push(isActive ? "#FF0000" : "#E5E5E5");
+            }
+        }
+    };
+
     let data = {
         labels: x_values,
         datasets: [
             {
                 label: 'Count',
                 data: y_values,
-                pointRadius: 1,
+                pointRadius: 2,
                 pointBorderWidth: 1,
                 hoverBackgroundColor: 'white',
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 3,
-                backgroundColor: "#1363DF",
-                borderColor: "#1363DF",
+                backgroundColor: bdrColor,
+                borderColor: bdrColor,
                 fill: true,
                 tension: 0.4,
                 segment: {

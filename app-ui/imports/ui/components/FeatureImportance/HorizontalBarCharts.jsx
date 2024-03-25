@@ -14,7 +14,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable, lang="ENG
     for (let i = 0; i < x_values.length; i++) {
         if (x_values[i] < maxXval/2) {
             if (isActionable){
-                bdColor.push("#67A3FF");
+                bdColor.push("#be95ff");
             }
             else{
                 bdColor.push("#C5C4C4");
@@ -22,7 +22,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable, lang="ENG
         }
         else if (x_values[i] < maxXval) {
             if (isActionable){
-                bdColor.push("#1363DF");
+                bdColor.push("#6929c4");
             }
             else{
                 bdColor.push("#999999");
@@ -30,7 +30,7 @@ export const HorizontalBarCharts = ({y_labels, x_values, isActionable, lang="ENG
         }
         else {
             if (isActionable){
-                bdColor.push("#244CB1");
+                bdColor.push("#491d8b");
             }
             else{
                 bdColor.push("#7B7B7B");

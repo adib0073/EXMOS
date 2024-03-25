@@ -154,7 +154,7 @@
 }
 
 .top-rules-filter-left-active {
-    background: #67A3FF;
+    background: #be95ff;
     color: white;
     text-align: center;
     border-top-left-radius: 20px;
@@ -184,7 +184,7 @@
     border-bottom-right-radius: 20px;
     padding: 5px 20px 5px 10px;
     font-size: 1.5vh;
-    background: #67A3FF;
+    background: #be95ff;
     color: white;
 }
 
@@ -204,7 +204,7 @@
 
 .top-rules-viz-item {
     background: #FFFEFE;
-    border: 2px solid #1363DF;
+    border: 2px solid #6929c4;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     flex: 1;

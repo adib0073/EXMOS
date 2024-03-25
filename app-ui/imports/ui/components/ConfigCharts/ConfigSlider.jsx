@@ -36,9 +36,30 @@ const handleSliderChange = (value,
     featureConfig,
     setFeatureConfig,
     userid,
-    cohort) => {
+    cohort,
+    setWarningFlag
+) => {
 
     const updatedFeature = { ...featureConfig[featureName], lowerLimit: value[0], upperLimit: value[1] }
+
+    const LLI = updatedFeature["xdata"].findIndex((element) => element >= value[0]);
+    const ULI = updatedFeature["xdata"].findIndex((element) => element >= value[1]);
+
+    const slicedYdata = updatedFeature["ydata"].slice(LLI, ULI);
+
+    let sumYdata = 0;
+    slicedYdata.forEach(x => {
+        sumYdata += x;
+    });
+
+    if (sumYdata < 350) {
+        setWarningFlag(true);
+    }
+    else {
+        setWarningFlag(false);
+    }
+
+
     setFeatureConfig({
         ...featureConfig,
         [featureName]: updatedFeature
@@ -62,9 +83,10 @@ export const ConfigSlider = ({ defaultLimit,
     featureName,
     isActive,
     userid,
-    cohort
+    cohort,
+    setWarningFlag
 }) => {
-    const chartColor = isActive ? "#67A3FF" : "#6C6C6C";
+    const chartColor = isActive ? "#be95ff" : "#6C6C6C";
 
     return (<Slider
         range
@@ -101,10 +123,11 @@ export const ConfigSlider = ({ defaultLimit,
                 featureConfig,
                 setFeatureConfig,
                 userid,
-                cohort
+                cohort,
+                setWarningFlag
             )
         }}
-        //dotStyle={{ borderColor: "#67A3FF" }}
+        //dotStyle={{ borderColor: "#be95ff" }}
         trackStyle={{ background: chartColor }}
         handleStyle={{ borderColor: chartColor }}
         railStyle={{ background: "#E5E5E5" }}

@@ -213,7 +213,7 @@ export const DCE = ({ user }) => {
     const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     // Data Quality Gauage Chart Color
-    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1"
+    const dqChartColor = dqChartVals["score"] > 0.8 ? "#6929c4" : dqChartVals["score"] > 0.5 ? "#be95ff" : "#FFB1C1"
 
     return (
         <>
@@ -817,7 +817,7 @@ export const DCE = ({ user }) => {
                         >
                             &nbsp;
                             &nbsp;
-                            <RectBlock color="#67A3FF" />
+                            <RectBlock color="#be95ff" />
                             &nbsp;
                             {
                                 language == "ENG"

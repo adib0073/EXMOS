@@ -122,10 +122,10 @@ const GetDSChartValue = ({ userid, setDsChartVals }) => {
         });
 };
 
-const PostInteractions = ({ userid, cohort, interactioData }) => {
+const PostInteractions = ({ userid, group, interactioData }) => {
     axios.post(BASE_API + '/trackinteractions', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: interactioData
     }, {
         headers: {
@@ -148,7 +148,7 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-export const HYB = ({ user }) => {
+export const HYB = ({ user, updateDash, setUpdateDash }) => {
     var userid = user.id;
     if (userid == null || userid == "") {
         userid = window.localStorage.getItem('userid');
@@ -160,6 +160,10 @@ export const HYB = ({ user }) => {
     var language = user.language;
     if (language == null || language == "") {
         language = window.localStorage.getItem('language');
+    }
+    var group = user.group;
+    if (group == null || group == "") {
+        group = window.localStorage.getItem('group');
     }
 
     const accuracyChartRef = useRef();
@@ -234,7 +238,7 @@ export const HYB = ({ user }) => {
             "duration": duration
         }
 
-        PostInteractions({ userid, cohort, interactioData });
+        //PostInteractions({ userid, group, interactioData });
     };
     const handleVizClick = (viz, feature) => {
 
@@ -246,7 +250,7 @@ export const HYB = ({ user }) => {
             "duration": 0
         }
 
-        PostInteractions({ userid, cohort, interactioData });
+        //PostInteractions({ userid, group, interactioData });
     };
 
     // Loading Indicator
@@ -262,7 +266,7 @@ export const HYB = ({ user }) => {
     const FRIENDLY_NAMES = (language == "ENG") ? FRIENDLY_NAMES_ENG : FRIENDLY_NAMES_SLO;
 
     // Data Quality Gauage Chart Color
-    const dqChartColor = dqChartVals["score"] > 0.8 ? "#1363DF" : dqChartVals["score"] > 0.5 ? "#67A3FF" : "#FFB1C1"
+    const dqChartColor = dqChartVals["score"] > 0.8 ? "#6929c4" : dqChartVals["score"] > 0.5 ? "#be95ff" : "#FFB1C1"
 
     return (
         <>
@@ -310,7 +314,7 @@ export const HYB = ({ user }) => {
                                     title={lang.dce.accuracyChart.trainingSamples}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Training Samples" : "Vzorci za usposabljanje"} : <b>{accChartVals.nsamples}</b>
+                                    <HollowBullet /> &nbsp;{"Training Samples"} : <b>{accChartVals.nsamples}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info' style={{ marginLeft: "20%" }}>
@@ -319,7 +323,7 @@ export const HYB = ({ user }) => {
                                     title={lang.dce.accuracyChart.featuresConsidered}
                                     overlayStyle={{ maxWidth: '400px' }}
                                 >
-                                    <HollowBullet /> &nbsp;{language == "ENG" ? "Features Considered" : "Upoštevane značilnosti"} : <b>{accChartVals.nfeats}</b>
+                                    <HollowBullet /> &nbsp;{"Predictor variables"} : <b>{accChartVals.nfeats}</b>
                                 </Tooltip>
                             </div>
                             <div className='chart-container-info' style={{ marginLeft: "20%" }}>
@@ -993,7 +997,7 @@ export const HYB = ({ user }) => {
                             >
                                 &nbsp;
                                 &nbsp;
-                                <RectBlock color="#67A3FF" />
+                                <RectBlock color="#be95ff" />
                                 &nbsp;
                                 {
                                     language == "ENG"

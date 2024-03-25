@@ -20,11 +20,11 @@ const data = {
             label: 'Overall Prediction Accuracy',
             data: [0, 100],
             backgroundColor: [
-                '#1363DF',
+                '#6929c4',
                 '#E5E5E5'
             ],
             borderColor: [
-                '#1363DF',
+                '#6929c4',
                 '#E5E5E5'
             ],
             borderWidth: 1,
@@ -45,13 +45,13 @@ const centerText = {
         
         ctx.save();
         const fontHeight = 0.2 * height;
-        ctx.font = `bolder ${fontHeight / 2}px Noto Sans`;
+        ctx.font = `bolder ${fontHeight / 2}px Open Sans`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         // For Overall text
         ctx.fillText('Overall', width / 2, 0.65 * height);
 
-        ctx.font = `bolder ${fontHeight * 1.2}px Noto Sans`;
+        ctx.font = `bolder ${fontHeight * 1.2}px Open Sans`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
         
@@ -62,7 +62,7 @@ const centerText = {
         
         // For % symbol
         var pOffset = (options.accuracy === 100 ? (fontHeight * 0.9) : (options.accuracy >= 10 ? (fontHeight * 0.6) : (fontHeight * 0.3)))
-        ctx.font = `bolder ${fontHeight * 0.6}px Noto Sans`;
+        ctx.font = `bolder ${fontHeight * 0.6}px Open Sans`;
         ctx.fillText("%", width/2 + pOffset, height / 2);
         ctx.restore();
         chart.update();
@@ -80,8 +80,8 @@ export const DoughnutChart = ({ accuracy, chartRef, language = "ENG" }) => {
     options.accuracy=accuracy;
 
     data.datasets[0].data = [accuracy, 100 - accuracy];
-    data.datasets[0].backgroundColor = ['#1363DF', '#E5E5E5'];
-    data.datasets[0].borderColor = ['#1363DF', '#E5E5E5'];
+    data.datasets[0].backgroundColor = ['#6929c4', '#E5E5E5'];
+    data.datasets[0].borderColor = ['#6929c4', '#E5E5E5'];
 
     if (chartRef.current) {
         chartRef.current.data.datasets[0].data = [accuracy, 100 - accuracy];

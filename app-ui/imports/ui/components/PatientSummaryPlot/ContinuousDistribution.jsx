@@ -181,8 +181,8 @@ export const ContinuousDistribution = (
 
     let alpha = 1.0;
 
-    const chartColor = isActive ? `rgb(103, 163, 255, ${alpha})` : "#E5E5E5";
-    const cardColor = isActive ? "#1363DF" : "#E5E5E5";
+    const chartColor = isActive ? `rgb(190, 149, 255, ${alpha})` : "#E5E5E5";
+    const cardColor = isActive ? "#6929c4" : "#E5E5E5";
 
     const highlightRegion = (ctx) => {
         if (x_values[ctx.p0DataIndex] >= q1 && x_values[ctx.p0DataIndex] <= q3) {
@@ -190,11 +190,22 @@ export const ContinuousDistribution = (
             return chartColor;
         }
         else {
-            return isActive ? "#FFB1C1" : "#E5E5E5";;
+            return isActive ? "#FFB1C1" : "#E5E5E5";
         }
     };
     // background color function
     const bgColor = ctx => highlightRegion(ctx);
+
+    
+    let bdrColor = [];
+    for (let i = 0; i < x_values.length; i++) {
+        if (x_values[i] >= q1 && x_values[i] <= q3) {
+            bdrColor.push(cardColor);
+        }
+        else {
+            bdrColor.push(isActive ? "#FF0000" : "#E5E5E5");
+        }
+    };
 
     let data = {
         labels: x_values,
@@ -202,9 +213,9 @@ export const ContinuousDistribution = (
             {
                 label: 'Count',
                 data: y_values,
-                pointRadius: 1,
-                backgroundColor: cardColor,
-                borderColor: cardColor,
+                pointRadius: 2,
+                backgroundColor: bdrColor,
+                borderColor: bdrColor,
                 pointBorderWidth: 1,
                 hoverBackgroundColor: 'white',
                 pointHoverRadius: 5,
@@ -332,14 +343,14 @@ export const ContinuousDistribution = (
             ctx.save();
 
             // Lower Boundary Line   
-            ctx.strokeStyle = '#244CB1';
+            ctx.strokeStyle = '#491d8b';
             ctx.setLineDash([5, 10]);
             ctx.lineDashOffset = 2;
             //ctx.strokeRect(x.getPixelForValue(boundary_ind1), top, 0, height);
             //ctx.strokeRect(x.getPixelForValue(q1), top, 0, height);
 
             // Higher Boundary Line
-            ctx.strokeStyle = '#244CB1';
+            ctx.strokeStyle = '#491d8b';
             //ctx.strokeRect(x.getPixelForValue(boundary_ind2), top, 0, height);
             //ctx.strokeRect(x.getPixelForValue(q3), top, 0, height);
 

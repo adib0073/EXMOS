@@ -14,32 +14,14 @@ import { ConfigArea } from '../components/ConfigCharts/ConfigArea.jsx';
 import axios from 'axios';
 import { tooltipEnglishContent } from '../tooltipContent/tooltipEnglishContent.jsx';
 import { tooltipSloveneContent } from '../tooltipContent/tooltipSloveneContent.jsx';
+import { GetConfigData } from './Configuration.jsx';
 
 
-const GetConfigData = ({ userid, setFeatureConfig }) => {
-    axios.get(BASE_API + '/getconfigdata/?user=' + userid)
-        .then(function (response) {
-            //console.log(response.data["OutputJson"]);
-            setFeatureConfig({
-                "Pregnancies": response.data["OutputJson"]["Pregnancies"],
-                "Glucose": response.data["OutputJson"]["Glucose"],
-                "BloodPressure": response.data["OutputJson"]["BloodPressure"],
-                "SkinThickness": response.data["OutputJson"]["SkinThickness"],
-                "Insulin": response.data["OutputJson"]["Insulin"],
-                "BMI": response.data["OutputJson"]["BMI"],
-                "DiabetesPedigreeFunction": response.data["OutputJson"]["DiabetesPedigreeFunction"],
-                "Age": response.data["OutputJson"]["Age"],
-                "target": response.data["OutputJson"]["target"]
-            });
 
-        }).catch(function (error) {
-            console.log(error);
-        });
-};
-const PostConfigData = ({ userid, cohort, featureConfig }) => {
+const PostConfigData = ({ userid, group, featureConfig }) => {
     axios.post(BASE_API + '/configandretrain', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: featureConfig
     }, {
         headers: {
@@ -64,6 +46,7 @@ const PostConfigData = ({ userid, cohort, featureConfig }) => {
                 "Age": response.data["OutputJson"]["Age"],
                 "target": response.data["OutputJson"]["target"]
             });*/
+            console.log('model training complete ...');
         }
         else {
             console.log("Error reported. Login failed.")
@@ -74,10 +57,11 @@ const PostConfigData = ({ userid, cohort, featureConfig }) => {
     });
 };
 
-const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) => {
+const RestoreConfigData = ({ userid, group, featureConfig, setFeatureConfig }) => {
+    //console.log(group);
     axios.post(BASE_API + '/restoreandretrain', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: featureConfig
     }, {
         headers: {
@@ -100,10 +84,10 @@ const RestoreConfigData = ({ userid, cohort, featureConfig, setFeatureConfig }) 
     });
 };
 
-const PostInteractions = ({ userid, cohort, interactioData }) => {
+const PostInteractions = ({ userid, group, interactioData }) => {
     axios.post(BASE_API + '/trackinteractions', {
         UserId: userid,
-        Cohort: cohort,
+        Cohort: group,
         JsonData: interactioData
     }, {
         headers: {
@@ -126,14 +110,14 @@ const PostInteractions = ({ userid, cohort, interactioData }) => {
     });
 };
 
-const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) => {
+const handleResetButton = (userid, cohort, group, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) => {
     if (window.confirm(
         language == "ENG"
             ? "Do you want to reset to default values?"
             : "Ali želite ponastaviti na privzete vrednosti?"
     )) {
+        RestoreConfigData({ userid, group, featureConfig, setFeatureConfig });
         setReloadFlag(true);
-        RestoreConfigData({ userid, cohort, featureConfig, setFeatureConfig });
         setTimeout(function () {
             message.success(
                 language == "ENG"
@@ -142,7 +126,7 @@ const handleResetButton = (userid, cohort, featureConfig, setFeatureConfig, setR
                 , 3);
             setReloadFlag(false);
             navigate('/dashboard/' + cohort);
-        }, 2000);
+        }, 3000);
     }
 };
 
@@ -157,32 +141,33 @@ const handleCancelButton = (userid, setFeatureConfig, language) => {
     }
 };
 
-const handleTrainButton = (userid, cohort, featureConfig, setReloadFlag, navigate, language) => {
+const handleTrainButton = (userid, cohort, group, featureConfig, setReloadFlag, navigate, language) => {
     if (window.confirm(
         language == "ENG"
             ? 'Do you want to save and re-train the machine learning model?'
             : 'Ali želite shraniti in ponovno usposobiti model strojnega učenja?'
     )) {
-        //window.location.reload();
+        //window.location.reload();        
+        PostConfigData({ userid, group, featureConfig });
         setReloadFlag(true);
-        PostConfigData({ userid, cohort, featureConfig });
         setTimeout(function () {
             message.success(
                 language == "ENG"
                     ? "Model is successfully re-trained with latest changes."
                     : "Model je uspešno ponovno usposobljen z najnovejšimi spremembami."
-                , 3);
+                , 4);
             setReloadFlag(false);
             navigate('/dashboard/' + cohort);
-        }, 3000);
+        }, 4000);
 
     }
 };
 
 
-export const FeatureConfig = ({ userid, cohort, language }) => {
-    const [featureConfig, setFeatureConfig] = useState(DATA_SUMMARY_DEFAULT_MODEL);
+export const FeatureConfig = ({ userid, cohort, group, language, featureConfig, setFeatureConfig }) => {
     const [reloadFlag, setReloadFlag] = useState(false);
+    const [warningFlag, setWarningFlag] = useState(false);
+
     const navigate = useNavigate();
 
     const handleTickClick = (feature) => {
@@ -193,15 +178,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
             [feature]: updatedFeature
         });
 
-        let interactioData = {
-            "viz": "featureSelection",
-            "eventType": "click",
-            "description": feature,
-            "timestamp": Date().toString(),
-            "duration": 0
-        }
-
-        PostInteractions({ userid, cohort, interactioData });
+        //PostInteractions({ userid, group, interactioData });
     };
     // Hover time for interaction data
     var startTime, endTime;
@@ -215,16 +192,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
         timeDiff /= 1000;
         // get seconds
         var duration = Math.round(timeDiff % 60);
-
-        let interactioData = {
-            "viz": viz,
-            "eventType": "hover",
-            "description": feature,
-            "timestamp": Date().toString(),
-            "duration": duration
-        }
-
-        PostInteractions({ userid, cohort, interactioData });
+        //PostInteractions({ userid, group, interactioData });
     };
 
     const inputOnChange = (e) => {
@@ -233,10 +201,10 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
 
     useEffect(() => {
         setReloadFlag(true);
-        GetConfigData({ userid, setFeatureConfig });
+        //GetConfigData({ userid, setFeatureConfig });
         setTimeout(function () {
             setReloadFlag(false);
-        }, 3000);
+        }, 1500);
     }, []);
 
     const loadingIndicator = (
@@ -262,7 +230,7 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                     <div className='config-display-fc-r1-text'>
                         {
                             language == "ENG"
-                                ? "The current model is trained on the selected features with selected data configurations:"
+                                ? "The current model is trained on the selected predictor variables with selected data configurations:"
                                 : "Trenutni model se usposobi na izbranih funkcijah z izbranimi konfiguracijami podatkov:"
                         }
                     </div>
@@ -328,7 +296,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"Glucose"}
                                             isActive={featureConfig["Glucose"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -338,6 +307,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Glucose"].ydata}
                                         selectedLimit={[featureConfig["Glucose"].lowerLimit, featureConfig["Glucose"].upperLimit]}
                                         isActive={featureConfig["Glucose"].isSelected}
+                                        q1={featureConfig["Glucose"].q1}
+                                        q3={featureConfig["Glucose"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Glucose"
@@ -374,7 +345,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"BMI"}
                                             isActive={featureConfig["BMI"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -384,6 +356,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["BMI"].ydata}
                                         selectedLimit={[featureConfig["BMI"].lowerLimit, featureConfig["BMI"].upperLimit]}
                                         isActive={featureConfig["BMI"].isSelected}
+                                        q1={featureConfig["BMI"].q1}
+                                        q3={featureConfig["BMI"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "BMI"
@@ -422,7 +396,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"Insulin"}
                                             isActive={featureConfig["Insulin"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -432,6 +407,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Insulin"].ydata}
                                         selectedLimit={[featureConfig["Insulin"].lowerLimit, featureConfig["Insulin"].upperLimit]}
                                         isActive={featureConfig["Insulin"].isSelected}
+                                        q1={featureConfig["Insulin"].q1}
+                                        q3={featureConfig["Insulin"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Insulin"
@@ -468,7 +445,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"Age"}
                                             isActive={featureConfig["Age"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -478,6 +456,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Age"].ydata}
                                         selectedLimit={[featureConfig["Age"].lowerLimit, featureConfig["Age"].upperLimit]}
                                         isActive={featureConfig["Age"].isSelected}
+                                        q1={featureConfig["Age"].q1}
+                                        q3={featureConfig["Age"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Age"
@@ -514,7 +494,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"Pregnancies"}
                                             isActive={featureConfig["Pregnancies"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -524,6 +505,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["Pregnancies"].ydata}
                                         selectedLimit={[featureConfig["Pregnancies"].lowerLimit, featureConfig["Pregnancies"].upperLimit]}
                                         isActive={featureConfig["Pregnancies"].isSelected}
+                                        q1={featureConfig["Pregnancies"].q1}
+                                        q3={featureConfig["Pregnancies"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Pregnancies"
@@ -562,7 +545,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"BloodPressure"}
                                             isActive={featureConfig["BloodPressure"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -572,6 +556,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["BloodPressure"].ydata}
                                         selectedLimit={[featureConfig["BloodPressure"].lowerLimit, featureConfig["BloodPressure"].upperLimit]}
                                         isActive={featureConfig["BloodPressure"].isSelected}
+                                        q1={featureConfig["BloodPressure"].q1}
+                                        q3={featureConfig["BloodPressure"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Pressure"
@@ -608,7 +594,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"SkinThickness"}
                                             isActive={featureConfig["SkinThickness"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -618,6 +605,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["SkinThickness"].ydata}
                                         selectedLimit={[featureConfig["SkinThickness"].lowerLimit, featureConfig["SkinThickness"].upperLimit]}
                                         isActive={featureConfig["SkinThickness"].isSelected}
+                                        q1={featureConfig["SkinThickness"].q1}
+                                        q3={featureConfig["SkinThickness"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Skin Thickness"
@@ -654,7 +643,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                             featureName={"DiabetesPedigreeFunction"}
                                             isActive={featureConfig["DiabetesPedigreeFunction"].isSelected}
                                             userid={userid}
-                                            cohort={cohort}
+                                            cohort={group}
+                                            setWarningFlag={setWarningFlag}
                                         />
                                     </div>
                                 </div>
@@ -664,6 +654,8 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                                         y_values={featureConfig["DiabetesPedigreeFunction"].ydata}
                                         selectedLimit={[featureConfig["DiabetesPedigreeFunction"].lowerLimit, featureConfig["DiabetesPedigreeFunction"].upperLimit]}
                                         isActive={featureConfig["DiabetesPedigreeFunction"].isSelected}
+                                        q1={featureConfig["DiabetesPedigreeFunction"].q1}
+                                        q3={featureConfig["DiabetesPedigreeFunction"].q3}
                                         name={
                                             language == "ENG"
                                                 ? "Pedigree Function"
@@ -679,17 +671,27 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                 </div>
                 <div className='config-display-fc-r3'>
                     <div className='config-display-fc-r3-text'>
+
                         {
-                            language == "ENG"
-                                ? "* You can select/deselect features or filter feature values to tune the trained model"
-                                : "* Izberete/odstranite lahko funkcije ali filtrirate vrednosti funkcij, da prilagodite trenirani model"
+                            warningFlag
+                                ? <span style={{ color: "#D64242", fontSize: "larger" }}>
+                                    <b>
+                                        !! Warning: the size of the training data has reduced significantly after this configuration!!
+                                        This is harmful for the model. Please cancel or revert the current changes.
+                                    </b>
+                                </span>
+                                :
+                                "* You can select/deselect predictior variables or filter variable values to tune the trained model"
                         }
+
                     </div>
+
+
                     <div className='config-display-fc-r3-item'>
                         <button
                             className="reset-button"
                             type="submit"
-                            onClick={() => { handleResetButton(userid, cohort, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) }}
+                            onClick={() => { handleResetButton(userid, cohort, group, featureConfig, setFeatureConfig, setReloadFlag, navigate, language) }}
                         >
                             {
                                 language == "ENG"
@@ -712,13 +714,9 @@ export const FeatureConfig = ({ userid, cohort, language }) => {
                         <button
                             className="train-button"
                             type="submit"
-                            onClick={() => { handleTrainButton(userid, cohort, featureConfig, setReloadFlag, navigate, language) }}
+                            onClick={() => { handleTrainButton(userid, cohort, group, featureConfig, setReloadFlag, navigate, language) }}
                         >
-                            {
-                                language == "ENG"
-                                    ? "Save and Re-train"
-                                    : "Shrani in ponovno usposobi"
-                            }
+                            {"Save and Re-train"}
                         </button>
                     </div>
                 </div>

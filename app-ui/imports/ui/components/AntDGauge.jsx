@@ -7,7 +7,7 @@ export const AntDGauge = ({ accuracy }) => {
     percent: accuracy,
     radius: 0.5,
     range: {
-      color: ['#1363DF', '#E5E5E5'],
+      color: ['#6929c4', '#E5E5E5'],
       width: 20,
     },
     indicator: {
