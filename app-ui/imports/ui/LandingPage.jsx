@@ -15,12 +15,15 @@ export const LandingPage = ({ user, setUser }) => {
     useEffect(() => {
         window.localStorage.setItem('language', user.language);
     }, [user.language]);
+    useEffect(() => {
+        window.localStorage.setItem('group', user.group);
+    }, [user.group]);
 
     const selectedDashType = () => {
-        //console.log(user)'
+        console.log(user);
         axios.post(BASE_API + '/validateusers', {
             UserId: user.id,
-            Cohort: user.cohort,
+            Cohort: user.group,
             Language: user.language,
         }, {
             headers: {
@@ -67,58 +70,31 @@ export const LandingPage = ({ user, setUser }) => {
                 </h1>
                 <br />
                 <h1 className="lp-container-headerfont-2">
-                    {user.language == "ENG"
-                        ?
-                        "An Interactive Explainable Machine Learning Platform for Healthcare Experts for Personalized Predictions"
-                        :
-                        "Interaktivna razložljiva platforma za strojno učenje za zdravstvene strokovnjake za prilagojene napovedi"
-                    }
+                    {"An Interactive Explainable Machine Learning Platform for Healthcare Experts for Personalized Predictions"}
 
                 </h1>
 
                 <div className="lp-container-entry">
                     <form onClick={(e) => e.preventDefault()}>
-                        <select className="lp-container-entry-input" defaultValue={'DEFAULT'} name="language" onChange={handleChange} required>
-                            <option value="DEFAULT" disabled>Language/Jezik</option>
-                            <option value="ENG">English</option>
-                            <option value="SLO">Slovenščina</option>
-                        </select>
                         <input
                             className="lp-container-entry-input"
-                            placeholder={user.language == "ENG"
-                                ?
-                                "Please enter your email address"
-                                :
-                                "Prosimo, vnesite svoj elektronski naslov"
-                            }
+                            placeholder={"Enter your username to begin:"}
                             value={user.id}
                             name="id"
                             onChange={handleChange}
                             required />
                         <br />
-                        <select className="lp-container-entry-input" defaultValue={'DEFAULT'} name="cohort" onChange={handleChange} required>
-                            <option value="DEFAULT" disabled>{user.language == "ENG"
-                                ?
-                                "Select your assigned cohort"
-                                :
-                                "Izberite dodeljeno kohortno skupino"
-                            }</option>
-                            <option value="DCE">Cohort-1</option>
-                            <option value="MCE">Cohort-2</option>
-                            <option value="HYB">Cohort-3</option>
-                        </select>
+
                         <br />
                         <button
                             className="lp-container-entry-button"
-                            disabled={user.id === "" || user.cohort === ""}
+                            disabled={user.id === ""}
                             type="submit"
                             onClick={selectedDashType}
                         >
                             {
-                                user.id === "" || user.cohort === "" ?
-                                    user.language == "ENG" ? "Not ready yet?" : "Še niste pripravljeni?"
-                                    :
-                                    user.language == "ENG" ? "Let's Start" : "Začnimo"
+                                user.id === "" || user.group === "" ?
+                                    "Not ready yet?" : "Let's Start"
                             }
                         </button>
                     </form>

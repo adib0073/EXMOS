@@ -9,8 +9,14 @@ import { LandingPage } from './LandingPage.jsx';
 import { Configuration } from './pages/Configuration.jsx';
 
 export const App = () => {
-    const [user, setUser] = useState({ id: "", cohort: "", language: "ENG" });
+    const [user, setUser] = useState({ 
+        id: "", 
+        group: "all",
+        cohort: "HYB", 
+        language: "ENG" });
+
     const [activeTab, setActiveTab] = useState("tab1");
+    const [updateDash, setUpdateDash] = useState(true);
 
     return (
         <>
@@ -20,10 +26,8 @@ export const App = () => {
             <BrowserRouter basename="/exmos">
                 <Routes>
                     <Route path="/" element={<LandingPage user={user} setUser={setUser} />} />
-                    <Route path="/dashboard/dce" element={<DCE user = {user}/>} />
-                    <Route path="/dashboard/mce" element={<MCE user = {user} />} />
-                    <Route path="/dashboard/hyb" element={<HYB user = {user} />} />
-                    <Route path="/configuration" element={<Configuration user={user} activeTab={activeTab} setActiveTab={setActiveTab} />} />
+                    <Route path="/dashboard/hyb" element={<HYB user = {user} updateDash={updateDash} setUpdateDash={setUpdateDash}/>} />
+                    <Route path="/configuration" element={<Configuration user={user} activeTab={activeTab} setActiveTab={setActiveTab}/>} />
                 </Routes>
             </BrowserRouter>
         </>
