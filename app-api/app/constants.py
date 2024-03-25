@@ -3,17 +3,17 @@ ALL_FEATURES = ["Pregnancies", "Glucose", "BloodPressure",
 DEFAULT_VALUES = [(0, 15), (0, 199), (0, 122), (0, 99),
                   (0, 846), (0.0, 67.1), (0.078, 2.329), (21, 81)]
 # Provide the mongodb atlas url to connect python to mongodb using pymongo
-CONNECTION_STRING = <your_connection_string>
+CONNECTION_STRING = <your_connection_string> # <update_here>
 # MONGO DATABASE NAME
-DBNAME = <your_db_name>
+DBNAME = <your_db_name> # <update_here>
 # MONGO COLLECTION NAME FOR USER DETAILS
-USER_COLLECTION = <your_user_collections>
+USER_COLLECTION = <your_user_collections> # <update_here>
 # MONGO COLLECTION FOR ACCURACY
-ACCURACY_COLLECTION = <your_collections_name_for_storing_accuracy>
+ACCURACY_COLLECTION = <your_collections_name_for_storing_accuracy> # <update_here>
 # MONGO COLLECTION FOR IINTERACTIONS DATA
-INTERACTIONS_COLLECTION = <your_collections_name_for_storing_interaction_data>
+INTERACTIONS_COLLECTION = <your_collections_name_for_storing_interaction_data> # <update_here>
 # MONGO COLLECTION FOR AUTOCORRECT CONFIG
-AUTOCORRECT_CONFIG = <your_collections_name_for_storing_config_data>
+AUTOCORRECT_CONFIG = <your_collections_name_for_storing_config_data> # <update_here>
 # User Detail Template
 USER_DETAIL_JSON = {
     "UserName": None,
