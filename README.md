@@ -52,18 +52,18 @@ Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Ve
 BibTex:
 
 ```
-@article{bhattacharya2024exmos,
-  author    = {Aditya Bhattacharya and
-               Simone Stumpf and
-               Lucija Gosak and
-               Gregor Stiglic and
-               Katrien Verbert},
+@inproceedings{bhattacharya2024exmos,
+  author    = {Aditya Bhattacharya and Simone Stumpf and Lucija Gosak and Gregor Stiglic and Katrien Verbert},
   title     = {{EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations}},
-  journal   = {arXiv:2402.00491},
+  booktitle = {Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '24)},
+  series    = {CHI '24},
+  location  = {Honolulu, HI, USA},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  pages     = {27},
   year      = {2024},
-  eprint    = {2402.00491},
-  primaryClass  = {cs.AI},
-  url       = {https://arxiv.org/abs/2402.00491},
-  doi       = {10.48550/arXiv.2402.00491},
+  month     = {May 11--16},
+  doi       = {10.1145/3613904.3642106},
+  url       = {https://doi.org/10.1145/3613904.3642106},
 }
 ```
