@@ -3,7 +3,7 @@
 With the increasing adoption of Artificial Intelligence (AI) systems in high-stake domains, such as healthcare, effective collaboration between domain experts and AI is imperative. To facilitate effective collaboration between domain experts and AI systems, we introduce an Explanatory Model Steering system that allows domain experts to steer prediction models using their domain knowledge. The system includes an explanation dashboard that combines different types of data-centric and model-centric explanations and allows prediction models to be steered through manual and automated data configuration approaches. It allows domain experts to apply their prior knowledge for configuring the underlying training data and refining prediction models. Additionally, our model steering system has been evaluated for a healthcare-focused scenario with 174 healthcare experts through three extensive user studies. Our findings highlight the importance of involving domain experts during model steering, ultimately leading to improved human-AI collaboration.
 
 <p align="center" width="100%">
-<a href="https://www.youtube.com/watch?v=-9itqTkyQ6s" target="_blank"><img src="https://github.com/adib0073/EXMOS/blob/main/images/XIL%20Systems.jpg" width="800" alt="EXMOS System"/></a>
+<a href="https://www.youtube.com/watch?v=-9itqTkyQ6s" target="_blank"><img src="https://github.com/adib0073/EXMOS/blob/main/images/XIL%20Systems.jpg" width="650" alt="EXMOS System"/></a>
 </p>
 
 ## Demo
