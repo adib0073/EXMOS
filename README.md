@@ -44,26 +44,56 @@ docker-compose up --force-recreate
 After the app is running successfully, you can open the base url of the app as mentioned in your configuration files to launch it in your web browser.
 
 ## Citation
-If you use EXMOS in your research, please cite us as follows:
+If you use EXMOS in your research, please cite us and all our related work as follows:
 
-Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Verbert. 2024. EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI ’24), May 11–16, 2024, Honolulu, HI, USA. [https:
+#### 1. From ACM CHI 2024
+
+` ACM reference format `
+
+Aditya Bhattacharya, Simone Stumpf, Lucija Gosak, Gregor Stiglic, and Katrien Verbert. 2024. EXMOS: Explanatory Model Steering through Multifaceted Explanations and Data Configurations. In Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '24). Association for Computing Machinery, New York, NY, USA, Article 314, 1–27. [https:
 //doi.org/10.1145/3613904.3642106](https://doi.org/10.1145/3613904.3642106)
 
 BibTex:
 
 ```
-@inproceedings{bhattacharya2024exmos,
-  author    = {Aditya Bhattacharya and Simone Stumpf and Lucija Gosak and Gregor Stiglic and Katrien Verbert},
-  title     = {{EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations}},
-  booktitle = {Proceedings of the CHI Conference on Human Factors in Computing Systems (CHI '24)},
-  series    = {CHI '24},
-  location  = {Honolulu, HI, USA},
-  publisher = {ACM},
-  address   = {New York, NY, USA},
-  pages     = {27},
-  year      = {2024},
-  month     = {May 11--16},
-  doi       = {10.1145/3613904.3642106},
-  url       = {https://doi.org/10.1145/3613904.3642106},
+@inproceedings{bhattacharya_chi_exmos_2024,
+author = {Bhattacharya, Aditya and Stumpf, Simone and Gosak, Lucija and Stiglic, Gregor and Verbert, Katrien},
+title = {EXMOS: Explanatory Model Steering through Multifaceted Explanations and Data Configurations},
+year = {2024},
+isbn = {9798400703300},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3613904.3642106},
+doi = {10.1145/3613904.3642106},
+booktitle = {Proceedings of the CHI Conference on Human Factors in Computing Systems},
+articleno = {314},
+numpages = {27},
+keywords = {Explainable AI, Explanatory Interactive Learning, Human-centered AI, IML, Interactive Machine Learning, Interpretable AI, Model Steering, Responsible AI, XAI},
+location = {<conf-loc>, <city>Honolulu</city>, <state>HI</state>, <country>USA</country>, </conf-loc>},
+series = {CHI '24}
 }
 ```
+
+#### 2. From ACM UMAP 2024
+
+` ACM reference format `
+
+Aditya Bhattacharya, Simone Stumpf, and Katrien Verbert. 2024. An Explanatory Model Steering System for Collaboration between Domain Experts and AI. In Adjunct Proceedings of the 32nd ACM Conference on User Modeling, Adaptation and Personalization (UMAP Adjunct ’24), July 1–4, 2024, Cagliari,Italy. ACM, New York, NY, USA, 5 pages. [https://doi.org/10.1145/3631700.3664886](https://doi.org/10.1145/3631700.3664886)
+
+BibTex:
+
+```
+@inproceedings{BhattacharyaUMAP2024,
+  author = {Aditya Bhattacharya and Simone Stumpf and Katrien Verbert},
+  title = {An Explanatory Model Steering System for Collaboration between Domain Experts and AI},
+  booktitle = {Adjunct Proceedings of the 32nd ACM Conference on User Modeling, Adaptation and Personalization (UMAP Adjunct '24)},
+  year = {2024},
+  location = {Cagliari, Italy},
+  publisher = {ACM},
+  address = {New York, NY, USA},
+  pages = {5},
+  doi = {10.1145/3631700.3664886},
+  url = {https://doi.org/10.1145/3631700.3664886}
+}
+```
+
