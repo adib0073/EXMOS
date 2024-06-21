@@ -1,9 +1,9 @@
-# EXMOS: Explanatory Model Steering Through Multifaceted Explanations and Data Configurations
+# EXMOS: Explanatory Model Steering System
 
-Explanations in interactive machine-learning systems facilitate debugging and improving prediction models. However, the effectiveness of various global model-centric and data-centric explanations in aiding domain experts to detect and resolve potential data issues for model improvement remains unexplored. This research investigates the influence of data-centric and model-centric global explanations in systems that support healthcare experts in optimising models through automated and manual data configurations. We conducted quantitative (n=70) and qualitative (n=30) studies with healthcare experts to explore the impact of different explanations on trust, understandability and model improvement. Our results reveal the insufficiency of global model-centric explanations for guiding users during data configuration. Although data-centric explanations enhanced understanding of post-configuration system changes, a hybrid fusion of both explanation types demonstrated the highest effectiveness. Based on our study results, we also present design implications for effective explanation-driven interactive machine-learning systems.
+With the increasing adoption of Artificial Intelligence (AI) systems in high-stake domains, such as healthcare, effective collaboration between domain experts and AI is imperative. To facilitate effective collaboration between domain experts and AI systems, we introduce an Explanatory Model Steering system that allows domain experts to steer prediction models using their domain knowledge. The system includes an explanation dashboard that combines different types of data-centric and model-centric explanations and allows prediction models to be steered through manual and automated data configuration approaches. It allows domain experts to apply their prior knowledge for configuring the underlying training data and refining prediction models. Additionally, our model steering system has been evaluated for a healthcare-focused scenario with 174 healthcare experts through three extensive user studies. Our findings highlight the importance of involving domain experts during model steering, ultimately leading to improved human-AI collaboration.
 
 <p align="center" width="100%">
-<a href="https://www.youtube.com/watch?v=DP1tAejstAg" target="_blank"><img src="https://github.com/adib0073/EXMOS/blob/main/images/XIL%20Systems.jpg" width="650" alt="EXMOS System"/></a>
+<a href="https://www.youtube.com/watch?v=-9itqTkyQ6s" target="_blank"><img src="https://github.com/adib0073/EXMOS/blob/main/images/XIL%20Systems.jpg" width="70vw" alt="EXMOS System"/></a>
 </p>
 
 ## Demo
@@ -12,7 +12,7 @@ Please check the demonstration for our EXMOS system:
 <br/>
 <br/>
 
-[![Demo_Video](https://img.youtube.com/vi/DP1tAejstAg/0.jpg)](https://www.youtube.com/watch?v=DP1tAejstAg)
+[![Demo_Video](https://img.youtube.com/vi/DP1tAejstAg/0.jpg)](https://www.youtube.com/watch?v=-9itqTkyQ6s)
 <br/>
 <br/>
 
